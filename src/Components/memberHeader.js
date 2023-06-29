@@ -1,7 +1,5 @@
 import styled from 'styled-components';
-import ForestRoundedIcon from '@mui/icons-material/ForestRounded';
-import ParkRoundedIcon from '@mui/icons-material/ParkRounded';
-import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
+import { ForestRounded, ParkRounded, LogoutRounded } from '@mui/icons-material';
 
 const HeaderContainer = styled.div`
   height: 50px;
@@ -44,7 +42,7 @@ const MemberHeader = () => (
     <HeaderContainer>
       <ElementWrapper>
         <IconWrapper>
-          <ForestRoundedIcon fontSize="large" />
+          <ForestRounded sx={{ fontSize: 40 }} />
         </IconWrapper>
         <OneLineText>나누고 나눔 받는 무한 지식 품앗이</OneLineText>
       </ElementWrapper>
@@ -54,9 +52,9 @@ const MemberHeader = () => (
           <div>오늘도 좋은 하루 보내세요!</div>
         </TwoLineText>
         <IconWrapper>
-          <ParkRoundedIcon fontSize="medium" />
+          <ParkRounded sx={{ fontSize: 30 }} />
         </IconWrapper>
-        <LogoutRoundedIcon fontSize="medium" />
+        <LogoutRounded sx={{ fontSize: 30 }} />
       </ElementWrapper>
     </HeaderContainer>
   </>
