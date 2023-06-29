@@ -3,8 +3,13 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  parser: 'babel-parser',
-  extends: ['airbnb-base', 'prettier'],
+
+  extends: [
+    'airbnb-base',
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'prettier',
+  ],
   overrides: [
     {
       env: {
@@ -13,6 +18,10 @@ module.exports = {
       files: ['.eslintrc.{js,cjs}'],
       parserOptions: {
         sourceType: 'script',
+        requireConfigFile: false,
+        ecmaFeatures: {
+          jsx: true,
+        },
       },
     },
   ],
@@ -20,5 +29,6 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  rules: {},
+  rules: { 'react/react-in-jsx-scope': 'off' },
+  parser: '@babel/eslint-parser',
 };

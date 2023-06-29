@@ -1,7 +1,11 @@
-import './App.css';
+import MemberHeader from './Components/memberHeader';
 
 function App() {
-  return <div></div>;
+  return (
+    <div>
+      <MemberHeader></MemberHeader>
+    </div>
+  );
 }
 
 export default App;
