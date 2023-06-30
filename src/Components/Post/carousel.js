@@ -12,11 +12,13 @@ const CarouselWrapper = styled.div`
   .slick-prev::before,
   .slick-next::before {
     color: #9eb23b;
+    font-size: 27px;
   }
 
   .slick-list {
     background-color: #9eb23b;
     border-radius: 10px;
+    margin: 0px 0px 0px 7px;
   }
 `;
 
@@ -44,9 +46,14 @@ const Carousel = () => {
     slidesToScroll: 1,
     initialSlide: 2,
     arrows: true,
-    afterChange: (currentSlide) => {
-      if (carouselRef.current) {
-        carouselRef.current.scrollTo(0, 0);
+    beforeChange: (current, next) => {
+      const carouselElement = carouselRef.current;
+
+      if (carouselElement && carouselElement.scrollTo) {
+        carouselElement.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
       }
     }
   };
@@ -139,7 +146,7 @@ const Carousel = () => {
 
   return (
     <CarouselWrapper>
-      <Slider {...settings}>
+      <Slider ref={carouselRef} {...settings}>
         {tagPostLists.map((postList, idx) => (
           <CarouselItemContainer key={idx}>
             {postList.map((post, i) => (
