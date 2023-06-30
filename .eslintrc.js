@@ -32,6 +32,17 @@ module.exports = {
       presets: ['@babel/preset-react']
     }
   },
-  rules: { 'react/react-in-jsx-scope': 'off', 'react/prop-types': 'off' },
-  parser: '@babel/eslint-parser'
+  rules: {
+    'react/react-in-jsx-scope': 'off',
+    'react/prop-types': 'off',
+    'import/no-extraneous-dependencies': ['error', { devDependencies: true }]
+  },
+  parser: '@babel/eslint-parser',
+  settings: {
+    'import/resolver': {
+      node: {
+        paths: ['src']
+      }
+    }
+  }
 };
