@@ -5,11 +5,11 @@ const PostContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-radius: 20px;
+  border-radius: 30px;
   width: calc(60% - 10px);
   height: calc(85%);
   background-color: #ffffff;
-  margin: 0px 40px 50px 0px;
+  margin: 0px 20px 50px 0px;
 `;
 
 const PostSection = () => <PostContainer></PostContainer>;

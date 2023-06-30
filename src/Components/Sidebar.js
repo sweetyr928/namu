@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import {
   Home,
   SearchRounded,
-  ModeEditOutlineRounded,
+  ModeEditOutlineRounded
 } from '@mui/icons-material';
 
 const SideBarContainer = styled.div`
@@ -10,7 +10,7 @@ const SideBarContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 0px 20px 200px 20px;
+  margin: 0px 40px 200px 20px;
 `;
 
 const Circle = styled.div`
