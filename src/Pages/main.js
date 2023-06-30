@@ -22,6 +22,7 @@ const TagWrapper = styled.div`
     margin: 0px 30px 0px 0px;
     font-size: medium;
     font-weight: 600;
+    cursor: pointer;
 
     &:hover {
       color: #9eb23b;
