@@ -1,9 +1,102 @@
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import { useEffect } from 'react';
-import MemberHeader from './Components/memberHeader';
-import SideBar from './Components/Sidebar';
-import PostSection from './Components/postSection';
-import ChatSection from './Components/chatSection';
+import MemberHeader from './Components/UI/memberHeader';
+import SideBar from './Components/UI/Sidebar';
+import MainPage from './Pages/main';
+
+const GlobalStyle = createGlobalStyle`
+  html,
+  body,
+  div,
+  button,
+  span,
+  applet,
+  object,
+  iframe,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  blockquote,
+  pre,
+  a,
+  abbr,
+  acronym,
+  address,
+  big,
+  cite,
+  code,
+  del,
+  dfn,
+  em,
+  img,
+  ins,
+  kbd,
+  q,
+  s,
+  samp,
+  small,
+  strike,
+  strong,
+  sub,
+  sup,
+  tt,
+  var,
+  b,
+  u,
+  i,
+  center,
+  dl,
+  dt,
+  dd,
+  ol,
+  ul,
+  li,
+  fieldset,
+  form,
+  label,
+  legend,
+  table,
+  caption,
+  tbody,
+  tfoot,
+  thead,
+  tr,
+  th,
+  td,
+  article,
+  aside,
+  canvas,
+  details,
+  embed,
+  figure,
+  figcaption,
+  footer,
+  header,
+  hgroup,
+  menu,
+  nav,
+  output,
+  ruby,
+  section,
+  summary,
+  time,
+  mark,
+  audio,
+  video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    color: #3f3f3f;
+  }
+
+`;
 
 const AppContainer = styled.div`
   overflow: hidden;
@@ -23,11 +116,11 @@ function App() {
   }, []);
   return (
     <AppContainer>
+      <GlobalStyle />
       <MemberHeader />
       <MainContainer>
         <SideBar />
-        <PostSection />
-        <ChatSection />
+        <MainPage />
       </MainContainer>
     </AppContainer>
   );
