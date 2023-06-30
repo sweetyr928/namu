@@ -28,6 +28,9 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
+    babelOptions: {
+      presets: ['@babel/preset-react'],
+    },
   },
   rules: { 'react/react-in-jsx-scope': 'off' },
   parser: '@babel/eslint-parser',
