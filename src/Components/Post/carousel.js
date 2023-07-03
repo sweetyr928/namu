@@ -11,12 +11,12 @@ const CarouselWrapper = styled.div`
 
   .slick-prev::before,
   .slick-next::before {
-    color: #9eb23b;
+    color: #c7d36f;
     font-size: 27px;
   }
 
   .slick-list {
-    background-color: #9eb23b;
+    background-color: #c7d36f;
     border-radius: 10px;
     margin: 0px 0px 0px 7px;
   }
@@ -44,7 +44,7 @@ const TagWrapper = styled.div`
     cursor: pointer;
 
     &:hover {
-      color: #9eb23b;
+      color: #c7d36f;
     }
   }
 `;
@@ -62,7 +62,7 @@ const CarouselItemContainer = styled.div`
   }
 `;
 
-const Carousel = ({ handleCompAndIdx, tagList }) => {
+const Carousel = ({ handlePostDetail, tagList }) => {
   const carouselRef = useRef(null);
   const [tagIdx, setTagIdx] = useState(0);
 
@@ -175,28 +175,39 @@ const Carousel = ({ handleCompAndIdx, tagList }) => {
   ];
 
   return (
-    <CarouselWrapper>
-      <TagWrapper>
-        <p>{`# ${tagList[tagIdx]}`}</p>
-        <button>태그 추가</button>
-      </TagWrapper>
-      <Slider ref={carouselRef} {...settings}>
-        {tagList.map((_, idx) => (
-          <CarouselItemContainer key={idx}>
-            {tagPostLists[tagIdx].map((post, i) => (
-              <CarouselItem
-                key={i}
-                title={post.title}
-                content={post.content}
-                date={post.date}
-                idx={i}
-                handleCompAndIdx={handleCompAndIdx}
-              />
+    <>
+      {tagList.length ? (
+        <CarouselWrapper>
+          <TagWrapper>
+            <p>{`# ${tagList[tagIdx]}`}</p>
+            <button>태그 추가</button>
+          </TagWrapper>
+          <Slider ref={carouselRef} {...settings}>
+            {tagList.map((_, idx) => (
+              <CarouselItemContainer key={idx}>
+                {tagPostLists[tagIdx].map((post, i) => (
+                  <CarouselItem
+                    key={i}
+                    category={tagList[tagIdx]}
+                    title={post.title}
+                    content={post.content}
+                    date={post.date}
+                    idx={i}
+                    handlePostDetail={handlePostDetail}
+                  />
+                ))}
+              </CarouselItemContainer>
             ))}
-          </CarouselItemContainer>
-        ))}
-      </Slider>
-    </CarouselWrapper>
+          </Slider>
+        </CarouselWrapper>
+      ) : (
+        <>
+          <div>아직 태그를 설정하지 않았어요!</div>
+          <div>지금 태그를 설정하러 가볼까요?</div>
+          <button>태그 설정하러 가기</button>
+        </>
+      )}
+    </>
   );
 };
 
