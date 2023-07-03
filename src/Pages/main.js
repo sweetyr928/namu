@@ -11,7 +11,7 @@ const TagWrapper = styled.div`
   margin: 30px 0px 30px 0px;
 
   p {
-    margin: 0px 0px 0px 50px;
+    margin: 0px 0px 0px 70px;
     font-size: x-large;
     font-weight: 700;
   }
@@ -19,7 +19,7 @@ const TagWrapper = styled.div`
   button {
     background-color: transparent;
     border: none;
-    margin: 0px 50px 0px 0px;
+    margin: 0px 70px 0px 0px;
     font-size: medium;
     font-weight: 600;
     cursor: pointer;
