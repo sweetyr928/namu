@@ -23,7 +23,7 @@ export const WhiteButton = styled.button`
   font-size: 15px;
   padding: 10px 10px 10px 10px;
 
-  /* &:hover {
-    background-color: #9eb23b;
-  } */
+  &:hover {
+    color: #9eb23b;
+  }
 `;
