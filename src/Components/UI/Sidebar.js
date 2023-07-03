@@ -45,7 +45,7 @@ const SideBar = () => (
       <CustomIcon
         component={Home}
         color="#3F3F3F"
-        hoverColor="#9EB23B"
+        hoverColor="#c7d36f"
         sx={{ fontSize: 40 }}
       />
     </IconWrapper>
@@ -53,7 +53,7 @@ const SideBar = () => (
       <CustomIcon
         component={SearchRounded}
         color="#3F3F3F"
-        hoverColor="#9EB23B"
+        hoverColor="#c7d36f"
         sx={{ fontSize: 40 }}
       />
     </IconWrapper>
@@ -61,7 +61,7 @@ const SideBar = () => (
       <CustomIcon
         component={ModeEditOutlineRounded}
         color="#3F3F3F"
-        hoverColor="#9EB23B"
+        hoverColor="#c7d36f"
         sx={{ fontSize: 40 }}
       />
     </IconWrapper>
