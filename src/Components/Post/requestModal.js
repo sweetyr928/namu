@@ -143,19 +143,22 @@ const RequestModal = ({ toggleModal }) => {
             </DropdownButton>
             {isDropdownOpen && (
               <DropdownMenu>
-                <DropdownMenuItem onClick={() => handleTimeSelect('10분')}>
-                  10분
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleTimeSelect('30분')}>
+                <DropdownMenuItem onClick={() => handleTimeSelect('30 분')}>
                   30분
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleTimeSelect('60분')}>
-                  60분
+                <DropdownMenuItem onClick={() => handleTimeSelect('1시간')}>
+                  1시간
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  onClick={() => handleTimeSelect('시간 제한 없음')}
+                  onClick={() => handleTimeSelect('1시간 30분')}
                 >
-                  시간 제한 없음
+                  1시간 30분
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => handleTimeSelect('2시간')}>
+                  2시간
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => handleTimeSelect('제한 없음')}>
+                  제한 없음
                 </DropdownMenuItem>
               </DropdownMenu>
             )}
