@@ -6,7 +6,7 @@ import Carousel from '../Components/Post/carousel';
 import PostDetail from '../Components/Post/postDetail';
 
 const MainPage = () => {
-  const [comp, setComp] = useState('detail');
+  const [comp, setComp] = useState('list');
   const [selectedIdx, setSelectedIdx] = useState(null);
   const [category, setCategory] = useState('');
   const [tagList, setTagList] = useState(['React.js', 'Vue.js']);
