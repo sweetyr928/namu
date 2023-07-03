@@ -1,8 +1,8 @@
 import styled, { createGlobalStyle } from 'styled-components';
 import { useEffect } from 'react';
-import MemberHeader from './Components/UI/memberHeader';
 import SideBar from './Components/UI/Sidebar';
 import MainPage from './Pages/main';
+import Header from './Components/UI/header';
 
 const GlobalStyle = createGlobalStyle`
   html,
@@ -40,7 +40,7 @@ function App() {
   return (
     <AppContainer>
       <GlobalStyle />
-      <MemberHeader />
+      <Header />
       <MainContainer>
         <SideBar />
         <MainPage />
