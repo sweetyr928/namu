@@ -1,9 +1,25 @@
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import { useEffect } from 'react';
-import Header from './Components/header';
-import SideBar from './Components/Sidebar';
-import PostSection from './Components/postSection';
-import ChatSection from './Components/chatSection';
+import SideBar from './Components/UI/Sidebar';
+import MainPage from './Pages/main';
+import Header from './Components/UI/header';
+
+const GlobalStyle = createGlobalStyle`
+  html,
+  body,
+  div,
+  button,
+  span,
+  p{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    color: #3f3f3f;
+  }
+`;
 
 const AppContainer = styled.div`
   overflow: hidden;
@@ -23,11 +39,11 @@ function App() {
   }, []);
   return (
     <AppContainer>
+      <GlobalStyle />
       <Header />
       <MainContainer>
         <SideBar />
-        <PostSection />
-        <ChatSection />
+        <MainPage />
       </MainContainer>
     </AppContainer>
   );

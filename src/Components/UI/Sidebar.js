@@ -13,7 +13,7 @@ const SideBarContainer = styled.div`
   margin: 0px 40px 200px 20px;
 `;
 
-const Circle = styled.div`
+const IconWrapper = styled.div`
   width: 60px;
   height: 60px;
   background-color: #ffffff;
@@ -41,30 +41,30 @@ const CustomIcon = styled(({ color, hoverColor, ...props }) => (
 
 const SideBar = () => (
   <SideBarContainer>
-    <Circle>
+    <IconWrapper>
       <CustomIcon
         component={Home}
         color="#3F3F3F"
-        hoverColor="#9EB23B"
+        hoverColor="#c7d36f"
         sx={{ fontSize: 40 }}
       />
-    </Circle>
-    <Circle>
+    </IconWrapper>
+    <IconWrapper>
       <CustomIcon
         component={SearchRounded}
         color="#3F3F3F"
-        hoverColor="#9EB23B"
+        hoverColor="#c7d36f"
         sx={{ fontSize: 40 }}
       />
-    </Circle>
-    <Circle>
+    </IconWrapper>
+    <IconWrapper>
       <CustomIcon
         component={ModeEditOutlineRounded}
         color="#3F3F3F"
-        hoverColor="#9EB23B"
+        hoverColor="#c7d36f"
         sx={{ fontSize: 40 }}
       />
-    </Circle>
+    </IconWrapper>
   </SideBarContainer>
 );
 

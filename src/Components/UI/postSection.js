@@ -7,11 +7,11 @@ const PostContainer = styled.div`
   align-items: center;
   border-radius: 30px;
   width: calc(60% - 10px);
-  height: calc(85%);
+  height: calc(75%);
   background-color: #ffffff;
   margin: 0px 20px 50px 0px;
 `;
 
-const PostSection = () => <PostContainer></PostContainer>;
+const PostSection = (props) => <PostContainer>{props.children}</PostContainer>;
 
 export default PostSection;
