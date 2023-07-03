@@ -52,7 +52,7 @@ const AnimatedCarouselItem = styled.div`
   animation: ${fadeIn} 0.5s ease;
 `;
 
-const CarouselItem = ({ title, content, date }) => {
+const CarouselItem = ({ title, content, date, idx, handleCompAndIdx }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseEnter = () => {
@@ -70,6 +70,7 @@ const CarouselItem = ({ title, content, date }) => {
       style={{
         backgroundColor: isHovered ? '#f8f8f8' : '#ffffff'
       }}
+      onClick={() => handleCompAndIdx('detail', idx)}
     >
       <AnimatedCarouselItem>
         <Title

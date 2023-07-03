@@ -35,7 +35,7 @@ const CarouselItemContainer = styled.div`
   }
 `;
 
-const Carousel = () => {
+const Carousel = ({ handleCompAndIdx }) => {
   const carouselRef = useRef(null);
 
   const settings = {
@@ -155,6 +155,8 @@ const Carousel = () => {
                 title={post.title}
                 content={post.content}
                 date={post.date}
+                idx={i}
+                handleCompAndIdx={handleCompAndIdx}
               />
             ))}
           </CarouselItemContainer>

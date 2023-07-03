@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useState, useEffect } from 'react';
 import PostSection from '../Components/UI/postSection';
 import ChatSection from '../Components/UI/chatSection';
 import Carousel from '../Components/Post/carousel';
@@ -30,17 +31,36 @@ const TagWrapper = styled.div`
   }
 `;
 
-const MainPage = () => (
-  <>
-    <PostSection>
-      <TagWrapper>
-        <p># 리액트</p>
-        <button>태그 추가</button>
-      </TagWrapper>
-      <Carousel />
-    </PostSection>
-    <ChatSection></ChatSection>
-  </>
-);
+const MainPage = () => {
+  const [comp, setComp] = useState('list');
+  const [selectedIdx, setSelectedIdx] = useState(null);
+
+  const handleCompAndIdx = (newComp, idx) => {
+    setComp(newComp);
+    setSelectedIdx(idx);
+  };
+
+  useEffect(() => {
+    console.log(selectedIdx);
+    console.log(comp);
+  }, [selectedIdx, comp]);
+
+  return (
+    <>
+      <PostSection>
+        {comp === 'list' && (
+          <>
+            <TagWrapper>
+              <p># 리액트</p>
+              <button>태그 추가</button>
+            </TagWrapper>
+            <Carousel handleCompAndIdx={handleCompAndIdx} />
+          </>
+        )}
+      </PostSection>
+      <ChatSection></ChatSection>
+    </>
+  );
+};
 
 export default MainPage;
