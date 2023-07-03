@@ -1,7 +1,4 @@
-import styled, {
-  createGlobalStyle,
-  StyleSheetManager
-} from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import { useEffect } from 'react';
 import MemberHeader from './Components/UI/memberHeader';
 import SideBar from './Components/UI/Sidebar';
@@ -41,16 +38,14 @@ function App() {
     document.body.style.overflow = 'hidden';
   }, []);
   return (
-    <StyleSheetManager shouldForwardProp={(prop) => prop !== 'sx'}>
-      <AppContainer>
-        <GlobalStyle />
-        <MemberHeader />
-        <MainContainer>
-          <SideBar />
-          <MainPage />
-        </MainContainer>
-      </AppContainer>
-    </StyleSheetManager>
+    <AppContainer>
+      <GlobalStyle />
+      <MemberHeader />
+      <MainContainer>
+        <SideBar />
+        <MainPage />
+      </MainContainer>
+    </AppContainer>
   );
 }
 
