@@ -3,30 +3,31 @@ import { useState, useEffect } from 'react';
 import PostSection from '../Components/UI/postSection';
 import ChatSection from '../Components/UI/chatSection';
 import Carousel from '../Components/Post/carousel';
+import PostDetail from '../Components/Post/postDetail';
 
 const MainPage = () => {
-  const [comp, setComp] = useState('list');
+  const [comp, setComp] = useState('detail');
   const [selectedIdx, setSelectedIdx] = useState(null);
+  const [category, setCategory] = useState('');
   const [tagList, setTagList] = useState(['React.js', 'Vue.js']);
 
-  const handleCompAndIdx = (newComp, idx) => {
+  const handlePostDetail = (newComp, newCategory, newIdx) => {
     setComp(newComp);
-    setSelectedIdx(idx);
+    setCategory(newCategory);
+    setSelectedIdx(newIdx);
   };
 
-  useEffect(() => {
-    console.log(selectedIdx);
-    console.log(comp);
-  }, [selectedIdx, comp]);
+  const handleComp = (newComp) => {
+    setComp(newComp);
+  };
 
   return (
     <>
       <PostSection>
         {comp === 'list' && (
-          <>
-            <Carousel handleCompAndIdx={handleCompAndIdx} tagList={tagList} />
-          </>
+          <Carousel handlePostDetail={handlePostDetail} tagList={tagList} />
         )}
+        {comp === 'detail' && <PostDetail handleComp={handleComp} />}
       </PostSection>
       <ChatSection></ChatSection>
     </>
