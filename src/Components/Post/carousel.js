@@ -86,8 +86,10 @@ const Carousel = ({ handleCompAndIdx, tagList }) => {
 
       if (next > current) {
         if (tagIdx < tagList.length - 1) setTagIdx((prevIdx) => prevIdx + 1);
+        else setTagIdx(0);
       } else if (next < current) {
         if (tagIdx > 0) setTagIdx((prevIdx) => prevIdx - 1);
+        else setTagIdx(tagList.length - 1);
       }
     }
   };
