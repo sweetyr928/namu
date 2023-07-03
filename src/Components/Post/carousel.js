@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import Slider from 'react-slick';
 import styled from 'styled-components';
 import 'slick-carousel/slick/slick.css';
@@ -22,6 +22,33 @@ const CarouselWrapper = styled.div`
   }
 `;
 
+const TagWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin: 30px 0px 30px 0px;
+
+  p {
+    margin: 0px 0px 0px 10px;
+    font-size: x-large;
+    font-weight: 700;
+  }
+
+  button {
+    background-color: transparent;
+    border: none;
+    margin: 0px 10px 0px 0px;
+    font-size: medium;
+    font-weight: 600;
+    cursor: pointer;
+
+    &:hover {
+      color: #9eb23b;
+    }
+  }
+`;
+
 const CarouselItemContainer = styled.div`
   width: 100%;
   height: 63vh;
@@ -35,8 +62,9 @@ const CarouselItemContainer = styled.div`
   }
 `;
 
-const Carousel = ({ handleCompAndIdx }) => {
+const Carousel = ({ handleCompAndIdx, tagList }) => {
   const carouselRef = useRef(null);
+  const [tagIdx, setTagIdx] = useState(0);
 
   const settings = {
     lazyLoad: true,
@@ -54,6 +82,12 @@ const Carousel = ({ handleCompAndIdx }) => {
           top: 0,
           behavior: 'smooth'
         });
+      }
+
+      if (next > current) {
+        if (tagIdx < tagList.length - 1) setTagIdx((prevIdx) => prevIdx + 1);
+      } else if (next < current) {
+        if (tagIdx > 0) setTagIdx((prevIdx) => prevIdx - 1);
       }
     }
   };
@@ -134,22 +168,20 @@ const Carousel = ({ handleCompAndIdx }) => {
         content:
           '리액트와 뷰의 장단점, 차이점을 알고 싶습니다. 실무에서는 어떤 프레임워크가 더 많이 사용되나요?',
         date: '2023-06-30'
-      },
-      {
-        title: '커스텀 훅이 정확히 무엇인가요?',
-        content:
-          '리액트를 공부하다가 커스텀 훅이라는 것을 알게 되었습니다. 커스텀 훅이 정확히 무엇인지, 어떨 때 사용하는지 예제를 사용해 설명해 주실 천사분을 찾습니다. 도와주...',
-        date: '2023-06-30'
       }
     ]
   ];
 
   return (
     <CarouselWrapper>
+      <TagWrapper>
+        <p>{`# ${tagList[tagIdx]}`}</p>
+        <button>태그 추가</button>
+      </TagWrapper>
       <Slider ref={carouselRef} {...settings}>
-        {tagPostLists.map((postList, idx) => (
+        {tagList.map((_, idx) => (
           <CarouselItemContainer key={idx}>
-            {postList.map((post, i) => (
+            {tagPostLists[tagIdx].map((post, i) => (
               <CarouselItem
                 key={i}
                 title={post.title}
