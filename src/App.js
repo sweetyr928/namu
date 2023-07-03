@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useEffect } from 'react';
-import MemberHeader from './Components/memberHeader';
+import Header from './Components/header';
 import SideBar from './Components/Sidebar';
 import PostSection from './Components/postSection';
 import ChatSection from './Components/chatSection';
@@ -23,7 +23,7 @@ function App() {
   }, []);
   return (
     <AppContainer>
-      <MemberHeader />
+      <Header />
       <MainContainer>
         <SideBar />
         <PostSection />
