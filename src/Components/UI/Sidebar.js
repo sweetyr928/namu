@@ -11,7 +11,9 @@ const SideBarContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 0px 40px 200px 20px;
+  position: fixed;
+  top: 30%;
+  left: 30px;
 `;
 
 const IconWrapper = styled.div`
