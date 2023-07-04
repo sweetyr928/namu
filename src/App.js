@@ -1,8 +1,10 @@
 import styled, { createGlobalStyle } from 'styled-components';
 import { useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import SideBar from './Components/UI/Sidebar';
-import MainPage from './Pages/main';
+import Main from './Pages/main';
 import Header from './Components/UI/header';
+import Search from './Pages/search';
 
 const GlobalStyle = createGlobalStyle`
   html,
@@ -37,13 +39,21 @@ function App() {
   useEffect(() => {
     document.body.style.overflow = 'hidden';
   }, []);
+
   return (
     <AppContainer>
       <GlobalStyle />
       <Header />
       <MainContainer>
-        <SideBar />
-        <MainPage />
+        <Router>
+          <SideBar />
+          <Routes>
+            <Route path="/" element={<Main />} />
+            <Route path="/search" element={<Search />} />
+            {/* <Route path="/post" element={<Post />} /> */}
+            {/* <Route path="/mypage" element={<MyPage />} /> */}
+          </Routes>
+        </Router>
       </MainContainer>
     </AppContainer>
   );
