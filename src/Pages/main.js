@@ -5,7 +5,7 @@ import ChatSection from '../Components/UI/chatSection';
 import Carousel from '../Components/Post/carousel';
 import PostDetail from '../Components/Post/postDetail';
 
-const MainPage = () => {
+const Main = () => {
   const [comp, setComp] = useState('detail');
   const [selectedIdx, setSelectedIdx] = useState(null);
   const [category, setCategory] = useState('');
@@ -34,4 +34,4 @@ const MainPage = () => {
   );
 };
 
-export default MainPage;
+export default Main;
