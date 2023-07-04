@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import CarouselItem from './carouselItem';
+import { GreenButton } from '../UI/button';
 
 const CarouselWrapper = styled.div`
   width: calc(90%);
@@ -62,7 +63,20 @@ const CarouselItemContainer = styled.div`
   }
 `;
 
-const Carousel = ({ handlePostDetail, tagList }) => {
+const GuideWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  div {
+    font-weight: 800;
+    font-size: 25px;
+    margin: 0px 0px 30px 0px;
+  }
+`;
+
+const Carousel = ({ handlePostDetail, tagList, handleComp }) => {
   const carouselRef = useRef(null);
   const [tagIdx, setTagIdx] = useState(0);
 
@@ -180,7 +194,7 @@ const Carousel = ({ handlePostDetail, tagList }) => {
         <CarouselWrapper>
           <TagWrapper>
             <p>{`# ${tagList[tagIdx]}`}</p>
-            <button>태그 추가</button>
+            <button onClick={() => handleComp('tag')}>태그 추가</button>
           </TagWrapper>
           <Slider ref={carouselRef} {...settings}>
             {tagList.map((_, idx) => (
@@ -201,11 +215,11 @@ const Carousel = ({ handlePostDetail, tagList }) => {
           </Slider>
         </CarouselWrapper>
       ) : (
-        <>
+        <GuideWrapper>
           <div>아직 태그를 설정하지 않았어요!</div>
           <div>지금 태그를 설정하러 가볼까요?</div>
-          <button>태그 설정하러 가기</button>
-        </>
+          <GreenButton>태그 설정하러 가기</GreenButton>
+        </GuideWrapper>
       )}
     </>
   );

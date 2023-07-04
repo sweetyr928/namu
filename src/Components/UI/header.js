@@ -1,7 +1,15 @@
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
-import { ForestRounded, ParkRounded, LogoutRounded } from '@mui/icons-material';
 import GoogleIcon from '@mui/icons-material/Google';
+import { ForestRounded, ParkRounded, LogoutRounded } from '@mui/icons-material';
+import { useEffect, useState } from 'react';
+import {
+  GoogleAuthProvider,
+  signInWithPopup,
+  signOut,
+  setPersistence,
+  browserSessionPersistence
+} from 'firebase/auth';
+import { auth } from '../../firebase';
 
 const HeaderContainer = styled.div`
   height: 50px;
@@ -45,11 +53,45 @@ const TwoLineText = styled.div`
 `;
 
 const Header = () => {
-  const [isLogin, setIsLogin] = useState(false);
+  const [userData, setUserData] = useState(null);
+  const [loginState, setLoginState] = useState(false);
 
   useEffect(() => {
-    setIsLogin(false);
-  }, [isLogin]);
+    const sessions = Object.keys(sessionStorage);
+    for (let i = 0; i < sessions.length; i += 1) {
+      if (sessions[i].includes('firebase:authUser:')) {
+        setLoginState(true);
+      }
+    }
+  }, [userData]);
+
+  const provider = new GoogleAuthProvider();
+
+  const handleGoogleLogin = () => {
+    setPersistence(auth, browserSessionPersistence)
+      .then(() => {
+        signInWithPopup(auth, provider)
+          .then((data) => {
+            setUserData(data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleGoogleLogout = () => {
+    signOut(auth)
+      .then(() => {
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <>
@@ -60,21 +102,21 @@ const Header = () => {
           </IconWrapper>
           <LogoDetail>나누고 나눔 받는 무한 지식 품앗이</LogoDetail>
         </ElementWrapper>
-        {isLogin ? (
+        {loginState ? (
           <ElementWrapper>
             <TwoLineText>
-              <div>나는야 고수 예린 님!</div>
+              <div>나는야 고수 {userData.user.displayName} 님!</div>
               <div>오늘도 좋은 하루 보내세요!</div>
             </TwoLineText>
             <IconWrapper>
               <ParkRounded sx={{ fontSize: 30 }} />
             </IconWrapper>
-            <LogoutRounded sx={{ fontSize: 30 }} />
+            <LogoutRounded sx={{ fontSize: 30 }} onClick={handleGoogleLogout} />
           </ElementWrapper>
         ) : (
           <ElementWrapper>
             <OneLineText>나무와 함께 하시겠어요?</OneLineText>
-            <GoogleIcon sx={{ fontSize: 30 }} />
+            <GoogleIcon sx={{ fontSize: 30 }} onClick={handleGoogleLogin} />
           </ElementWrapper>
         )}
       </HeaderContainer>

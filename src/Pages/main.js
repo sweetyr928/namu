@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import PostSection from '../Components/UI/postSection';
 import Carousel from '../Components/Post/carousel';
 import PostDetail from '../Components/Post/postDetail';
+import EditTag from '../Components/Tag/editTag';
 
 const Main = () => {
   const [comp, setComp] = useState('list');
@@ -24,9 +25,14 @@ const Main = () => {
     <>
       <PostSection>
         {comp === 'list' && (
-          <Carousel handlePostDetail={handlePostDetail} tagList={tagList} />
+          <Carousel
+            handlePostDetail={handlePostDetail}
+            tagList={tagList}
+            handleComp={handleComp}
+          />
         )}
         {comp === 'detail' && <PostDetail handleComp={handleComp} />}
+        {comp === 'tag' && <EditTag handleComp={handleComp} />}
       </PostSection>
     </>
   );
