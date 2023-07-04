@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import PostSection from '../Components/UI/postSection';
-import ChatSection from '../Components/UI/chatSection';
 import Carousel from '../Components/Post/carousel';
 import PostDetail from '../Components/Post/postDetail';
 
@@ -29,7 +28,6 @@ const Main = () => {
         )}
         {comp === 'detail' && <PostDetail handleComp={handleComp} />}
       </PostSection>
-      <ChatSection></ChatSection>
     </>
   );
 };

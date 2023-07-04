@@ -5,6 +5,7 @@ import SideBar from './Components/UI/Sidebar';
 import Main from './Pages/main';
 import Header from './Components/UI/header';
 import Search from './Pages/search';
+import ChatSection from './Components/UI/chatSection';
 
 const GlobalStyle = createGlobalStyle`
   html,
@@ -53,6 +54,7 @@ function App() {
             {/* <Route path="/post" element={<Post />} /> */}
             {/* <Route path="/mypage" element={<MyPage />} /> */}
           </Routes>
+          <ChatSection></ChatSection>
         </Router>
       </MainContainer>
     </AppContainer>
