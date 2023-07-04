@@ -27,7 +27,7 @@ const TagWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  margin: 30px 0px 30px 0px;
+  margin: 30px 0px 20px 0px;
 
   p {
     margin: 0px 0px 0px 10px;
@@ -51,7 +51,7 @@ const TagWrapper = styled.div`
 
 const CarouselItemContainer = styled.div`
   width: 100%;
-  height: 63vh;
+  height: 68vh;
   display: flex;
   justify-content: center;
   align-items: center;
