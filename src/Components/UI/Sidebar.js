@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import {
   Home,
   SearchRounded,
@@ -10,7 +11,9 @@ const SideBarContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 0px 40px 200px 20px;
+  position: fixed;
+  top: 30%;
+  left: 30px;
 `;
 
 const IconWrapper = styled.div`
@@ -41,30 +44,36 @@ const CustomIcon = styled(({ color, hoverColor, ...props }) => (
 
 const SideBar = () => (
   <SideBarContainer>
-    <IconWrapper>
-      <CustomIcon
-        component={Home}
-        color="#3F3F3F"
-        hoverColor="#c7d36f"
-        sx={{ fontSize: 40 }}
-      />
-    </IconWrapper>
-    <IconWrapper>
-      <CustomIcon
-        component={SearchRounded}
-        color="#3F3F3F"
-        hoverColor="#c7d36f"
-        sx={{ fontSize: 40 }}
-      />
-    </IconWrapper>
-    <IconWrapper>
-      <CustomIcon
-        component={ModeEditOutlineRounded}
-        color="#3F3F3F"
-        hoverColor="#c7d36f"
-        sx={{ fontSize: 40 }}
-      />
-    </IconWrapper>
+    <Link to="/">
+      <IconWrapper>
+        <CustomIcon
+          component={Home}
+          color="#3F3F3F"
+          hoverColor="#c7d36f"
+          sx={{ fontSize: 40 }}
+        />
+      </IconWrapper>
+    </Link>
+    <Link to="/search">
+      <IconWrapper>
+        <CustomIcon
+          component={SearchRounded}
+          color="#3F3F3F"
+          hoverColor="#c7d36f"
+          sx={{ fontSize: 40 }}
+        />
+      </IconWrapper>
+    </Link>
+    <Link to="/post">
+      <IconWrapper>
+        <CustomIcon
+          component={ModeEditOutlineRounded}
+          color="#3F3F3F"
+          hoverColor="#c7d36f"
+          sx={{ fontSize: 40 }}
+        />
+      </IconWrapper>
+    </Link>
   </SideBarContainer>
 );
 
