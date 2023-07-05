@@ -54,6 +54,7 @@ const TwoLineText = styled.div`
 `;
 
 const Header = () => {
+  const [name, setName] = useState('');
   const [userData, setUserData] = useState(null);
   const [loginState, setLoginState] = useState(false);
 
@@ -62,6 +63,7 @@ const Header = () => {
     for (let i = 0; i < sessions.length; i += 1) {
       if (sessions[i].includes('firebase:authUser:')) {
         setLoginState(true);
+        setName(JSON.parse(sessionStorage.getItem(sessions[i])).displayName);
       }
     }
   }, [userData]);
@@ -106,7 +108,7 @@ const Header = () => {
         {loginState ? (
           <ElementWrapper>
             <TwoLineText>
-              <div>나는야 고수 {userData.user.displayName} 님!</div>
+              <div>나는야 고수 {name} 님!</div>
               <div>오늘도 좋은 하루 보내세요!</div>
             </TwoLineText>
             <IconWrapper>
