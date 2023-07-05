@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const MyTagListWrapper = styled.div`
+const TagInputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -9,8 +9,8 @@ const MyTagListWrapper = styled.div`
 
   div:first-child {
     align-self: start;
-    font-weight: 800;
-    font-size: 20px;
+    font-weight: 600;
+    font-size: 18px;
     margin: 10px 0px 10px 5px;
   }
 `;
@@ -19,8 +19,8 @@ const TagsInput = styled.div`
   display: flex;
   align-items: flex-start;
   flex-wrap: wrap;
-  width: 98%;
   margin: 0 auto;
+  width: 98%;
   height: 33px;
   padding: 2px 9px 2px 2px;
   border: 3px solid #c7d36f;
@@ -85,9 +85,9 @@ const TagsInput = styled.div`
   }
 `;
 
-const MyTagList = ({ tagList = [], handleTagList }) => {
+const TagInput = ({ tagList = [], setTagList, explainText, inputWidth }) => {
   const removeTags = (idxToRemove) => {
-    handleTagList(tagList.filter((_, idx) => idx !== idxToRemove));
+    setTagList(tagList.filter((_, idx) => idx !== idxToRemove));
   };
 
   const addTags = (e) => {
@@ -95,14 +95,14 @@ const MyTagList = ({ tagList = [], handleTagList }) => {
     const filtered = tagList.filter((el) => el === newTag);
     if (newTag !== '' && filtered.length === 0 && e.key === 'Enter') {
       const updatedTagList = [...tagList, newTag];
-      handleTagList(updatedTagList);
+      setTagList(updatedTagList);
       e.target.value = '';
     }
   };
 
   return (
-    <MyTagListWrapper>
-      <div>나의 태그 목록</div>
+    <TagInputWrapper style={{ width: inputWidth ? `${inputWidth}%` : '90%' }}>
+      <div>{`${explainText}`}</div>
       <TagsInput>
         <ul id="tags">
           {tagList.map((tag, idx) => (
@@ -125,8 +125,8 @@ const MyTagList = ({ tagList = [], handleTagList }) => {
           placeholder={!tagList.length ? 'e.g. (피아노 아이폰 육아)' : ''}
         />
       </TagsInput>
-    </MyTagListWrapper>
+    </TagInputWrapper>
   );
 };
 
-export default MyTagList;
+export default TagInput;

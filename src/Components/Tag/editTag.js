@@ -3,7 +3,7 @@ import { useState } from 'react';
 import SearchInput from '../UI/searchInput';
 import SearchedTagResult from './tagList';
 import TagItem from './tagItem';
-import MyTagList from './myTagList';
+import TagInput from '../UI/tagInput';
 import { GreenButton } from '../UI/button';
 
 const EditTagContainer = styled.div`
@@ -68,11 +68,16 @@ const EditTag = ({ setComp }) => {
             category={el.category}
             postCount={el.postCount}
             tagList={tagList}
-            handleTagList={setTagList}
+            setTagList={setTagList}
           />
         ))}
       </SearchedTagResult>
-      <MyTagList tagList={tagList} handleTagList={setTagList} />
+      <TagInput
+        tagList={tagList}
+        setTagList={setTagList}
+        explainText={`나의 태그 목록`}
+        inputWidth={90}
+      />
       <ButtonWrapper>
         <GreenButton onClick={handleSave}>저장</GreenButton>
         <GreenButton onClick={handleGoBack}>취소</GreenButton>
