@@ -33,6 +33,7 @@ const ElementWrapper = styled.div`
 
 const IconWrapper = styled.div`
   margin: 0px 10px 0px 0px;
+  cursor: pointer;
 `;
 
 const LogoDetail = styled.div`
@@ -111,12 +112,19 @@ const Header = () => {
             <IconWrapper>
               <ParkRounded sx={{ fontSize: 30 }} />
             </IconWrapper>
-            <LogoutRounded sx={{ fontSize: 30 }} onClick={handleGoogleLogout} />
+            <IconWrapper>
+              <LogoutRounded
+                sx={{ fontSize: 30 }}
+                onClick={handleGoogleLogout}
+              />
+            </IconWrapper>
           </ElementWrapper>
         ) : (
           <ElementWrapper>
             <OneLineText>나무와 함께 하시겠어요?</OneLineText>
-            <GoogleIcon sx={{ fontSize: 30 }} onClick={handleGoogleLogin} />
+            <IconWrapper>
+              <GoogleIcon sx={{ fontSize: 30 }} onClick={handleGoogleLogin} />
+            </IconWrapper>
           </ElementWrapper>
         )}
       </HeaderContainer>
