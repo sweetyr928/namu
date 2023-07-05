@@ -41,7 +41,7 @@ const ResultItem = styled.div`
   }
 `;
 
-const SearchResultItem = ({ category, postCount, tagList, handleTagList }) => {
+const TagItem = ({ category, postCount, tagList, handleTagList }) => {
   const handleAddTag = () => {
     if (!tagList.includes(category)) handleTagList([...tagList, category]);
     else alert('이미 추가된 카테고리 입니다!');
@@ -58,4 +58,4 @@ const SearchResultItem = ({ category, postCount, tagList, handleTagList }) => {
   );
 };
 
-export default SearchResultItem;
+export default TagItem;

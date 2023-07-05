@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import SearchInput from '../UI/searchInput';
 import SearchResultList from '../UI/searchResultList';
-import SearchResultItem from './searchResultItem';
+import TagItem from './tagItem';
 import MyTagList from './myTagList';
 import { GreenButton } from '../UI/button';
 
@@ -63,7 +63,7 @@ const EditTag = ({ handleComp }) => {
       />
       <SearchResultList>
         {searchedTagList.map((el, idx) => (
-          <SearchResultItem
+          <TagItem
             key={idx}
             category={el.category}
             postCount={el.postCount}
