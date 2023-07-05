@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import DOMPurify from 'isomorphic-dompurify';
+// import DOMPurify from 'isomorphic-dompurify';
 import { GreenButton } from '../UI/button';
 import RequestModal from './requestModal';
 import 'react-quill/dist/quill.core.css';
