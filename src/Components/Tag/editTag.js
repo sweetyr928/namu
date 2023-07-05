@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import SearchInput from '../UI/searchInput';
-import SearchResultList from '../UI/searchResultList';
+import SearchedTagResult from './tagList';
 import TagItem from './tagItem';
 import MyTagList from './myTagList';
 import { GreenButton } from '../UI/button';
@@ -61,7 +61,7 @@ const EditTag = ({ handleComp }) => {
         placeholder={`추가하고픈 태그를 검색해주세요!`}
         handleInputText={setSearchInputText}
       />
-      <SearchResultList>
+      <SearchedTagResult>
         {searchedTagList.map((el, idx) => (
           <TagItem
             key={idx}
@@ -71,7 +71,7 @@ const EditTag = ({ handleComp }) => {
             handleTagList={setTagList}
           />
         ))}
-      </SearchResultList>
+      </SearchedTagResult>
       <MyTagList tagList={tagList} handleTagList={setTagList} />
       <ButtonWrapper>
         <GreenButton onClick={handleSave}>저장</GreenButton>
