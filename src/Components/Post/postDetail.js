@@ -85,11 +85,11 @@ const ModalBackground = styled.div`
   align-items: center;
 `;
 
-const PostDetail = ({ handleComp, category, idx }) => {
+const PostDetail = ({ setComp, category, idx }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleGoBack = () => {
-    handleComp('list');
+    setComp('list');
   };
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);

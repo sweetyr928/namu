@@ -27,7 +27,7 @@ const ButtonWrapper = styled.div`
   }
 `;
 
-const EditTag = ({ handleComp }) => {
+const EditTag = ({ setComp }) => {
   const tempSearchedList = [
     {
       category: '리액트',
@@ -48,11 +48,11 @@ const EditTag = ({ handleComp }) => {
   const [searchedTagList, setSearchedTagList] = useState(tempSearchedList);
 
   const handleSave = () => {
-    handleComp('list');
+    setComp('list');
   };
 
   const handleGoBack = () => {
-    handleComp('list');
+    setComp('list');
   };
 
   return (
