@@ -1,6 +1,9 @@
 import { useMemo, useRef, useState } from 'react';
 import 'react-quill/dist/quill.snow.css';
-import ReactQuill from 'react-quill';
+import ReactQuill, { Quill } from 'react-quill';
+import ImageResize from 'quill-image-resize';
+
+Quill.register('modules/ImageResize', ImageResize);
 
 const TextEditor = () => {
   const quillRef = useRef();
@@ -17,15 +20,18 @@ const TextEditor = () => {
           [{ color: [] }, { background: [] }],
           [{ align: [] }, 'link', 'image']
         ]
+      },
+      ImageResize: {
+        parchment: Quill.import('parchment')
       }
     }),
     []
   );
 
   return (
-    <div style={{ margin: '50px' }}>
+    <div style={{ width: '80%', height: '90%' }}>
       <ReactQuill
-        style={{ width: '600px', height: '600px' }}
+        style={{ width: '100%', height: '100%' }}
         placeholder="질문 내용을 입력해주세요."
         theme="snow"
         ref={quillRef}
