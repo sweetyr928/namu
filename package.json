@@ -9,6 +9,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "firebase": "^9.23.0",
+    "firebase-tools": "^12.4.2",
     "isomorphic-dompurify": "^1.7.0",
     "prop-types": "^15.8.1",
     "quill-image-resize": "^3.0.9",
