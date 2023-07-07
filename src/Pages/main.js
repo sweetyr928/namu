@@ -21,14 +21,10 @@ const Main = () => {
     }
   }, [state]);
 
-  const handlePostDetail = (newComp, newCategory, newIdx) => {
+  const setPostDetail = (newComp, newCategory, newIdx) => {
     setComp(newComp);
     setCategory(newCategory);
     setSelectedIdx(newIdx);
-  };
-
-  const handleComp = (newComp) => {
-    setComp(newComp);
   };
 
   return (
@@ -36,19 +32,15 @@ const Main = () => {
       <PostSection>
         {comp === 'list' && (
           <Carousel
-            handlePostDetail={handlePostDetail}
+            setPostDetail={setPostDetail}
             tagList={tagList}
-            handleComp={handleComp}
+            setComp={setComp}
           />
         )}
         {comp === 'detail' && (
-          <PostDetail
-            handleComp={handleComp}
-            category={category}
-            idx={selectedIdx}
-          />
+          <PostDetail setComp={setComp} category={category} idx={selectedIdx} />
         )}
-        {comp === 'tag' && <EditTag handleComp={handleComp} />}
+        {comp === 'tag' && <EditTag setComp={setComp} />}
       </PostSection>
     </>
   );

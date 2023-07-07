@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 import { useState } from 'react';
+// import DOMPurify from 'isomorphic-dompurify';
 import { GreenButton } from '../UI/button';
 import RequestModal from './requestModal';
+import 'react-quill/dist/quill.core.css';
 
 const ContentContainer = styled.div`
   display: flex;
@@ -85,11 +87,11 @@ const ModalBackground = styled.div`
   align-items: center;
 `;
 
-const PostDetail = ({ handleComp, category, idx }) => {
+const PostDetail = ({ setComp, category, idx }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleGoBack = () => {
-    handleComp('list');
+    setComp('list');
   };
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -112,6 +114,10 @@ const PostDetail = ({ handleComp, category, idx }) => {
         </ContentHeader>
         <Divider />
         <ContentDetail>
+          {/* <div className="view ql-editor" 
+      dangerouslySetInnerHTML={{
+        __html: DOMPurify.sanitize(content)
+      }}></div> */}
           현재 리액트를 사용하여 간단한 투두 리스트 앱을 만들고 있습니다.
           완료되지 않은 투두 리스트만 뽑아 보여주려고 하는데 filter 함수
           부분에서 막혔습니다. 저를 도와주세요... filter 함수의 기본 지식은

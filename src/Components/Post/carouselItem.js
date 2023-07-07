@@ -58,7 +58,7 @@ const CarouselItem = ({
   content,
   date,
   idx,
-  handlePostDetail
+  setPostDetail
 }) => {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -77,7 +77,7 @@ const CarouselItem = ({
       style={{
         backgroundColor: isHovered ? '#f8f8f8' : '#ffffff'
       }}
-      onClick={() => handlePostDetail('detail', category, idx)}
+      onClick={() => setPostDetail('detail', category, idx)}
     >
       <AnimatedCarouselItem>
         <Title

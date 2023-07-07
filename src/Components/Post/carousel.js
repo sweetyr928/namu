@@ -76,7 +76,7 @@ const GuideWrapper = styled.div`
   }
 `;
 
-const Carousel = ({ handlePostDetail, tagList, handleComp }) => {
+const Carousel = ({ setPostDetail, tagList, setComp }) => {
   const carouselRef = useRef(null);
   const [tagIdx, setTagIdx] = useState(0);
 
@@ -194,7 +194,7 @@ const Carousel = ({ handlePostDetail, tagList, handleComp }) => {
         <CarouselWrapper>
           <TagWrapper>
             <p>{`# ${tagList[tagIdx]}`}</p>
-            <button onClick={() => handleComp('tag')}>태그 추가</button>
+            <button onClick={() => setComp('tag')}>태그 추가</button>
           </TagWrapper>
           <Slider ref={carouselRef} {...settings}>
             {tagList.map((_, idx) => (
@@ -207,7 +207,7 @@ const Carousel = ({ handlePostDetail, tagList, handleComp }) => {
                     content={post.content}
                     date={post.date}
                     idx={i}
-                    handlePostDetail={handlePostDetail}
+                    setPostDetail={setPostDetail}
                   />
                 ))}
               </CarouselItemContainer>

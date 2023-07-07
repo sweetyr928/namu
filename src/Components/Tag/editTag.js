@@ -3,7 +3,7 @@ import { useState } from 'react';
 import SearchInput from '../UI/searchInput';
 import SearchedTagResult from './tagList';
 import TagItem from './tagItem';
-import MyTagList from './myTagList';
+import TagInput from '../UI/tagInput';
 import { GreenButton } from '../UI/button';
 
 const EditTagContainer = styled.div`
@@ -27,7 +27,7 @@ const ButtonWrapper = styled.div`
   }
 `;
 
-const EditTag = ({ handleComp }) => {
+const EditTag = ({ setComp }) => {
   const tempSearchedList = [
     {
       category: '리액트',
@@ -48,11 +48,11 @@ const EditTag = ({ handleComp }) => {
   const [searchedTagList, setSearchedTagList] = useState(tempSearchedList);
 
   const handleSave = () => {
-    handleComp('list');
+    setComp('list');
   };
 
   const handleGoBack = () => {
-    handleComp('list');
+    setComp('list');
   };
 
   return (
@@ -68,11 +68,16 @@ const EditTag = ({ handleComp }) => {
             category={el.category}
             postCount={el.postCount}
             tagList={tagList}
-            handleTagList={setTagList}
+            setTagList={setTagList}
           />
         ))}
       </SearchedTagResult>
-      <MyTagList tagList={tagList} handleTagList={setTagList} />
+      <TagInput
+        tagList={tagList}
+        setTagList={setTagList}
+        explainText={`나의 태그 목록`}
+        inputWidth={90}
+      />
       <ButtonWrapper>
         <GreenButton onClick={handleSave}>저장</GreenButton>
         <GreenButton onClick={handleGoBack}>취소</GreenButton>
