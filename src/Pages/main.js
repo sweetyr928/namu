@@ -10,7 +10,7 @@ const Main = () => {
   const [comp, setComp] = useState('list');
   const [selectedIdx, setSelectedIdx] = useState(null);
   const [category, setCategory] = useState('');
-  const [tagList, setTagList] = useState(['React.js', 'Vue.js']);
+  const [tagList, setTagList] = useState(['리액트', '뷰']);
   const { state } = useLocation();
 
   useEffect(() => {

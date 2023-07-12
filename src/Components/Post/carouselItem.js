@@ -80,11 +80,12 @@ const CarouselItem = ({
   category,
   title,
   content,
-  date,
+  createdAt,
   idx,
   setPostDetail
 }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const formattedDate = new window.Date(createdAt.seconds * 1000);
 
   const handleMouseEnter = () => {
     setIsHovered(true);
@@ -119,7 +120,7 @@ const CarouselItem = ({
           {content}
         </Content>
       </AnimatedCarouselItem>
-      <Date>{date}</Date>
+      <Date>{formattedDate.toLocaleString()}</Date>
     </ItemWrapper>
   );
 };
