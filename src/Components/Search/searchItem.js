@@ -21,23 +21,47 @@ const ItemWrapper = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 18px;
+  font-size: 14px;
   font-weight: bold;
   transition: color 0.3s ease;
   margin: 10px 0px 0px 0px;
+
+  @media (min-width: 1024px) {
+    font-size: 16px;
+  }
+
+  @media (min-width: 1440px) {
+    font-size: 18px;
+  }
 `;
 
 const Content = styled.div`
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 600;
   transition: color 0.3s ease;
   margin: 5px 0px 0px 0px;
+
+  @media (min-width: 1024px) {
+    font-size: 14px;
+  }
+
+  @media (min-width: 1440px) {
+    font-size: 16px;
+  }
 `;
 
 const Date = styled.span`
-  font-size: 14px;
+  font-size: 10px;
   font-weight: 300;
   align-self: flex-end;
+
+  @media (min-width: 1024px) {
+    font-size: 12px;
+  }
+
+  @media (min-width: 1440px) {
+    font-size: 14px;
+  }
 `;
 
 const fadeIn = keyframes`

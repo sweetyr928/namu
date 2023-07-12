@@ -9,7 +9,7 @@ import { GreenButton } from '../Components/UI/button';
 const TitleInput = styled.input`
   border: 2px solid #c7d36f;
   border-radius: 10px;
-  margin: 20px auto 0px auto;
+  margin: 25px auto 10px auto;
   padding: 0px 0px 0px 10px;
   font-size: 16px;
   font-weight: 500;

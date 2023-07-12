@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { GreenButton } from '../UI/button';
 
 const ResultItem = styled.div`
   display: flex;
@@ -8,11 +9,20 @@ const ResultItem = styled.div`
   padding: 20px 20px 20px 20px;
   width: calc(100%);
   border-bottom: 2px solid #c7d36f;
+  cursor: pointer;
 
   div:first-child {
-    font-weight: 800;
-    font-size: 19px;
+    font-weight: 700;
+    font-size: 14px;
     margin: 0px 0px 0px 15px;
+
+    @media (min-width: 1024px) {
+      font-size: 16px;
+    }
+
+    @media (min-width: 1440px) {
+      font-size: 18px;
+    }
   }
 
   div:last-child {
@@ -25,19 +35,6 @@ const ResultItem = styled.div`
       font-size: 15px;
       font-weight: 700;
     }
-
-    button {
-      background-color: transparent;
-      border: none;
-      margin: 0px 15px 0px 0px;
-      font-size: medium;
-      font-weight: 600;
-      cursor: pointer;
-
-      &:hover {
-        color: #c7d36f;
-      }
-    }
   }
 `;
 
@@ -48,11 +45,11 @@ const TagItem = ({ category, postCount, tagList, setTagList }) => {
   };
 
   return (
-    <ResultItem>
+    <ResultItem onClick={handleAddTag}>
       <div>{`# ${category}`}</div>
       <div>
         <div>{`게시글 수: ${postCount} `}</div>
-        <button onClick={handleAddTag}>추가하기</button>
+        <GreenButton>추가</GreenButton>
       </div>
     </ResultItem>
   );

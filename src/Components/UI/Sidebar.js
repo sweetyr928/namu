@@ -50,7 +50,7 @@ const SideBar = () => (
           component={Home}
           color="#3F3F3F"
           hoverColor="#c7d36f"
-          sx={{ fontSize: 40 }}
+          sx={{ fontSize: 35 }}
         />
       </IconWrapper>
     </Link>
@@ -60,7 +60,7 @@ const SideBar = () => (
           component={SearchRounded}
           color="#3F3F3F"
           hoverColor="#c7d36f"
-          sx={{ fontSize: 40 }}
+          sx={{ fontSize: 35 }}
         />
       </IconWrapper>
     </Link>
@@ -70,7 +70,7 @@ const SideBar = () => (
           component={ModeEditOutlineRounded}
           color="#3F3F3F"
           hoverColor="#c7d36f"
-          sx={{ fontSize: 40 }}
+          sx={{ fontSize: 35 }}
         />
       </IconWrapper>
     </Link>

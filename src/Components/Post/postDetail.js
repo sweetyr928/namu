@@ -18,7 +18,7 @@ const ContentHeader = styled.div`
   flex-direction: column;
   justify-content: space-around;
   align-items: flex-start;
-  padding: 10px 0px 0px 0px;
+  padding: 10px 0px 0px 10px;
   flex-shrink: 0;
 
   div {
