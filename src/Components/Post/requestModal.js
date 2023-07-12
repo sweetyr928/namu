@@ -92,14 +92,15 @@ const TextWrapper = styled.div`
 `;
 
 const ModalTextArea = styled.textarea`
-  width: 95%;
+  width: 93%;
   height: 150px;
   resize: none;
   margin: 10px auto;
-  padding: 5px 5px 5px 5px;
+  padding: 10px 10px 10px 10px;
   border-radius: 10px;
   border: 2px solid #c7d36f;
   font-size: 15px;
+  outline: none;
 `;
 
 const ButtonWrapper = styled.div`
