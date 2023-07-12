@@ -23,7 +23,7 @@ const TagsInput = styled.div`
   width: 98%;
   height: 33px;
   padding: 2px 9px 2px 2px;
-  border: 3px solid #c7d36f;
+  border: 2px solid #c7d36f;
   border-radius: 20px;
 
   > ul {
@@ -40,7 +40,7 @@ const TagsInput = styled.div`
       justify-content: center;
       color: #ffffff;
       padding: 0px 4px 0px 4px;
-      font-size: 15px;
+      font-size: 13px;
       list-style: none;
       border-radius: 20px;
       margin: 2px 3px 4px 2px;

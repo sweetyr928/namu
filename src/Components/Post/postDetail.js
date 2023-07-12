@@ -25,13 +25,29 @@ const ContentHeader = styled.div`
     font-size: 18px;
     font-weight: bold;
     margin: 10px 0px 5px 0px;
+
+    @media (min-width: 1024px) {
+      font-size: 20px;
+    }
+
+    @media (min-width: 1440px) {
+      font-size: 22px;
+    }
   }
 
   span {
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 300;
     align-self: flex-end;
     margin: 0px 0px 5px 0px;
+
+    @media (min-width: 1024px) {
+      font-size: 14px;
+    }
+
+    @media (min-width: 1440px) {
+      font-size: 16px;
+    }
   }
 `;
 
@@ -54,6 +70,20 @@ const ContentDetail = styled.div`
 
   &::-webkit-scrollbar-track {
     background-color: transparent;
+  }
+
+  p {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
+
+    @media (min-width: 1024px) {
+      font-size: 16px;
+    }
+
+    @media (min-width: 1440px) {
+      font-size: 18px;
+    }
   }
 `;
 

@@ -13,7 +13,7 @@ const SideBarContainer = styled.div`
   align-items: center;
   position: fixed;
   top: 30%;
-  left: 30px;
+  left: 1.5%;
 `;
 
 const IconWrapper = styled.div`

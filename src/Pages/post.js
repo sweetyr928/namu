@@ -7,14 +7,14 @@ import TagInput from '../Components/UI/tagInput';
 import { GreenButton } from '../Components/UI/button';
 
 const TitleInput = styled.input`
-  border: 3px solid #c7d36f;
-  border-radius: 20px;
+  border: 2px solid #c7d36f;
+  border-radius: 10px;
   margin: 20px auto 0px auto;
-  padding: 0px 0px 0px 20px;
-  font-size: 19px;
-  font-weight: 700;
-  width: 78%;
-  height: 35px;
+  padding: 0px 0px 0px 10px;
+  font-size: 16px;
+  font-weight: 500;
+  width: 79%;
+  height: 33px;
   outline: none;
 `;
 

@@ -1,7 +1,7 @@
 import styled, { createGlobalStyle } from 'styled-components';
 import { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import SideBar from './Components/UI/Sidebar';
+import SideBar from './Components/UI/sidebar';
 import Main from './Pages/main';
 import Header from './Components/UI/header';
 import Search from './Pages/search';
