@@ -39,20 +39,21 @@ const ContentHeader = styled.div`
     font-size: 12px;
     font-weight: 300;
     align-self: flex-end;
-    margin: 0px 0px 5px 0px;
 
     @media (min-width: 1024px) {
       font-size: 14px;
+      margin: 0px 0px 10px 0px;
     }
 
     @media (min-width: 1440px) {
       font-size: 16px;
+      margin: 0px 15px 10px 0px;
     }
   }
 `;
 
 const ContentDetail = styled.div`
-  margin: 10px 10px 10px 10px;
+  margin: 10px auto;
   height: 72%;
   overflow-y: scroll;
   letter-spacing: 1px;
