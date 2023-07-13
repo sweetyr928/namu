@@ -1,5 +1,5 @@
 import styled, { keyframes } from 'styled-components';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const ItemWrapper = styled.div`
@@ -11,7 +11,7 @@ const ItemWrapper = styled.div`
   padding: 10px 10px 10px 10px;
   border-bottom: 2px solid #c7d36f;
   width: 98%;
-  height: calc(20%);
+  height: calc(13%);
   cursor: pointer;
   transition: all 0.3s ease;
 
@@ -77,26 +77,22 @@ const AnimatedCarouselItem = styled.div`
   animation: ${fadeIn} 0.5s ease;
 `;
 
-const SearchItem = ({ category, title, content, date, idx }) => {
+const SearchItem = ({ title, content, createdAt, id }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const formattedDate = new window.Date(createdAt.seconds * 1000);
   const navigate = useNavigate();
 
   const handleNavigate = () => {
-    navigate('/', { state: { comp: 'detail', category, idx } });
+    navigate('/', { state: { comp: 'detail', id } });
   };
-
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-  };
+  const handleMouse = useCallback(() => {
+    setIsHovered(!isHovered);
+  }, [isHovered]);
 
   return (
     <ItemWrapper
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      onMouseEnter={handleMouse}
+      onMouseLeave={handleMouse}
       style={{
         backgroundColor: isHovered ? '#f8f8f8' : '#ffffff'
       }}
@@ -118,7 +114,7 @@ const SearchItem = ({ category, title, content, date, idx }) => {
           {content}
         </Content>
       </AnimatedCarouselItem>
-      <Date>{date}</Date>
+      <Date>{formattedDate.toLocaleString()}</Date>
     </ItemWrapper>
   );
 };
