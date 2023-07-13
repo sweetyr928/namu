@@ -5,9 +5,10 @@ const ResultItem = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 10px 10px 10px 10px;
+  margin: 10px 10px 0px 10px;
   padding: 20px 20px 20px 20px;
   width: calc(100%);
+  height: calc(7%);
   border-bottom: 2px solid #c7d36f;
   cursor: pointer;
 
