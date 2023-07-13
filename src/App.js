@@ -1,12 +1,10 @@
 import styled, { createGlobalStyle } from 'styled-components';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import SideBar from './Components/UI/sidebar';
-import Main from './Pages/main';
+import SideBar from './Components/UI/Sidebar';
 import Header from './Components/UI/header';
-import Search from './Pages/search';
-import ChatSection from './Components/UI/chatSection';
-import CreatePost from './Pages/post';
+import MyPage from './Pages/mypage';
+import MainHome from './MainHome';
 
 const GlobalStyle = createGlobalStyle`
   html,
@@ -38,6 +36,20 @@ const MainContainer = styled.div`
 `;
 
 function App() {
+  const [name, setName] = useState('');
+  const [userData, setUserData] = useState(null);
+  const [isLogin, setIsLogin] = useState(false);
+
+  useEffect(() => {
+    const sessions = Object.keys(sessionStorage);
+    for (let i = 0; i < sessions.length; i += 1) {
+      if (sessions[i].includes('firebase:authUser:')) {
+        setIsLogin(true);
+        setName(JSON.parse(sessionStorage.getItem(sessions[i])).displayName);
+      }
+    }
+  }, [userData]);
+
   useEffect(() => {
     document.body.style.overflow = 'hidden';
   }, []);
@@ -45,17 +57,14 @@ function App() {
   return (
     <AppContainer>
       <GlobalStyle />
-      <Header />
+      <Header isLogin={isLogin} setUserData={setUserData} name={name} />
       <MainContainer>
         <Router>
           <SideBar />
           <Routes>
-            <Route path="/" element={<Main />} />
-            <Route path="/search" element={<Search />} />
-            <Route path="/newPost" element={<CreatePost />} />
-            {/* <Route path="/mypage" element={<MyPage />} /> */}
+            <Route path="/*" element={<MainHome />} />
+            <Route path="/mypage" element={<MyPage name={name} />} />
           </Routes>
-          <ChatSection></ChatSection>
         </Router>
       </MainContainer>
     </AppContainer>
