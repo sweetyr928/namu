@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import PostSection from '../Components/UI/postSection';
 import Carousel from '../Components/Post/carousel';
@@ -17,7 +17,7 @@ const Main = () => {
       setComp(state.comp);
       setSelectedId(state.id);
     }
-  }, [state, comp, selectedId]);
+  }, [state]);
 
   return (
     <>
@@ -30,7 +30,11 @@ const Main = () => {
           />
         )}
         {comp === 'detail' && (
-          <PostDetail setComp={setComp} selectedId={selectedId} />
+          <PostDetail
+            setComp={setComp}
+            selectedId={selectedId}
+            setSelectedId={setSelectedId}
+          />
         )}
         {comp === 'tag' && <EditTag setComp={setComp} />}
       </PostSection>

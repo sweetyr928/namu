@@ -43,13 +43,14 @@ const Search = () => {
       });
 
       setSearchResult(results);
+      setSearchInputText('');
     } catch (error) {
       console.error('Error searching posts: ', error);
     }
   };
 
   useEffect(() => {
-    searchPosts(searchInputText);
+    if (searchInputText.length) searchPosts(searchInputText);
   }, [searchInputText]);
 
   return (

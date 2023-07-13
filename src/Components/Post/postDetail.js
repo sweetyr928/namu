@@ -140,7 +140,7 @@ const fetchPostData = async (id) => {
   }
 };
 
-const PostDetail = ({ setComp, selectedId }) => {
+const PostDetail = ({ setComp, selectedId, setSelectedId }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [postData, setPostData] = useState({});
   const formattedDate = postData?.createdAt
@@ -158,6 +158,7 @@ const PostDetail = ({ setComp, selectedId }) => {
 
   const handleGoBack = () => {
     setComp('list');
+    setSelectedId('');
   };
 
   const toggleModal = useCallback(() => {
