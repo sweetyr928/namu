@@ -25,7 +25,6 @@ const Search = () => {
   const [searchResult, setSearchResult] = useState([]);
 
   const searchPosts = async (text) => {
-    console.log(text);
     const postsRef = collection(db, 'posts');
     const q = query(postsRef, orderBy('createdAt', 'desc'));
 
@@ -39,7 +38,7 @@ const Search = () => {
           post.title.indexOf(text) !== -1 ||
           post.content.indexOf(text) !== -1
         ) {
-          results.push(post);
+          results.push({ id: doc.id, ...post });
         }
       });
 

@@ -15,9 +15,9 @@ const Main = () => {
   useEffect(() => {
     if (state) {
       setComp(state.comp);
-      setSelectedId(state.idx);
+      setSelectedId(state.id);
     }
-  }, [state]);
+  }, [state, comp, selectedId]);
 
   return (
     <>

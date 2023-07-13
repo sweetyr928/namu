@@ -85,6 +85,7 @@ const SearchItem = ({ title, content, createdAt, id }) => {
   const handleNavigate = () => {
     navigate('/', { state: { comp: 'detail', id } });
   };
+
   const handleMouse = useCallback(() => {
     setIsHovered(!isHovered);
   }, [isHovered]);

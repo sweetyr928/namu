@@ -156,9 +156,9 @@ const PostDetail = ({ setComp, selectedId }) => {
     fetchData();
   }, [selectedId]);
 
-  const handleGoBack = useCallback(() => {
+  const handleGoBack = () => {
     setComp('list');
-  }, []);
+  };
 
   const toggleModal = useCallback(() => {
     setIsModalOpen(!isModalOpen);
