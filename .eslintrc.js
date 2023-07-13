@@ -40,7 +40,8 @@ module.exports = {
     'no-restricted-syntax': 'off',
     'no-await-in-loop': 'off',
     'no-shadow': 'off',
-    'consistent-return': 'off'
+    'consistent-return': 'off',
+    'no-else-return': 'off'
   },
   parser: '@babel/eslint-parser',
   settings: {

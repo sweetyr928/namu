@@ -80,9 +80,9 @@ const CarouselItem = ({
   title,
   content,
   createdAt,
-  idx,
+  id,
   setComp,
-  setSelectedIdx
+  setSelectedId
 }) => {
   const [isHovered, setIsHovered] = useState(false);
   const formattedDate = new window.Date(createdAt.seconds * 1000);
@@ -93,8 +93,8 @@ const CarouselItem = ({
 
   const handleClick = useCallback(() => {
     setComp('detail');
-    setSelectedIdx(idx);
-  }, []);
+    setSelectedId(id);
+  }, [id]);
 
   return (
     <ItemWrapper

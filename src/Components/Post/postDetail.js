@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useState, useCallback, useEffect } from 'react';
-// import DOMPurify from 'isomorphic-dompurify';
+import DOMPurify from 'isomorphic-dompurify';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { GreenButton } from '../UI/button';
@@ -10,7 +10,9 @@ import 'react-quill/dist/quill.core.css';
 const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 40px 30px 30px 30px;
+  justify-content: space-between;
+  margin: 20px 20px 20px 20px;
+  width: 95%;
   height: 100%;
 `;
 
@@ -44,22 +46,38 @@ const ContentHeader = styled.div`
 
     @media (min-width: 1024px) {
       font-size: 14px;
-      margin: 0px 0px 10px 0px;
+      margin: 0px 0px 0px 0px;
     }
 
     @media (min-width: 1440px) {
       font-size: 16px;
-      margin: 0px 15px 10px 0px;
+      margin: 0px 15px 0px 0px;
     }
   }
 `;
 
 const ContentDetail = styled.div`
-  margin: 10px auto;
+  margin: 10px 10px 10px 10px;
   height: 72%;
   overflow-y: scroll;
-  letter-spacing: 1px;
   scroll-behavior: smooth;
+
+  div {
+    width: 100%;
+    letter-spacing: 1px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: left;
+
+    @media (min-width: 1024px) {
+      font-size: 16px;
+    }
+
+    @media (min-width: 1440px) {
+      font-size: 18px;
+    }
+  }
 
   &::-webkit-scrollbar {
     width: 10px;
@@ -73,20 +91,6 @@ const ContentDetail = styled.div`
 
   &::-webkit-scrollbar-track {
     background-color: transparent;
-  }
-
-  p {
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 1.5;
-
-    @media (min-width: 1024px) {
-      font-size: 16px;
-    }
-
-    @media (min-width: 1440px) {
-      font-size: 18px;
-    }
   }
 `;
 
@@ -120,31 +124,37 @@ const ModalBackground = styled.div`
   align-items: center;
 `;
 
-const fetchPostData = async (idx) => {
+const fetchPostData = async (id) => {
   try {
-    const docRef = doc(db, 'posts', idx);
+    const docRef = doc(db, 'posts', id);
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      return docSnap.data();
+      const postData = docSnap.data();
+      return postData;
+    } else {
+      console.log('No such document!');
     }
   } catch (error) {
     console.error('Error fetching post data: ', error);
   }
 };
 
-const PostDetail = ({ setComp, selectedIdx }) => {
+const PostDetail = ({ setComp, selectedId }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [postData, setPostData] = useState({});
+  const formattedDate = postData?.createdAt
+    ? new window.Date(postData.createdAt.seconds * 1000)
+    : null;
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await fetchPostData(selectedIdx);
+      const data = await fetchPostData(selectedId);
       setPostData(data);
     };
 
     fetchData();
-  }, [selectedIdx]);
+  }, [selectedId]);
 
   const handleGoBack = useCallback(() => {
     setComp('list');
@@ -164,66 +174,16 @@ const PostDetail = ({ setComp, selectedIdx }) => {
       ) : null}
       <ContentContainer>
         <ContentHeader>
-          <div>
-            filter 함수가 제대로 돌아가지 않습니다 ㅠㅠ 어떻게 해야 하나요?
-          </div>
-          <span>2023년 6월 26일 오후 2시 33분</span>
+          <div>{postData.title}</div>
+          <span>{formattedDate && formattedDate.toLocaleString()}</span>
         </ContentHeader>
         <Divider />
         <ContentDetail>
-          {/* <div className="view ql-editor" 
-      dangerouslySetInnerHTML={{
-        __html: DOMPurify.sanitize(content)
-      }}></div> */}
-          현재 리액트를 사용하여 간단한 투두 리스트 앱을 만들고 있습니다.
-          완료되지 않은 투두 리스트만 뽑아 보여주려고 하는데 filter 함수
-          부분에서 막혔습니다. 저를 도와주세요... filter 함수의 기본 지식은
-          있는데 어떤 조건이 좋을지가 고민입니다 ㅠㅠ 코드는 너무 길어서... 채팅
-          주시면 캡처 화면 드릴게요... 현재 리액트를 사용하여 간단한 투두 리스트
-          앱을 만들고 있습니다. 완료되지 않은 투두 리스트만 뽑아 보여주려고
-          하는데 filter 함수 부분에서 막혔습니다. 저를 도와주세요... filter
-          함수의 기본 지식은 있는데 어떤 조건이 좋을지가 고민입니다 ㅠㅠ 코드는
-          너무 길어서... 채팅 주시면 캡처 화면 드릴게요... 현재 리액트를
-          사용하여 간단한 투두 리스트 앱을 만들고 있습니다. 완료되지 않은 투두
-          리스트만 뽑아 보여주려고 하는데 filter 함수 부분에서 막혔습니다. 저를
-          도와주세요... filter 함수의 기본 지식은 있는데 어떤 조건이 좋을지가
-          고민입니다 ㅠㅠ 코드는 너무 길어서... 채팅 주시면 캡처 화면
-          드릴게요... 현재 리액트를 사용하여 간단한 투두 리스트 앱을 만들고
-          있습니다. 완료되지 않은 투두 리스트만 뽑아 보여주려고 하는데 filter
-          함수 부분에서 막혔습니다. 저를 도와주세요... filter 함수의 기본 지식은
-          있는데 어떤 조건이 좋을지가 고민입니다 ㅠㅠ 코드는 너무 길어서... 채팅
-          주시면 캡처 화면 드릴게요... 현재 리액트를 사용하여 간단한 투두 리스트
-          앱을 만들고 있습니다. 완료되지 않은 투두 리스트만 뽑아 보여주려고
-          하는데 filter 함수 부분에서 막혔습니다. 저를 도와주세요... filter
-          함수의 기본 지식은 있는데 어떤 조건이 좋을지가 고민입니다 ㅠㅠ 코드는
-          너무 길어서... 채팅 주시면 캡처 화면 드릴게요... 현재 리액트를
-          사용하여 간단한 투두 리스트 앱을 만들고 있습니다. 완료되지 않은 투두
-          리스트만 뽑아 보여주려고 하는데 filter 함수 부분에서 막혔습니다. 저를
-          도와주세요... filter 함수의 기본 지식은 있는데 어떤 조건이 좋을지가
-          고민입니다 ㅠㅠ 코드는 너무 길어서... 채팅 주시면 캡처 화면
-          드릴게요... 현재 리액트를 사용하여 간단한 투두 리스트 앱을 만들고
-          있습니다. 완료되지 않은 투두 리스트만 뽑아 보여주려고 하는데 filter
-          함수 부분에서 막혔습니다. 저를 도와주세요... filter 함수의 기본 지식은
-          있는데 어떤 조건이 좋을지가 고민입니다 ㅠㅠ 코드는 너무 길어서... 채팅
-          주시면 캡처 화면 드릴게요... 현재 리액트를 사용하여 간단한 투두 리스트
-          앱을 만들고 있습니다. 완료되지 않은 투두 리스트만 뽑아 보여주려고
-          하는데 filter 함수 부분에서 막혔습니다. 저를 도와주세요... filter
-          함수의 기본 지식은 있는데 어떤 조건이 좋을지가 고민입니다 ㅠㅠ 코드는
-          너무 길어서... 채팅 주시면 캡처 화면 드릴게요... 현재 리액트를
-          사용하여 간단한 투두 리스트 앱을 만들고 있습니다. 완료되지 않은 투두
-          리스트만 뽑아 보여주려고 하는데 filter 함수 부분에서 막혔습니다. 저를
-          도와주세요... filter 함수의 기본 지식은 있는데 어떤 조건이 좋을지가
-          고민입니다 ㅠㅠ 코드는 너무 길어서... 채팅 주시면 캡처 화면
-          드릴게요... 현재 리액트를 사용하여 간단한 투두 리스트 앱을 만들고
-          있습니다. 완료되지 않은 투두 리스트만 뽑아 보여주려고 하는데 filter
-          함수 부분에서 막혔습니다. 저를 도와주세요... filter 함수의 기본 지식은
-          있는데 어떤 조건이 좋을지가 고민입니다 ㅠㅠ 코드는 너무 길어서... 채팅
-          주시면 캡처 화면 드릴게요... 현재 리액트를 사용하여 간단한 투두 리스트
-          앱을 만들고 있습니다. 완료되지 않은 투두 리스트만 뽑아 보여주려고
-          하는데 filter 함수 부분에서 막혔습니다. 저를 도와주세요... filter
-          함수의 기본 지식은 있는데 어떤 조건이 좋을지가 고민입니다 ㅠㅠ 코드는
-          너무 길어서... 채팅 주시면 캡처 화면 드릴게요... 현재 리액트를
-          사용하여 간단한 투두 리스트 앱을 만들고
+          <div
+            dangerouslySetInnerHTML={{
+              __html: DOMPurify.sanitize(postData.content)
+            }}
+          ></div>
         </ContentDetail>
         <Divider />
         <ContentFooter>
