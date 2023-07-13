@@ -162,7 +162,7 @@ const PostDetail = ({ setComp, selectedId }) => {
 
   const toggleModal = useCallback(() => {
     setIsModalOpen(!isModalOpen);
-  }, []);
+  }, [isModalOpen]);
 
   return (
     <>
