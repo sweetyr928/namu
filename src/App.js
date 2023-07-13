@@ -52,7 +52,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Main />} />
             <Route path="/search" element={<Search />} />
-            <Route path="/post" element={<CreatePost />} />
+            <Route path="/newPost" element={<CreatePost />} />
             {/* <Route path="/mypage" element={<MyPage />} /> */}
           </Routes>
           <ChatSection></ChatSection>

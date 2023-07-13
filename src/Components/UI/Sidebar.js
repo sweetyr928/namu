@@ -64,7 +64,7 @@ const SideBar = () => (
         />
       </IconWrapper>
     </Link>
-    <Link to="/post">
+    <Link to="/newPost">
       <IconWrapper>
         <CustomIcon
           component={ModeEditOutlineRounded}
