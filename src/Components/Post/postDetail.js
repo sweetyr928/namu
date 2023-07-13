@@ -1,6 +1,8 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 // import DOMPurify from 'isomorphic-dompurify';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '../../firebase';
 import { GreenButton } from '../UI/button';
 import RequestModal from './requestModal';
 import 'react-quill/dist/quill.core.css';
@@ -118,15 +120,39 @@ const ModalBackground = styled.div`
   align-items: center;
 `;
 
-const PostDetail = ({ setComp, category, idx }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+const fetchPostData = async (idx) => {
+  try {
+    const docRef = doc(db, 'posts', idx);
+    const docSnap = await getDoc(docRef);
 
-  const handleGoBack = () => {
+    if (docSnap.exists()) {
+      return docSnap.data();
+    }
+  } catch (error) {
+    console.error('Error fetching post data: ', error);
+  }
+};
+
+const PostDetail = ({ setComp, selectedIdx }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [postData, setPostData] = useState({});
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await fetchPostData(selectedIdx);
+      setPostData(data);
+    };
+
+    fetchData();
+  }, [selectedIdx]);
+
+  const handleGoBack = useCallback(() => {
     setComp('list');
-  };
-  const toggleModal = () => {
+  }, []);
+
+  const toggleModal = useCallback(() => {
     setIsModalOpen(!isModalOpen);
-  };
+  }, []);
 
   return (
     <>

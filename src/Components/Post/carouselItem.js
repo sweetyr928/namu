@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import styled, { keyframes } from 'styled-components';
 
 const ItemWrapper = styled.div`
@@ -77,32 +77,33 @@ const AnimatedCarouselItem = styled.div`
 `;
 
 const CarouselItem = ({
-  category,
   title,
   content,
   createdAt,
   idx,
-  setPostDetail
+  setComp,
+  setSelectedIdx
 }) => {
   const [isHovered, setIsHovered] = useState(false);
   const formattedDate = new window.Date(createdAt.seconds * 1000);
 
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-  };
+  const handleMouse = useCallback(() => {
+    setIsHovered(!isHovered);
+  }, [isHovered]);
 
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-  };
+  const handleClick = useCallback(() => {
+    setComp('detail');
+    setSelectedIdx(idx);
+  }, []);
 
   return (
     <ItemWrapper
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      onMouseEnter={handleMouse}
+      onMouseLeave={handleMouse}
       style={{
         backgroundColor: isHovered ? '#f8f8f8' : '#ffffff'
       }}
-      onClick={() => setPostDetail('detail', category, idx)}
+      onClick={handleClick}
     >
       <AnimatedCarouselItem>
         <Title

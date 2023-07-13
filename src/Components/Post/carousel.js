@@ -86,7 +86,7 @@ const GuideWrapper = styled.div`
   }
 `;
 
-const Carousel = ({ setPostDetail, tagList, setComp }) => {
+const Carousel = ({ setComp, tagList, setSelectedIdx }) => {
   const carouselRef = useRef(null);
   const [tagIdx, setTagIdx] = useState(0);
   const [carouselData, setCarouselData] = useState({});
@@ -174,7 +174,8 @@ const Carousel = ({ setPostDetail, tagList, setComp }) => {
                       content={post.content}
                       createdAt={post.createdAt}
                       idx={i}
-                      setPostDetail={setPostDetail}
+                      setComp={setComp}
+                      setSelectedIdx={setSelectedIdx}
                     />
                   ))}
               </CarouselItemContainer>

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import PostSection from '../Components/UI/postSection';
 import Carousel from '../Components/Post/carousel';
@@ -21,24 +21,27 @@ const Main = () => {
     }
   }, [state]);
 
-  const setPostDetail = (newComp, newCategory, newIdx) => {
-    setComp(newComp);
-    setCategory(newCategory);
-    setSelectedIdx(newIdx);
-  };
+  const setPostDetail = useCallback(
+    (newComp, newCategory, newIdx) => {
+      setComp(newComp);
+      setCategory(newCategory);
+      setSelectedIdx(newIdx);
+    },
+    [comp, category, selectedIdx]
+  );
 
   return (
     <>
       <PostSection>
         {comp === 'list' && (
           <Carousel
-            setPostDetail={setPostDetail}
-            tagList={tagList}
             setComp={setComp}
+            setSelectedIdx={setSelectedIdx}
+            tagList={tagList}
           />
         )}
         {comp === 'detail' && (
-          <PostDetail setComp={setComp} category={category} idx={selectedIdx} />
+          <PostDetail setComp={setComp} selectedIdx={selectedIdx} />
         )}
         {comp === 'tag' && <EditTag setComp={setComp} />}
       </PostSection>
