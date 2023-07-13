@@ -1,5 +1,14 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useState, useCallback, useEffect } from 'react';
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  doc,
+  getDoc
+} from 'firebase/firestore';
+import { db } from '../../firebase';
 import SearchInput from '../UI/searchInput';
 import SearchedTagResult from './tagList';
 import TagItem from './tagItem';
@@ -43,7 +52,7 @@ const EditTag = ({ setComp }) => {
     }
   ];
 
-  const [tagList, setTagList] = useState(['개발', '리액트']);
+  const [tagList, setTagList] = useState([]);
   const [searchInputText, setSearchInputText] = useState('');
   const [searchedTagList, setSearchedTagList] = useState(tempSearchedList);
 
@@ -51,21 +60,52 @@ const EditTag = ({ setComp }) => {
     setComp('list');
   };
 
-  const handleGoBack = () => {
+  const handleGoBack = useCallback(() => {
     setComp('list');
+  }, []);
+
+  const searchTags = async (text) => {
+    const tagsRef = collection(db, 'tags');
+
+    try {
+      const querySnapshot = await getDocs(tagsRef);
+
+      const results = querySnapshot.docs
+        .filter((doc) => doc.id.includes(text))
+        .map((doc) => {
+          const tagData = doc.data();
+          const postCount = Object.keys(tagData).length || 0;
+          return {
+            id: doc.id,
+            postCount
+          };
+        });
+
+      setSearchedTagList(results);
+    } catch (error) {
+      console.error('Error searching tags: ', error);
+    }
   };
+
+  useEffect(() => {
+    if (searchInputText) {
+      searchTags(searchInputText);
+    } else {
+      setSearchedTagList([]);
+    }
+  }, [searchInputText]);
 
   return (
     <EditTagContainer>
       <SearchInput
         placeholder={`추가하고픈 태그를 검색해주세요!`}
-        handleInputText={setSearchInputText}
+        setSearchInputText={setSearchInputText}
       />
       <SearchedTagResult>
         {searchedTagList.map((el, idx) => (
           <TagItem
             key={idx}
-            category={el.category}
+            category={el.id}
             postCount={el.postCount}
             tagList={tagList}
             setTagList={setTagList}

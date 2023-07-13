@@ -8,37 +8,33 @@ import EditTag from '../Components/Tag/editTag';
 
 const Main = () => {
   const [comp, setComp] = useState('list');
-  const [selectedIdx, setSelectedIdx] = useState(null);
-  const [category, setCategory] = useState('');
-  const [tagList, setTagList] = useState(['React.js', 'Vue.js']);
+  const [selectedId, setSelectedId] = useState('');
+  const [tagList, setTagList] = useState(['리액트', '뷰']);
   const { state } = useLocation();
 
   useEffect(() => {
     if (state) {
       setComp(state.comp);
-      setCategory(state.category);
-      setSelectedIdx(state.idx);
+      setSelectedId(state.id);
     }
   }, [state]);
-
-  const setPostDetail = (newComp, newCategory, newIdx) => {
-    setComp(newComp);
-    setCategory(newCategory);
-    setSelectedIdx(newIdx);
-  };
 
   return (
     <>
       <PostSection>
         {comp === 'list' && (
           <Carousel
-            setPostDetail={setPostDetail}
-            tagList={tagList}
             setComp={setComp}
+            setSelectedId={setSelectedId}
+            tagList={tagList}
           />
         )}
         {comp === 'detail' && (
-          <PostDetail setComp={setComp} category={category} idx={selectedIdx} />
+          <PostDetail
+            setComp={setComp}
+            selectedId={selectedId}
+            setSelectedId={setSelectedId}
+          />
         )}
         {comp === 'tag' && <EditTag setComp={setComp} />}
       </PostSection>

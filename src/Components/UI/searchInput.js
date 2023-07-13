@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Search } from '@mui/icons-material';
+import { useState } from 'react';
 
 const InputWrapper = styled.div`
   position: relative;
@@ -34,9 +35,17 @@ const SearchIcon = styled(Search)`
   color: #c7d36f;
 `;
 
-const SearchInput = ({ placeholder, handleInputText }) => {
+const SearchInput = ({ placeholder, setSearchInputText }) => {
+  const [inputText, setInputText] = useState('');
+
   const handleChange = (e) => {
-    handleInputText(e.target.value);
+    setInputText(e.target.value);
+  };
+
+  const handleOnKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      setSearchInputText(inputText);
+    }
   };
 
   return (
@@ -45,6 +54,7 @@ const SearchInput = ({ placeholder, handleInputText }) => {
         type="text"
         placeholder={`${placeholder}`}
         onChange={handleChange}
+        onKeyPress={handleOnKeyPress}
       />
       <SearchIcon fontSize="small" />
     </InputWrapper>

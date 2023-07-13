@@ -36,7 +36,12 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'react/prop-types': 'off',
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
-    'no-unused-vars': 'off'
+    'no-unused-vars': 'off',
+    'no-restricted-syntax': 'off',
+    'no-await-in-loop': 'off',
+    'no-shadow': 'off',
+    'consistent-return': 'off',
+    'no-else-return': 'off'
   },
   parser: '@babel/eslint-parser',
   settings: {

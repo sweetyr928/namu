@@ -7,16 +7,17 @@ const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   background-color: #ffffff;
-  margin: 10px 0px 10px 0px;
-  padding: 10px 10px 10px 10px;
-  width: 90%;
+  margin: 0px 0px 15px 0px;
+  padding: 5px 10px 5px 10px;
+  width: 37vw;
+  height: 90%;
   border-radius: 20px;
 `;
 
 const DetailWrapper = styled.div`
   font-size: 20px;
   font-weight: 800;
-  margin: 10px 0px 15px 20px;
+  margin: 15px 0px 15px 20px;
 `;
 
 const Divider = styled.hr`
@@ -80,9 +81,10 @@ const DropdownMenuItem = styled.li`
 const TextWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-items: center;
+  justify-content: space-around;
   align-items: stretch;
-  margin: 0px 0px 15px 10px;
+  margin: 0px 0px 5px 10px;
+  height: 60%;
 
   div {
     margin: 0px 0px 0px 13px;
@@ -92,15 +94,18 @@ const TextWrapper = styled.div`
 `;
 
 const ModalTextArea = styled.textarea`
-  width: 95%;
-  height: 150px;
+  width: 93%;
+  height: 130px;
   resize: none;
   margin: 10px auto;
-  padding: 5px 5px 5px 5px;
+  padding: 10px 10px 10px 10px;
   border-radius: 10px;
   border: 2px solid #c7d36f;
   font-size: 15px;
+  outline: none;
 `;
+
+export { TextWrapper, ModalTextArea };
 
 const ButtonWrapper = styled.div`
   display: flex;
@@ -169,6 +174,7 @@ const RequestModal = ({ toggleModal }) => {
           <ModalTextArea />
         </TextWrapper>
       </ContentContainer>
+
       <ButtonWrapper>
         <WhiteButton onClick={handleSubmit}>보내기</WhiteButton>
         <WhiteButton onClick={handleCancel}>취소</WhiteButton>

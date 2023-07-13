@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import styled, { keyframes } from 'styled-components';
 
 const ItemWrapper = styled.div`
@@ -21,22 +21,46 @@ const ItemWrapper = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 18px;
+  font-size: 14px;
   font-weight: bold;
   transition: color 0.3s ease;
+
+  @media (min-width: 1024px) {
+    font-size: 16px;
+  }
+
+  @media (min-width: 1440px) {
+    font-size: 18px;
+  }
 `;
 
 const Content = styled.div`
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 600;
   transition: color 0.3s ease;
   margin: 5px 0px 0px 0px;
+
+  @media (min-width: 1024px) {
+    font-size: 14px;
+  }
+
+  @media (min-width: 1440px) {
+    font-size: 16px;
+  }
 `;
 
 const Date = styled.span`
-  font-size: 14px;
+  font-size: 10px;
   font-weight: 300;
   align-self: flex-end;
+
+  @media (min-width: 1024px) {
+    font-size: 12px;
+  }
+
+  @media (min-width: 1440px) {
+    font-size: 14px;
+  }
 `;
 
 const fadeIn = keyframes`
@@ -53,31 +77,33 @@ const AnimatedCarouselItem = styled.div`
 `;
 
 const CarouselItem = ({
-  category,
   title,
   content,
-  date,
-  idx,
-  setPostDetail
+  createdAt,
+  id,
+  setComp,
+  setSelectedId
 }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const formattedDate = new window.Date(createdAt.seconds * 1000);
 
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-  };
+  const handleMouse = useCallback(() => {
+    setIsHovered(!isHovered);
+  }, [isHovered]);
 
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-  };
+  const handleClick = useCallback(() => {
+    setComp('detail');
+    setSelectedId(id);
+  }, [id]);
 
   return (
     <ItemWrapper
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      onMouseEnter={handleMouse}
+      onMouseLeave={handleMouse}
       style={{
         backgroundColor: isHovered ? '#f8f8f8' : '#ffffff'
       }}
-      onClick={() => setPostDetail('detail', category, idx)}
+      onClick={handleClick}
     >
       <AnimatedCarouselItem>
         <Title
@@ -95,7 +121,7 @@ const CarouselItem = ({
           {content}
         </Content>
       </AnimatedCarouselItem>
-      <Date>{date}</Date>
+      <Date>{formattedDate.toLocaleString()}</Date>
     </ItemWrapper>
   );
 };

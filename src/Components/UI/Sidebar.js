@@ -13,7 +13,7 @@ const SideBarContainer = styled.div`
   align-items: center;
   position: fixed;
   top: 30%;
-  left: 30px;
+  left: 1.5%;
 `;
 
 const IconWrapper = styled.div`
@@ -50,7 +50,7 @@ const SideBar = () => (
           component={Home}
           color="#3F3F3F"
           hoverColor="#c7d36f"
-          sx={{ fontSize: 40 }}
+          sx={{ fontSize: 35 }}
         />
       </IconWrapper>
     </Link>
@@ -60,17 +60,17 @@ const SideBar = () => (
           component={SearchRounded}
           color="#3F3F3F"
           hoverColor="#c7d36f"
-          sx={{ fontSize: 40 }}
+          sx={{ fontSize: 35 }}
         />
       </IconWrapper>
     </Link>
-    <Link to="/post">
+    <Link to="/newPost">
       <IconWrapper>
         <CustomIcon
           component={ModeEditOutlineRounded}
           color="#3F3F3F"
           hoverColor="#c7d36f"
-          sx={{ fontSize: 40 }}
+          sx={{ fontSize: 35 }}
         />
       </IconWrapper>
     </Link>

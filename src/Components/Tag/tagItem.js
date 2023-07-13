@@ -1,18 +1,29 @@
 import styled from 'styled-components';
+import { GreenButton } from '../UI/button';
 
 const ResultItem = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 10px 10px 10px 10px;
+  margin: 10px 10px 0px 10px;
   padding: 20px 20px 20px 20px;
   width: calc(100%);
+  height: calc(7%);
   border-bottom: 2px solid #c7d36f;
+  cursor: pointer;
 
   div:first-child {
-    font-weight: 800;
-    font-size: 19px;
+    font-weight: 700;
+    font-size: 14px;
     margin: 0px 0px 0px 15px;
+
+    @media (min-width: 1024px) {
+      font-size: 16px;
+    }
+
+    @media (min-width: 1440px) {
+      font-size: 18px;
+    }
   }
 
   div:last-child {
@@ -25,34 +36,21 @@ const ResultItem = styled.div`
       font-size: 15px;
       font-weight: 700;
     }
-
-    button {
-      background-color: transparent;
-      border: none;
-      margin: 0px 15px 0px 0px;
-      font-size: medium;
-      font-weight: 600;
-      cursor: pointer;
-
-      &:hover {
-        color: #c7d36f;
-      }
-    }
   }
 `;
 
-const TagItem = ({ category, postCount, tagList, handleTagList }) => {
+const TagItem = ({ category, postCount, tagList, setTagList }) => {
   const handleAddTag = () => {
-    if (!tagList.includes(category)) handleTagList([...tagList, category]);
+    if (!tagList.includes(category)) setTagList([...tagList, category]);
     else alert('이미 추가된 카테고리 입니다!');
   };
 
   return (
-    <ResultItem>
+    <ResultItem onClick={handleAddTag}>
       <div>{`# ${category}`}</div>
       <div>
         <div>{`게시글 수: ${postCount} `}</div>
-        <button onClick={handleAddTag}>추가하기</button>
+        <GreenButton>추가</GreenButton>
       </div>
     </ResultItem>
   );
