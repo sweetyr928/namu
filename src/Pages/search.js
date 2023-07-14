@@ -7,7 +7,7 @@ import SearchInput from '../Components/UI/searchInput';
 import SearchPostResult from '../Components/Search/searchList';
 import SearchItem from '../Components/Search/searchItem';
 
-const GuideWrapper = styled.div`
+const GuideWrapper = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: center;

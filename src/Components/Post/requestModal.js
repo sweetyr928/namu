@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Modal from '../UI/modal';
 import { WhiteButton } from '../UI/button';
 
-const ContentContainer = styled.div`
+const ContentContainer = styled.article`
   display: flex;
   flex-direction: column;
   background-color: #ffffff;
@@ -14,7 +14,7 @@ const ContentContainer = styled.div`
   border-radius: 20px;
 `;
 
-const DetailWrapper = styled.div`
+const DetailWrapper = styled.section`
   font-size: 20px;
   font-weight: 800;
   margin: 15px 0px 15px 20px;
@@ -26,7 +26,7 @@ const Divider = styled.hr`
   margin: 0px 0px 30px 0px;
 `;
 
-const TimeSelectWrapper = styled.div`
+const TimeSelectWrapper = styled.section`
   display: flex;
   justify-items: center;
   align-items: center;
@@ -78,7 +78,7 @@ const DropdownMenuItem = styled.li`
   }
 `;
 
-const TextWrapper = styled.div`
+const TextWrapper = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -174,7 +174,6 @@ const RequestModal = ({ toggleModal }) => {
           <ModalTextArea />
         </TextWrapper>
       </ContentContainer>
-
       <ButtonWrapper>
         <WhiteButton onClick={handleSubmit}>보내기</WhiteButton>
         <WhiteButton onClick={handleCancel}>취소</WhiteButton>

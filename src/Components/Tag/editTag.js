@@ -15,7 +15,7 @@ import TagItem from './tagItem';
 import TagInput from '../UI/tagInput';
 import { GreenButton } from '../UI/button';
 
-const EditTagContainer = styled.div`
+const EditTagContainer = styled.article`
   width: 100%;
   height: 100%;
   display: flex;
@@ -24,7 +24,7 @@ const EditTagContainer = styled.div`
   align-items: center;
 `;
 
-const ButtonWrapper = styled.div`
+const ButtonWrapper = styled.footer`
   display: flex;
   justify-content: center;
   align-items: center;

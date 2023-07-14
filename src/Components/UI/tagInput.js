@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const TagInputWrapper = styled.div`
+const TagInputWrapper = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;

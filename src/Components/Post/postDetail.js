@@ -7,7 +7,7 @@ import { GreenButton } from '../UI/button';
 import RequestModal from './requestModal';
 import 'react-quill/dist/quill.core.css';
 
-const ContentContainer = styled.div`
+const ContentContainer = styled.article`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -16,7 +16,7 @@ const ContentContainer = styled.div`
   height: 100%;
 `;
 
-const ContentHeader = styled.div`
+const ContentHeader = styled.header`
   display: flex;
   height: 10%;
   flex-direction: column;
@@ -56,7 +56,7 @@ const ContentHeader = styled.div`
   }
 `;
 
-const ContentDetail = styled.div`
+const ContentDetail = styled.section`
   margin: 10px 10px 10px 10px;
   height: 72%;
   overflow-y: scroll;
@@ -94,7 +94,7 @@ const ContentDetail = styled.div`
   }
 `;
 
-const ContentFooter = styled.div`
+const ContentFooter = styled.footer`
   display: flex;
   justify-content: center;
   align-items: center;

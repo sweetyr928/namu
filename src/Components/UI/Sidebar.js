@@ -6,7 +6,7 @@ import {
   ModeEditOutlineRounded
 } from '@mui/icons-material';
 
-const SideBarContainer = styled.div`
+const SideBarContainer = styled.nav`
   display: flex;
   flex-direction: column;
   justify-content: center;

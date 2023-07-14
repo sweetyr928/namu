@@ -18,7 +18,7 @@ const TitleInput = styled.input`
   outline: none;
 `;
 
-const EditorWrapper = styled.div`
+const EditorWrapper = styled.article`
   width: 100%;
   height: 68%;
   display: flex;
@@ -31,7 +31,7 @@ const EditorWrapper = styled.div`
   }
 `;
 
-const ButtonWrapper = styled.div`
+const ButtonWrapper = styled.footer`
   display: flex;
   justify-content: center;
   align-items: center;

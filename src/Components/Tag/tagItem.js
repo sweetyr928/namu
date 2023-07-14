@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { GreenButton } from '../UI/button';
 
-const ResultItem = styled.div`
+const ResultItem = styled.article`
   display: flex;
   justify-content: space-between;
   align-items: center;

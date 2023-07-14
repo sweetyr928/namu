@@ -16,7 +16,7 @@ import { db } from '../../firebase';
 import CarouselItem from './carouselItem';
 import { GreenButton } from '../UI/button';
 
-const CarouselWrapper = styled.div`
+const CarouselWrapper = styled.article`
   width: calc(90%);
   height: 100%;
 
@@ -33,7 +33,7 @@ const CarouselWrapper = styled.div`
   }
 `;
 
-const TagWrapper = styled.div`
+const TagWrapper = styled.section`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -60,7 +60,7 @@ const TagWrapper = styled.div`
   }
 `;
 
-const CarouselItemContainer = styled.div`
+const CarouselItemContainer = styled.section`
   width: 100%;
   height: 68vh;
   display: flex;
@@ -73,7 +73,7 @@ const CarouselItemContainer = styled.div`
   }
 `;
 
-const GuideWrapper = styled.div`
+const GuideWrapper = styled.article`
   display: flex;
   flex-direction: column;
   justify-content: center;

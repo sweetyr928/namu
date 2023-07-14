@@ -2,7 +2,7 @@ import styled, { keyframes } from 'styled-components';
 import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const ItemWrapper = styled.div`
+const ItemWrapper = styled.article`
   display: flex;
   flex-direction: column;
   justify-content: space-between;

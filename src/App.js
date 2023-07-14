@@ -1,7 +1,7 @@
 import styled, { createGlobalStyle } from 'styled-components';
 import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import SideBar from './Components/UI/Sidebar';
+import SideBar from './Components/UI/sidebar';
 import Header from './Components/UI/header';
 import MyPage from './Pages/mypage';
 import MainHome from './MainHome';
@@ -27,7 +27,7 @@ const AppContainer = styled.div`
   overflow: hidden;
 `;
 
-const MainContainer = styled.div`
+const MainContainer = styled.main`
   display: flex;
   justify-content: center;
   align-items: center;
