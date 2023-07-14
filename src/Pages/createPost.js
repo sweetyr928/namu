@@ -57,7 +57,7 @@ const CreatePost = ({ uid }) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [tagList, setTagList] = useState([]);
-  const [newPostID, setNewPostId] = useState('');
+  let newPostID = '';
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -75,10 +75,10 @@ const CreatePost = ({ uid }) => {
         isSolved: false,
         createdAt: currentTime
       });
-      setNewPostId(docRef.id);
+
+      newPostID = docRef.id;
 
       const tagsRef = collection(db, 'tags');
-
       const batch = writeBatch(db);
 
       for (const tag of tagList) {
@@ -121,11 +121,15 @@ const CreatePost = ({ uid }) => {
     ) {
       Toast.fire({
         icon: 'error',
-        title: '모든 항목(제목/내용/태그)을 정확히 입력했는지 확인해주세요!'
+        title: '모든 항목(제목/내용/태그)을 정확히 입력했는지 확인해주세요.'
       });
     } else {
       await createPost();
-      navigate('/');
+      Toast.fire({
+        icon: 'success',
+        title: '질문이 등록되었습니다.'
+      });
+      navigate('/', { state: { comp: 'detail', id: newPostID } });
     }
   };
 
