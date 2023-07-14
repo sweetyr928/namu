@@ -120,6 +120,14 @@ const CarouselItem = ({
   const sanitizedContent = stripHTMLTags(mergedContent);
   const truncatedContent = truncateContent(sanitizedContent, 70);
 
+  const options = {
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true
+  };
+
   return (
     <ItemWrapper
       onMouseEnter={handleMouse}
@@ -146,7 +154,7 @@ const CarouselItem = ({
           }}
         ></Content>
       </AnimatedCarouselItem>
-      <Date>{formattedDate.toLocaleString()}</Date>
+      <Date>{formattedDate.toLocaleString('ko-KR', options)}</Date>
     </ItemWrapper>
   );
 };

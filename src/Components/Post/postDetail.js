@@ -40,17 +40,17 @@ const ContentHeader = styled.header`
   }
 
   span {
-    font-size: 12px;
-    font-weight: 300;
+    font-size: 13px;
+    font-weight: 500;
     align-self: flex-end;
 
     @media (min-width: 1024px) {
-      font-size: 14px;
+      font-size: 15px;
       margin: 0px 0px 0px 0px;
     }
 
     @media (min-width: 1440px) {
-      font-size: 16px;
+      font-size: 17px;
       margin: 0px 15px 0px 0px;
     }
   }
@@ -165,6 +165,14 @@ const PostDetail = ({ setComp, selectedId, setSelectedId }) => {
     setIsModalOpen(!isModalOpen);
   }, [isModalOpen]);
 
+  const options = {
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true
+  };
+
   return (
     <>
       {isModalOpen ? (
@@ -176,7 +184,9 @@ const PostDetail = ({ setComp, selectedId, setSelectedId }) => {
       <ContentContainer>
         <ContentHeader>
           <div>{postData.title}</div>
-          <span>{formattedDate && formattedDate.toLocaleString()}</span>
+          <span>
+            {formattedDate && formattedDate.toLocaleString('ko-KR', options)}
+          </span>
         </ContentHeader>
         <Divider />
         <ContentDetail>
