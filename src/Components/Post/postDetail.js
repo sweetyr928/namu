@@ -148,7 +148,6 @@ const PostDetail = ({ setComp, selectedId, setSelectedId }) => {
     : null;
 
   useEffect(() => {
-    console.log(setSelectedId);
     const fetchData = async () => {
       const data = await fetchPostData(selectedId);
       setPostData(data);
