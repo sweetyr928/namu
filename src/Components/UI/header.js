@@ -33,7 +33,6 @@ const ElementWrapper = styled.div`
 
 const IconWrapper = styled.div`
   margin: 0px 10px 0px 0px;
-  cursor: pointer;
 `;
 
 const LogoDetail = styled.div`
@@ -53,21 +52,7 @@ const TwoLineText = styled.div`
   font-size: 15px;
 `;
 
-const Header = () => {
-  const [name, setName] = useState('');
-  const [userData, setUserData] = useState(null);
-  const [loginState, setLoginState] = useState(false);
-
-  useEffect(() => {
-    const sessions = Object.keys(sessionStorage);
-    for (let i = 0; i < sessions.length; i += 1) {
-      if (sessions[i].includes('firebase:authUser:')) {
-        setLoginState(true);
-        setName(JSON.parse(sessionStorage.getItem(sessions[i])).displayName);
-      }
-    }
-  }, [userData]);
-
+const Header = ({ isLogin, setUserData, name }) => {
   const provider = new GoogleAuthProvider();
 
   const handleGoogleLogin = () => {
@@ -105,7 +90,7 @@ const Header = () => {
           </IconWrapper>
           <LogoDetail>나누고 나눔 받는 무한 지식 품앗이</LogoDetail>
         </ElementWrapper>
-        {loginState ? (
+        {isLogin ? (
           <ElementWrapper>
             <TwoLineText>
               <div>나는야 고수 {name} 님!</div>
@@ -114,19 +99,12 @@ const Header = () => {
             <IconWrapper>
               <ParkRounded sx={{ fontSize: 30 }} />
             </IconWrapper>
-            <IconWrapper>
-              <LogoutRounded
-                sx={{ fontSize: 30 }}
-                onClick={handleGoogleLogout}
-              />
-            </IconWrapper>
+            <LogoutRounded sx={{ fontSize: 30 }} onClick={handleGoogleLogout} />
           </ElementWrapper>
         ) : (
           <ElementWrapper>
             <OneLineText>나무와 함께 하시겠어요?</OneLineText>
-            <IconWrapper>
-              <GoogleIcon sx={{ fontSize: 30 }} onClick={handleGoogleLogin} />
-            </IconWrapper>
+            <GoogleIcon sx={{ fontSize: 30 }} onClick={handleGoogleLogin} />
           </ElementWrapper>
         )}
       </HeaderContainer>
