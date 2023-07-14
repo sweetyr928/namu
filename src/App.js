@@ -37,6 +37,7 @@ const MainContainer = styled.main`
 
 function App() {
   const [name, setName] = useState('');
+  const [uid, setUid] = useState('');
   const [userData, setUserData] = useState(null);
   const [isLogin, setIsLogin] = useState(false);
 
@@ -46,6 +47,7 @@ function App() {
       if (sessions[i].includes('firebase:authUser:')) {
         setIsLogin(true);
         setName(JSON.parse(sessionStorage.getItem(sessions[i])).displayName);
+        setUid(JSON.parse(sessionStorage.getItem(sessions[i])).uid);
       }
     }
   }, [userData]);
@@ -62,7 +64,7 @@ function App() {
         <Router>
           <SideBar />
           <Routes>
-            <Route path="/*" element={<MainHome />} />
+            <Route path="/*" element={<MainHome uid={uid} />} />
             <Route path="/mypage" element={<MyPage name={name} />} />
           </Routes>
         </Router>

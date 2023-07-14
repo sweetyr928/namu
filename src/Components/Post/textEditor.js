@@ -7,9 +7,8 @@ import { storage } from '../../firebase';
 
 Quill.register('modules/ImageResize', ImageResize);
 
-const TextEditor = () => {
+const TextEditor = ({ content, setContent }) => {
   const quillRef = useRef();
-  const [content, setContent] = useState('');
 
   const imageHandler = () => {
     const input = document.createElement('input');

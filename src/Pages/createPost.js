@@ -1,6 +1,15 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
+import {
+  collection,
+  addDoc,
+  serverTimestamp,
+  doc,
+  getDoc,
+  writeBatch
+} from 'firebase/firestore';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { db } from '../firebase';
 import PostSection from '../Components/UI/postSection';
 import TextEditor from '../Components/Post/textEditor';
 import TagInput from '../Components/UI/tagInput';
@@ -43,23 +52,62 @@ const ButtonWrapper = styled.footer`
   }
 `;
 
-const CreatePost = () => {
+const CreatePost = ({ uid }) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [tagList, setTagList] = useState([]);
+  const [newPostID, setNewPostId] = useState('');
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setTitle(e.target.value);
   };
 
-  const handleSave = () => {
+  const createPost = async () => {
+    const currentTime = serverTimestamp();
+    try {
+      const docRef = await addDoc(collection(db, 'posts'), {
+        author: uid,
+        content,
+        title,
+        tags: tagList,
+        isSolved: false,
+        createdAt: currentTime
+      });
+      setNewPostId(docRef.id);
+
+      const tagsRef = collection(db, 'tags');
+
+      const batch = writeBatch(db);
+
+      for (const tag of tagList) {
+        const tagDocRef = doc(tagsRef, tag);
+        const tagDoc = await getDoc(tagDocRef);
+
+        if (tagDoc.exists()) {
+          batch.update(tagDocRef, { [docRef.id]: true });
+        } else {
+          const initialTagData = {
+            [docRef.id]: true
+          };
+          batch.set(tagDocRef, initialTagData);
+        }
+      }
+
+      await batch.commit();
+    } catch (e) {
+      console.error('Error adding document: ', e);
+    }
+  };
+
+  const handleSave = async () => {
+    await createPost();
     navigate('/');
   };
 
-  const handleGoBack = () => {
+  const handleGoBack = useCallback(() => {
     navigate('/');
-  };
+  }, []);
 
   return (
     <PostSection>
@@ -69,7 +117,7 @@ const CreatePost = () => {
         onChange={handleChange}
       />
       <EditorWrapper>
-        <TextEditor />
+        <TextEditor content={content} setContent={setContent} />
       </EditorWrapper>
       <TagInput
         tagList={tagList}

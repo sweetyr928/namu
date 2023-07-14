@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import styled, { keyframes } from 'styled-components';
+import DOMPurify from 'isomorphic-dompurify';
 
 const ItemWrapper = styled.article`
   display: flex;
@@ -10,7 +11,7 @@ const ItemWrapper = styled.article`
   padding: 10px 10px 10px 10px;
   border-radius: 20px;
   background-color: #ffffff;
-  height: calc(13%);
+  height: calc(8%);
   cursor: pointer;
   transition: all 0.3s ease;
 
@@ -34,20 +35,20 @@ const Title = styled.div`
   }
 `;
 
-const Content = styled.div`
-  font-size: 12px;
-  font-weight: 600;
-  transition: color 0.3s ease;
-  margin: 5px 0px 0px 0px;
+// const Content = styled.div`
+//   font-size: 12px;
+//   font-weight: 600;
+//   transition: color 0.3s ease;
+//   margin: 5px 0px 0px 0px;
 
-  @media (min-width: 1024px) {
-    font-size: 14px;
-  }
+//   @media (min-width: 1024px) {
+//     font-size: 14px;
+//   }
 
-  @media (min-width: 1440px) {
-    font-size: 16px;
-  }
-`;
+//   @media (min-width: 1440px) {
+//     font-size: 16px;
+//   }
+// `;
 
 const Date = styled.span`
   font-size: 10px;
@@ -113,13 +114,6 @@ const CarouselItem = ({
         >
           {title}
         </Title>
-        <Content
-          style={{
-            color: isHovered ? '#555555' : '#3f3f3f'
-          }}
-        >
-          {content}
-        </Content>
       </AnimatedCarouselItem>
       <Date>{formattedDate.toLocaleString()}</Date>
     </ItemWrapper>
