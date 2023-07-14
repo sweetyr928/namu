@@ -45,8 +45,8 @@ const TagItem = ({ category, postCount, tagList, setTagList }) => {
     toast: true,
     position: 'top',
     showConfirmButton: false,
-    timer: 1000,
-    timerProgressBar: true,
+    timer: 3000,
+    timerProgressBar: false,
     didOpen: (toast) => {
       toast.addEventListener('mouseenter', Swal.stopTimer);
       toast.addEventListener('mouseleave', Swal.resumeTimer);
@@ -58,7 +58,7 @@ const TagItem = ({ category, postCount, tagList, setTagList }) => {
     else
       Toast.fire({
         icon: 'error',
-        title: '이미 추가된 태그 입니다.'
+        title: '이미 추가된 태그입니다.'
       });
   };
 
