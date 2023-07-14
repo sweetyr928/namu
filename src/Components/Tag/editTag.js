@@ -36,25 +36,23 @@ const ButtonWrapper = styled.footer`
   }
 `;
 
-const EditTag = ({ setComp }) => {
-  const tempSearchedList = [
-    {
-      category: '리액트',
-      postCount: 41
-    },
-    {
-      category: '리액트 네이티브',
-      postCount: 19
-    },
-    {
-      category: '리액트 상태관리',
-      postCount: 5
-    }
-  ];
+const GuideWrapper = styled.section`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
+  div {
+    font-weight: 600;
+    font-size: 20px;
+    margin: calc(80%) 0px 0px 0px;
+  }
+`;
+
+const EditTag = ({ setComp }) => {
   const [tagList, setTagList] = useState([]);
   const [searchInputText, setSearchInputText] = useState('');
-  const [searchedTagList, setSearchedTagList] = useState(tempSearchedList);
+  const [searchedTagList, setSearchedTagList] = useState([]);
 
   const handleSave = () => {
     setComp('list');
@@ -102,15 +100,21 @@ const EditTag = ({ setComp }) => {
         setSearchInputText={setSearchInputText}
       />
       <SearchedTagResult>
-        {searchedTagList.map((el, idx) => (
-          <TagItem
-            key={idx}
-            category={el.id}
-            postCount={el.postCount}
-            tagList={tagList}
-            setTagList={setTagList}
-          />
-        ))}
+        {searchedTagList.length ? (
+          searchedTagList.map((el, idx) => (
+            <TagItem
+              key={idx}
+              category={el.id}
+              postCount={el.postCount}
+              tagList={tagList}
+              setTagList={setTagList}
+            />
+          ))
+        ) : (
+          <GuideWrapper>
+            <div>검색 결과가 없습니다.</div>
+          </GuideWrapper>
+        )}
       </SearchedTagResult>
       <TagInput
         tagList={tagList}
