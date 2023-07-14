@@ -28,15 +28,19 @@ const Search = () => {
     const postsRef = collection(db, 'posts');
     const q = query(postsRef, orderBy('createdAt', 'desc'));
 
+    const stripHTMLTags = (html) => html.textContent || html.innerText || '';
+
     try {
       const querySnapshot = await getDocs(q);
       const results = [];
 
       querySnapshot.forEach((doc) => {
         const post = doc.data();
+        const sanitizedContent = stripHTMLTags(post.content);
+
         if (
           post.title.indexOf(text) !== -1 ||
-          post.content.indexOf(text) !== -1
+          (sanitizedContent.indexOf(text) !== -1 && sanitizedContent.length)
         ) {
           results.push({ id: doc.id, ...post });
         }

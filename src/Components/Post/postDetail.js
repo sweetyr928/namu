@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useState, useCallback, useEffect } from 'react';
 import DOMPurify from 'isomorphic-dompurify';
+import { useNavigate } from 'react-router-dom';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { GreenButton } from '../UI/button';
@@ -143,6 +144,7 @@ const fetchPostData = async (id) => {
 const PostDetail = ({ setComp, selectedId, setSelectedId }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [postData, setPostData] = useState({});
+  const navigate = useNavigate();
   const formattedDate = postData?.createdAt
     ? new window.Date(postData.createdAt.seconds * 1000)
     : null;
@@ -157,8 +159,7 @@ const PostDetail = ({ setComp, selectedId, setSelectedId }) => {
   }, [selectedId]);
 
   const handleGoBack = () => {
-    setComp('list');
-    setSelectedId('');
+    navigate(-1);
   };
 
   const toggleModal = useCallback(() => {

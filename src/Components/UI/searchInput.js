@@ -39,7 +39,8 @@ const SearchInput = ({ placeholder, setSearchInputText }) => {
   const [inputText, setInputText] = useState('');
 
   const handleChange = (e) => {
-    setInputText(e.target.value);
+    const text = e.target.value.trim();
+    setInputText(text);
   };
 
   const handleOnKeyUp = (e) => {
