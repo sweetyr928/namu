@@ -8,10 +8,10 @@ const ItemWrapper = styled.article`
   justify-content: space-between;
   align-items: flex-start;
   margin: 10px 10px 0px 10px;
-  padding: 10px 10px 10px 10px;
+  padding: 20px 20px 10px 20px;
   border-radius: 20px;
   background-color: #ffffff;
-  height: calc(13%);
+  height: calc(10%);
   cursor: pointer;
   transition: all 0.3s ease;
 
@@ -118,7 +118,7 @@ const CarouselItem = ({
 
   const mergedContent = content.replace(/\n/g, '');
   const sanitizedContent = stripHTMLTags(mergedContent);
-  const truncatedContent = truncateContent(sanitizedContent, 70);
+  const truncatedContent = truncateContent(sanitizedContent, 62);
 
   const options = {
     month: '2-digit',
