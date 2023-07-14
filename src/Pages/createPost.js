@@ -114,11 +114,7 @@ const CreatePost = ({ uid }) => {
   });
 
   const handleSave = async () => {
-    if (
-      !title.length ||
-      (content.trim() === '' && !content.includes('<p')) ||
-      !tagList.length
-    ) {
+    if (!title.length || content.trim() === '' || !tagList.length) {
       Toast.fire({
         icon: 'error',
         title: '모든 항목(제목/내용/태그)을 정확히 입력했는지 확인해주세요.'

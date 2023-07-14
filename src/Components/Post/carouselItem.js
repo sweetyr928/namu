@@ -145,14 +145,16 @@ const CarouselItem = ({
         >
           {title}
         </Title>
-        <Content
-          style={{
-            color: isHovered ? '#555555' : '#3f3f3f'
-          }}
-          dangerouslySetInnerHTML={{
-            __html: DOMPurify.sanitize(truncatedContent)
-          }}
-        ></Content>
+        {truncatedContent && (
+          <Content
+            style={{
+              color: isHovered ? '#555555' : '#3f3f3f'
+            }}
+            dangerouslySetInnerHTML={{
+              __html: DOMPurify.sanitize(truncatedContent)
+            }}
+          ></Content>
+        )}
       </AnimatedCarouselItem>
       <Date>{formattedDate.toLocaleString('ko-KR', options)}</Date>
     </ItemWrapper>
