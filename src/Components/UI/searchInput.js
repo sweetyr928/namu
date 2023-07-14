@@ -14,7 +14,7 @@ const Input = styled.input`
   border: none;
   border-bottom: 3px solid #c7d36f;
   margin: 0 auto;
-  padding: 0px 0px 0px 25px;
+  padding: 0px 0px 0px 33px;
   font-size: 16px;
   font-weight: 700;
   width: 100%;
@@ -42,10 +42,8 @@ const SearchInput = ({ placeholder, setSearchInputText }) => {
     setInputText(e.target.value);
   };
 
-  const handleOnKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      setSearchInputText(inputText);
-    }
+  const handleOnKeyUp = (e) => {
+    setSearchInputText(inputText);
   };
 
   return (
@@ -54,7 +52,7 @@ const SearchInput = ({ placeholder, setSearchInputText }) => {
         type="text"
         placeholder={`${placeholder}`}
         onChange={handleChange}
-        onKeyPress={handleOnKeyPress}
+        onKeyUp={handleOnKeyUp}
       />
       <SearchIcon fontSize="small" />
     </InputWrapper>
