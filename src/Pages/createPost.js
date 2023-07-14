@@ -9,6 +9,7 @@ import {
 } from 'firebase/firestore';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import { db } from '../firebase';
 import PostSection from '../Components/UI/postSection';
 import TextEditor from '../Components/Post/textEditor';
@@ -100,9 +101,32 @@ const CreatePost = ({ uid }) => {
     }
   };
 
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'top',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: false,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer);
+      toast.addEventListener('mouseleave', Swal.resumeTimer);
+    }
+  });
+
   const handleSave = async () => {
-    await createPost();
-    navigate('/');
+    if (
+      !title.length ||
+      (content.trim() === '' && !content.includes('<p')) ||
+      !tagList.length
+    ) {
+      Toast.fire({
+        icon: 'error',
+        title: '모든 항목(제목/내용/태그)을 정확히 입력했는지 확인해주세요!'
+      });
+    } else {
+      await createPost();
+      navigate('/');
+    }
   };
 
   const handleGoBack = useCallback(() => {
