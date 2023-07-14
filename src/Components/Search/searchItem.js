@@ -1,6 +1,7 @@
 import styled, { keyframes } from 'styled-components';
 import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import DOMPurify from 'isomorphic-dompurify';
 
 const ItemWrapper = styled.article`
   display: flex;
@@ -11,10 +12,11 @@ const ItemWrapper = styled.article`
   padding: 10px 10px 10px 10px;
   border-bottom: 2px solid #c7d36f;
   width: 98%;
-  height: calc(10%);
+  height: calc(13%);
   cursor: pointer;
   transition: all 0.3s ease;
-  a &:hover {
+
+  &:hover {
     transform: scale(1.005);
   }
 `;
@@ -34,20 +36,20 @@ const Title = styled.div`
   }
 `;
 
-// const Content = styled.div`
-//   font-size: 12px;
-//   font-weight: 600;
-//   transition: color 0.3s ease;
-//   margin: 5px 0px 0px 0px;
+const Content = styled.div`
+  font-size: 12px;
+  font-weight: 600;
+  transition: color 0.3s ease;
+  margin: 5px 0px 0px 0px;
 
-//   @media (min-width: 1024px) {
-//     font-size: 14px;
-//   }
+  @media (min-width: 1024px) {
+    font-size: 14px;
+  }
 
-//   @media (min-width: 1440px) {
-//     font-size: 16px;
-//   }
-// `;
+  @media (min-width: 1440px) {
+    font-size: 16px;
+  }
+`;
 
 const Date = styled.span`
   font-size: 10px;
@@ -89,6 +91,25 @@ const SearchItem = ({ title, content, createdAt, id }) => {
     setIsHovered(!isHovered);
   }, [isHovered]);
 
+  const truncateContent = (text, maxLength) => {
+    if (text.length > maxLength) {
+      return `${text.slice(0, maxLength)}...`;
+    }
+
+    return text;
+  };
+
+  const stripHTMLTags = (html) => {
+    const tmp = document.createElement('div');
+    tmp.innerHTML = html;
+
+    return tmp.textContent || tmp.innerText || '';
+  };
+
+  const mergedContent = content.replace(/\n/g, '');
+  const sanitizedContent = stripHTMLTags(mergedContent);
+  const truncatedContent = truncateContent(sanitizedContent, 70);
+
   return (
     <ItemWrapper
       onMouseEnter={handleMouse}
@@ -106,6 +127,14 @@ const SearchItem = ({ title, content, createdAt, id }) => {
         >
           {title}
         </Title>
+        <Content
+          style={{
+            color: isHovered ? '#555555' : '#3f3f3f'
+          }}
+          dangerouslySetInnerHTML={{
+            __html: DOMPurify.sanitize(truncatedContent)
+          }}
+        ></Content>
       </AnimatedCarouselItem>
       <Date>{formattedDate.toLocaleString()}</Date>
     </ItemWrapper>
