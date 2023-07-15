@@ -7,7 +7,6 @@ import TabMenu from '../Components/UI/TabMenu';
 
 const MyPageContainer = styled.section`
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   border-radius: 30px;
@@ -18,15 +17,15 @@ const MyPageContainer = styled.section`
   padding: 20px;
 `;
 
-const ListContainer = styled.section`
+const UserContainer = styled.section`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   border-radius: 30px;
   width: 100%;
-  height: calc(80%);
-  background-color: #ffffff;
-  padding-top: 50px;
+  height: 100%;
+  padding-right: 30px;
 `;
 
 const UserList = styled.article`
@@ -36,7 +35,20 @@ const UserList = styled.article`
   border-radius: 30px;
   width: 100%;
   height: 100%;
-  background-color: #c7d36f;
+  background-color: #9eb23b;
+  overflow: hidden;
+  font-weight: 600;
+  font-size: 18px;
+  button {
+    border-bottom: 2px solid #ffffff;
+  }
+  .active {
+    background-color: #c7d36f;
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 20px;
+    border: none;
+  }
 `;
 
 const tabs = [
@@ -46,13 +58,13 @@ const tabs = [
 
 const MyPage = ({ name }) => (
   <MyPageContainer>
-    <UserInfo name={name} />
-    <ListContainer>
+    <UserContainer>
+      <UserInfo name={name} />
       <UserTitle />
-      <UserList>
-        <TabMenu tabs={tabs} />
-      </UserList>
-    </ListContainer>
+    </UserContainer>
+    <UserList>
+      <TabMenu tabs={tabs} />
+    </UserList>
   </MyPageContainer>
 );
 
