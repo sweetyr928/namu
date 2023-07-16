@@ -3,21 +3,23 @@ import { ParkRounded } from '@mui/icons-material';
 
 const InfoContainer = styled.article`
   display: flex;
+  flex-direction: column;
   width: 100%;
+  justify-content: center;
   align-items: center;
   border-radius: 30px;
   background-color: #c7d36f;
-  padding: 20px 0px;
-  svg {
-    padding: 0px 0px 0px 20px;
-  }
+  padding: 30px 0px;
+  margin-bottom: 20px;
 `;
 const TwoLineText = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   font-size: 22px;
   font-weight: bold;
-  padding: 0px 15px;
+  padding-top: 20px;
 `;
 
 const UserInfo = ({ name }) => (

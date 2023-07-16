@@ -29,10 +29,19 @@ const ElementWrapper = styled.div`
   div {
     font-weight: 800;
   }
+
+  .mypage-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+  }
 `;
 
 const IconWrapper = styled.div`
-  margin: 0px 10px 0px 0px;
+  margin: 3px 10px 0px 0px;
+  justify-content: center;
+  align-items: center;
 `;
 
 const LogoDetail = styled.div`
@@ -92,13 +101,15 @@ const Header = ({ isLogin, setUserData, name }) => {
         </ElementWrapper>
         {isLogin ? (
           <ElementWrapper>
-            <TwoLineText>
-              <div>나는야 고수 {name} 님!</div>
-              <div>오늘도 좋은 하루 보내세요!</div>
-            </TwoLineText>
-            <IconWrapper>
-              <ParkRounded sx={{ fontSize: 30 }} />
-            </IconWrapper>
+            <a href="/mypage" className="mypage-link">
+              <TwoLineText>
+                <div>나는야 고수 {name} 님!</div>
+                <div>오늘도 좋은 하루 보내세요!</div>
+              </TwoLineText>
+              <IconWrapper>
+                <ParkRounded sx={{ fontSize: 30 }} />
+              </IconWrapper>
+            </a>
             <LogoutRounded sx={{ fontSize: 30 }} onClick={handleGoogleLogout} />
           </ElementWrapper>
         ) : (
