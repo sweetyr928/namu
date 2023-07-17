@@ -24,38 +24,48 @@ const Search = () => {
   const [searchInputText, setSearchInputText] = useState('');
   const [searchResult, setSearchResult] = useState([]);
 
+  const stripHTMLTags = (html) => {
+    const tmp = document.createElement('div');
+    tmp.innerHTML = html;
+
+    const textContent = tmp.textContent || tmp.innerText || '';
+    return textContent.trim() !== '' ? textContent : '';
+  };
+
   const searchPosts = async (text) => {
-    const postsRef = collection(db, 'posts');
-    const q = query(postsRef, orderBy('createdAt', 'desc'));
+    if (text.trim() !== '') {
+      const postsRef = collection(db, 'posts');
+      const q = query(postsRef, orderBy('createdAt', 'desc'));
 
-    const stripHTMLTags = (html) => html.textContent || html.innerText || '';
+      try {
+        const querySnapshot = await getDocs(q);
+        const results = [];
 
-    try {
-      const querySnapshot = await getDocs(q);
-      const results = [];
+        querySnapshot.forEach((doc) => {
+          const post = doc.data();
+          const sanitizedContent = stripHTMLTags(post.content);
 
-      querySnapshot.forEach((doc) => {
-        const post = doc.data();
-        const sanitizedContent = stripHTMLTags(post.content);
+          if (
+            post.title.indexOf(text) !== -1 ||
+            (sanitizedContent && sanitizedContent.indexOf(text) !== -1)
+          ) {
+            results.push({ id: doc.id, ...post });
+          }
+        });
 
-        if (
-          post.title.indexOf(text) !== -1 ||
-          (sanitizedContent.indexOf(text) !== -1 && sanitizedContent.length)
-        ) {
-          results.push({ id: doc.id, ...post });
-        }
-      });
-
-      setSearchResult(results);
-      setSearchInputText('');
-    } catch (error) {
-      console.error('Error searching posts: ', error);
+        setSearchResult(results);
+        setSearchInputText('');
+      } catch (error) {
+        console.error('Error searching posts: ', error);
+      }
+    } else {
+      setSearchResult([]);
     }
   };
 
   useEffect(() => {
-    if (searchInputText.length) searchPosts(searchInputText);
-  }, [searchInputText]);
+    if (searchInputText.length > 0) searchPosts(searchInputText);
+  }, [searchInputText, searchResult]);
 
   return (
     <PostSection>
