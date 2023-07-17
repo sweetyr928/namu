@@ -78,13 +78,13 @@ const AnimatedCarouselItem = styled.div`
   animation: ${fadeIn} 0.5s ease;
 `;
 
-const SearchItem = ({ title, content, createdAt, id }) => {
+const SearchItem = ({ title, content, createdAt, id, searchResult }) => {
   const [isHovered, setIsHovered] = useState(false);
   const formattedDate = new window.Date(createdAt.seconds * 1000);
   const navigate = useNavigate();
 
   const handleNavigate = useCallback(() => {
-    navigate(`/postDetail/${id}`);
+    navigate(`/postDetail/${id}`, { state: { searchResult } });
   }, [id]);
 
   const handleMouse = useCallback(() => {

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useState, useCallback, useEffect } from 'react';
 import DOMPurify from 'isomorphic-dompurify';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { GreenButton } from '../Components/UI/button';
@@ -147,6 +147,7 @@ const PostDetail = () => {
   const [postData, setPostData] = useState({});
   const navigate = useNavigate();
   const { id } = useParams();
+  const { state } = useLocation();
   const formattedDate = postData?.createdAt
     ? new window.Date(postData.createdAt.seconds * 1000)
     : null;
@@ -156,12 +157,15 @@ const PostDetail = () => {
       const data = await fetchPostData(id);
       setPostData(data);
     };
-
     fetchData();
   }, [id]);
 
   const handleGoBack = useCallback(() => {
-    navigate(-1);
+    if (state && state.searchResult) {
+      navigate('/search', { state: { searchResult: state.searchResult } });
+    } else {
+      navigate(-1);
+    }
   }, []);
 
   const toggleModal = useCallback(() => {

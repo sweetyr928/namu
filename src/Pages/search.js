@@ -22,9 +22,11 @@ const GuideWrapper = styled.section`
 `;
 
 const Search = () => {
-  const [searchInputText, setSearchInputText] = useState('');
-  const [searchResult, setSearchResult] = useState([]);
   const { state } = useLocation();
+  const [searchInputText, setSearchInputText] = useState('');
+  const [searchResult, setSearchResult] = useState(
+    state ? state.searchResult : []
+  );
 
   const stripHTMLTags = (html) => {
     const tmp = document.createElement('div');
@@ -62,7 +64,7 @@ const Search = () => {
 
   useEffect(() => {
     if (searchInputText.trim() !== '') searchPosts(searchInputText);
-    else setSearchResult([]);
+    if (searchInputText.trim() === '' && !state) setSearchResult([]);
   }, [searchInputText, state]);
 
   return (
