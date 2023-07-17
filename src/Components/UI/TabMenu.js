@@ -6,7 +6,6 @@ const TabSection = styled.section`
   flex-direction: column;
   width: 100%;
   height: 100%;
-  justify-content: space-between;
   align-items: center;
 `;
 
@@ -15,20 +14,21 @@ const TabButtonContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: calc(7%);
+  height: 15%;
   button {
     padding: 10px;
     justify-content: center;
     align-items: center;
     background-color: transparent;
     width: 100%;
+    height: 100%;
 `;
 
 const TabCotentContainer = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  height: 80%;
+  height: 100%;
 `;
 
 const TabMenu = ({ tabs }) => {

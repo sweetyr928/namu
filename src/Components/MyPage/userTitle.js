@@ -4,13 +4,12 @@ import { WhiteButton } from '../UI/button';
 const UserTitleContainer = styled.article`
   display: flex;
   flex-direction: column;
-  width: 80%;
+  width: 100%;
   height: 100%;
   justify-content: center;
   align-items: center;
   border-radius: 30px;
   background-color: #c7d36f;
-  margin-right: 50px;
   button {
     margin-bottom: 20px;
   }
@@ -22,7 +21,7 @@ const UserTitleHeader = styled.section`
   height: 17%;
   justify-content: center;
   align-items: center;
-  font-size: 20px;
+  font-size: 23px;
   font-weight: 800;
 `;
 
@@ -38,12 +37,12 @@ const UserTitleList = styled.section`
     justify-content: center;
     align-items: center;
     width: 130px;
-    height: 30px;
-    font-size: 18px;
-    font-weight: 600;
+    height: 40px;
+    font-size: 19px;
+    font-weight: 700;
     background-color: #ffffff;
     margin: 10px;
-    padding: 8px;
+    padding: 10px;
     border-radius: 30px;
   }
 `;
