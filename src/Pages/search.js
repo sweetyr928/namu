@@ -33,39 +33,35 @@ const Search = () => {
   };
 
   const searchPosts = async (text) => {
-    if (text.trim() !== '') {
-      const postsRef = collection(db, 'posts');
-      const q = query(postsRef, orderBy('createdAt', 'desc'));
+    const postsRef = collection(db, 'posts');
+    const q = query(postsRef, orderBy('createdAt', 'desc'));
 
-      try {
-        const querySnapshot = await getDocs(q);
-        const results = [];
+    try {
+      const querySnapshot = await getDocs(q);
+      const results = [];
 
-        querySnapshot.forEach((doc) => {
-          const post = doc.data();
-          const sanitizedContent = stripHTMLTags(post.content);
+      querySnapshot.forEach((doc) => {
+        const post = doc.data();
+        const sanitizedContent = stripHTMLTags(post.content);
 
-          if (
-            post.title.indexOf(text) !== -1 ||
-            (sanitizedContent && sanitizedContent.indexOf(text) !== -1)
-          ) {
-            results.push({ id: doc.id, ...post });
-          }
-        });
+        if (
+          post.title.indexOf(text) !== -1 ||
+          (sanitizedContent && sanitizedContent.indexOf(text) !== -1)
+        ) {
+          results.push({ id: doc.id, ...post });
+        }
+      });
 
-        setSearchResult(results);
-        setSearchInputText('');
-      } catch (error) {
-        console.error('Error searching posts: ', error);
-      }
-    } else {
-      setSearchResult([]);
+      setSearchResult(results);
+    } catch (error) {
+      console.error('Error searching posts: ', error);
     }
   };
 
   useEffect(() => {
-    if (searchInputText.length > 0) searchPosts(searchInputText);
-  }, [searchInputText, searchResult]);
+    if (searchInputText.trim() === '') setSearchResult([]);
+    if (searchInputText.trim() !== '') searchPosts(searchInputText);
+  }, [searchInputText]);
 
   return (
     <PostSection>
