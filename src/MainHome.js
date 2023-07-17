@@ -10,9 +10,9 @@ function MainHome({ uid }) {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/postDetail/:id" element={<PostDetail />} />
-        <Route path="/tag" element={<EditTag />} />
+        <Route path="/" element={<Main uid={uid} />} />
+        <Route path="/postDetail/:id" element={<PostDetail uid={uid} />} />
+        <Route path="/tag" element={<EditTag uid={uid} />} />
         <Route path="/search" element={<Search />} />
         <Route path="/newPost" element={<CreatePost uid={uid} />} />
       </Routes>

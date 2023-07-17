@@ -2,7 +2,9 @@ import styled from 'styled-components';
 import { useState, useCallback, useEffect } from 'react';
 import DOMPurify from 'isomorphic-dompurify';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { doc, getDoc } from 'firebase/firestore';
+import { deleteDoc, doc, getDoc } from 'firebase/firestore';
+import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
+import Swal from 'sweetalert2';
 import { db } from '../firebase';
 import { GreenButton } from '../Components/UI/button';
 import RequestModal from '../Components/Post/requestModal';
@@ -24,10 +26,17 @@ const ContentHeader = styled.header`
   flex-direction: column;
   justify-content: space-around;
   align-items: flex-start;
-  padding: 10px 0px 0px 10px;
+  padding: 0px 0px 0px 10px;
   flex-shrink: 0;
 
-  div {
+  .div-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+  }
+  .title {
     font-size: 18px;
     font-weight: bold;
     margin: 10px 0px 5px 0px;
@@ -40,21 +49,51 @@ const ContentHeader = styled.header`
       font-size: 22px;
     }
   }
+  .icon {
+    margin: 0px 0px 1px 0px;
+    cursor: pointer;
+    font-weight: bold;
+  }
 
   span {
     font-size: 13px;
     font-weight: 500;
     align-self: flex-end;
+    margin: 0px 5px 0px 0px;
 
     @media (min-width: 1024px) {
       font-size: 15px;
-      margin: 0px 0px 0px 0px;
     }
 
     @media (min-width: 1440px) {
       font-size: 17px;
-      margin: 0px 15px 0px 0px;
     }
+  }
+`;
+
+const MenuContainer = styled.div`
+  display: ${(props) => (props.$isMenuOpen ? 'block' : 'none')};
+  position: absolute;
+  top: 30px;
+  right: 3px;
+  background-color: #fff;
+  border: 1px solid #c7d36f;
+  border-radius: 4px;
+  padding: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+`;
+
+const MenuItem = styled.button`
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 5px 5px 5px 5px;
+  font-size: medium;
+  width: 100%;
+  text-align: left;
+
+  &:hover {
+    background-color: #f5f5f5;
   }
 `;
 
@@ -142,8 +181,9 @@ const fetchPostData = async (id) => {
   }
 };
 
-const PostDetail = () => {
+const PostDetail = ({ uid }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [postData, setPostData] = useState({});
   const navigate = useNavigate();
   const { id } = useParams();
@@ -160,6 +200,33 @@ const PostDetail = () => {
     fetchData();
   }, [id]);
 
+  const handleHamburgerClick = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleEdit = () => {
+    // Implement the edit functionality here
+  };
+
+  const handleDelete = async () => {
+    try {
+      const result = await Swal.fire({
+        text: '정말로 이 게시글을 삭제하시겠습니까?',
+        showCancelButton: true,
+        confirmButtonColor: '#c7d36f',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '예, 삭제합니다',
+        cancelButtonText: '취소'
+      });
+
+      if (result.isConfirmed) {
+        await deleteDoc(doc(db, 'posts', id));
+        navigate('/');
+      }
+    } catch (error) {
+      console.error('Error deleting post: ', error);
+    }
+  };
   const handleGoBack = useCallback(() => {
     if (state && state.searchResult) {
       navigate('/search', { state: { searchResult: state.searchResult } });
@@ -190,7 +257,21 @@ const PostDetail = () => {
       ) : null}
       <ContentContainer>
         <ContentHeader>
-          <div>{postData.title}</div>
+          <div className="div-wrapper">
+            <div className="title">{postData.title}</div>
+            {postData.author === uid && (
+              <div className="icon">
+                <MenuRoundedIcon
+                  onClick={handleHamburgerClick}
+                  style={{ color: '#c7d36f', fontSize: '33px' }}
+                />
+              </div>
+            )}
+            <MenuContainer $isMenuOpen={isMenuOpen}>
+              <MenuItem onClick={handleEdit}>수정</MenuItem>
+              <MenuItem onClick={handleDelete}>삭제</MenuItem>
+            </MenuContainer>
+          </div>
           <span>
             {formattedDate && formattedDate.toLocaleString('ko-KR', options)}
           </span>
