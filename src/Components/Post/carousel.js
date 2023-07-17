@@ -50,7 +50,7 @@ const TagWrapper = styled.section`
   button {
     background-color: transparent;
     border: none;
-    margin: 0px 10px 0px 0px;
+    margin: 0px 1px 0px 0px;
     font-size: medium;
     font-weight: 600;
     cursor: pointer;
