@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 import { useState, useCallback, useEffect } from 'react';
 import DOMPurify from 'isomorphic-dompurify';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { doc, getDoc } from 'firebase/firestore';
-import { db } from '../../firebase';
-import { GreenButton } from '../UI/button';
-import RequestModal from './requestModal';
+import { db } from '../firebase';
+import { GreenButton } from '../Components/UI/button';
+import RequestModal from '../Components/Post/requestModal';
 import 'react-quill/dist/quill.core.css';
+import PostSection from '../Components/UI/postSection';
 
 const ContentContainer = styled.article`
   display: flex;
@@ -141,26 +142,27 @@ const fetchPostData = async (id) => {
   }
 };
 
-const PostDetail = ({ setComp, selectedId, setSelectedId }) => {
+const PostDetail = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [postData, setPostData] = useState({});
   const navigate = useNavigate();
+  const { id } = useParams();
   const formattedDate = postData?.createdAt
     ? new window.Date(postData.createdAt.seconds * 1000)
     : null;
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await fetchPostData(selectedId);
+      const data = await fetchPostData(id);
       setPostData(data);
     };
 
     fetchData();
-  }, [selectedId]);
+  }, [id]);
 
-  const handleGoBack = () => {
+  const handleGoBack = useCallback(() => {
     navigate(-1);
-  };
+  }, []);
 
   const toggleModal = useCallback(() => {
     setIsModalOpen(!isModalOpen);
@@ -175,7 +177,7 @@ const PostDetail = ({ setComp, selectedId, setSelectedId }) => {
   };
 
   return (
-    <>
+    <PostSection>
       {isModalOpen ? (
         <>
           <RequestModal toggleModal={toggleModal}></RequestModal>
@@ -203,7 +205,7 @@ const PostDetail = ({ setComp, selectedId, setSelectedId }) => {
           <GreenButton onClick={handleGoBack}>뒤로 가기</GreenButton>
         </ContentFooter>
       </ContentContainer>
-    </>
+    </PostSection>
   );
 };
 

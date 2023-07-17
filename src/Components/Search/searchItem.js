@@ -83,9 +83,9 @@ const SearchItem = ({ title, content, createdAt, id }) => {
   const formattedDate = new window.Date(createdAt.seconds * 1000);
   const navigate = useNavigate();
 
-  const handleNavigate = () => {
-    navigate('/', { state: { comp: 'detail', id } });
-  };
+  const handleNavigate = useCallback(() => {
+    navigate(`/postDetail/${id}`);
+  }, [id]);
 
   const handleMouse = useCallback(() => {
     setIsHovered(!isHovered);

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { collection, query, getDocs, orderBy } from 'firebase/firestore';
+import { useLocation } from 'react-router-dom';
 import { db } from '../firebase';
 import PostSection from '../Components/UI/postSection';
 import SearchInput from '../Components/UI/searchInput';
@@ -23,6 +24,7 @@ const GuideWrapper = styled.section`
 const Search = () => {
   const [searchInputText, setSearchInputText] = useState('');
   const [searchResult, setSearchResult] = useState([]);
+  const { state } = useLocation();
 
   const stripHTMLTags = (html) => {
     const tmp = document.createElement('div');
@@ -59,9 +61,9 @@ const Search = () => {
   };
 
   useEffect(() => {
-    if (searchInputText.trim() === '') setSearchResult([]);
     if (searchInputText.trim() !== '') searchPosts(searchInputText);
-  }, [searchInputText]);
+    else setSearchResult([]);
+  }, [searchInputText, state]);
 
   return (
     <PostSection>
@@ -78,6 +80,7 @@ const Search = () => {
               content={el.content}
               createdAt={el.createdAt}
               id={el.id}
+              searchResult={searchResult}
             />
           ))
         ) : (

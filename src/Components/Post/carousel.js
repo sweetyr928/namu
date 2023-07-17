@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useCallback } from 'react';
 import Slider from 'react-slick';
 import styled from 'styled-components';
 import 'slick-carousel/slick/slick.css';
@@ -12,6 +12,7 @@ import {
   getDoc,
   orderBy
 } from 'firebase/firestore';
+import { useNavigate } from 'react-router-dom';
 import { db } from '../../firebase';
 import CarouselItem from './carouselItem';
 import { GreenButton } from '../UI/button';
@@ -86,10 +87,11 @@ const GuideWrapper = styled.article`
   }
 `;
 
-const Carousel = ({ setComp, tagList, setSelectedId }) => {
+const Carousel = ({ setComp, tagList }) => {
   const carouselRef = useRef(null);
   const [tagIdx, setTagIdx] = useState(0);
   const [carouselData, setCarouselData] = useState({});
+  const navigate = useNavigate();
 
   const fetchPostsByTags = async (selectedTagIdx) => {
     try {
@@ -121,6 +123,10 @@ const Carousel = ({ setComp, tagList, setSelectedId }) => {
       console.error('Error fetching posts by tags: ', error);
     }
   };
+
+  const handleNavigate = useCallback(() => {
+    navigate('/tag');
+  }, []);
 
   useEffect(() => {
     fetchPostsByTags(tagIdx);
@@ -160,7 +166,7 @@ const Carousel = ({ setComp, tagList, setSelectedId }) => {
         <CarouselWrapper>
           <TagWrapper>
             <p>{`# ${tagList[tagIdx]}`}</p>
-            <button onClick={() => setComp('tag')}>태그 추가</button>
+            <button onClick={handleNavigate}>태그 추가</button>
           </TagWrapper>
           <Slider ref={carouselRef} {...settings}>
             {tagList.map((_, idx) => (
@@ -174,7 +180,6 @@ const Carousel = ({ setComp, tagList, setSelectedId }) => {
                       createdAt={post.createdAt}
                       id={post.id}
                       setComp={setComp}
-                      setSelectedId={setSelectedId}
                     />
                   ))}
               </CarouselItemContainer>
@@ -185,7 +190,7 @@ const Carousel = ({ setComp, tagList, setSelectedId }) => {
         <GuideWrapper>
           <div>아직 태그를 설정하지 않았어요!</div>
           <div>지금 태그를 설정하러 가볼까요?</div>
-          <GreenButton>태그 설정하러 가기</GreenButton>
+          <GreenButton onClick={handleNavigate}>태그 설정하러 가기</GreenButton>
         </GuideWrapper>
       )}
     </>

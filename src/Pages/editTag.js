@@ -1,19 +1,14 @@
 import styled from 'styled-components';
 import { useState, useCallback, useEffect } from 'react';
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-  doc,
-  getDoc
-} from 'firebase/firestore';
-import { db } from '../../firebase';
-import SearchInput from '../UI/searchInput';
-import SearchedTagResult from './tagList';
-import TagItem from './tagItem';
-import TagInput from '../UI/tagInput';
-import { GreenButton } from '../UI/button';
+import { useNavigate } from 'react-router-dom';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../firebase';
+import SearchInput from '../Components/UI/searchInput';
+import SearchedTagResult from '../Components/Tag/tagList';
+import TagItem from '../Components/Tag/tagItem';
+import TagInput from '../Components/UI/tagInput';
+import { GreenButton } from '../Components/UI/button';
+import PostSection from '../Components/UI/postSection';
 
 const EditTagContainer = styled.article`
   width: 100%;
@@ -49,17 +44,18 @@ const GuideWrapper = styled.section`
   }
 `;
 
-const EditTag = ({ setComp }) => {
+const EditTag = () => {
   const [tagList, setTagList] = useState([]);
   const [searchInputText, setSearchInputText] = useState('');
   const [searchedTagList, setSearchedTagList] = useState([]);
+  const navigate = useNavigate();
 
   const handleSave = () => {
-    setComp('list');
+    navigate('/');
   };
 
   const handleGoBack = useCallback(() => {
-    setComp('list');
+    navigate('/');
   }, []);
 
   const searchTags = async (text) => {
@@ -94,39 +90,41 @@ const EditTag = ({ setComp }) => {
   }, [searchInputText]);
 
   return (
-    <EditTagContainer>
-      <SearchInput
-        placeholder={`추가하고픈 태그를 검색해주세요!`}
-        setSearchInputText={setSearchInputText}
-      />
-      <SearchedTagResult>
-        {searchedTagList.length ? (
-          searchedTagList.map((el, idx) => (
-            <TagItem
-              key={idx}
-              category={el.id}
-              postCount={el.postCount}
-              tagList={tagList}
-              setTagList={setTagList}
-            />
-          ))
-        ) : (
-          <GuideWrapper>
-            <div>검색 결과가 없습니다.</div>
-          </GuideWrapper>
-        )}
-      </SearchedTagResult>
-      <TagInput
-        tagList={tagList}
-        setTagList={setTagList}
-        explainText={`나의 태그 목록`}
-        inputWidth={90}
-      />
-      <ButtonWrapper>
-        <GreenButton onClick={handleSave}>저장</GreenButton>
-        <GreenButton onClick={handleGoBack}>취소</GreenButton>
-      </ButtonWrapper>
-    </EditTagContainer>
+    <PostSection>
+      <EditTagContainer>
+        <SearchInput
+          placeholder={`추가하고픈 태그를 검색해주세요!`}
+          setSearchInputText={setSearchInputText}
+        />
+        <SearchedTagResult>
+          {searchedTagList.length ? (
+            searchedTagList.map((el, idx) => (
+              <TagItem
+                key={idx}
+                category={el.id}
+                postCount={el.postCount}
+                tagList={tagList}
+                setTagList={setTagList}
+              />
+            ))
+          ) : (
+            <GuideWrapper>
+              <div>검색 결과가 없습니다.</div>
+            </GuideWrapper>
+          )}
+        </SearchedTagResult>
+        <TagInput
+          tagList={tagList}
+          setTagList={setTagList}
+          explainText={`나의 태그 목록`}
+          inputWidth={90}
+        />
+        <ButtonWrapper>
+          <GreenButton onClick={handleSave}>저장</GreenButton>
+          <GreenButton onClick={handleGoBack}>취소</GreenButton>
+        </ButtonWrapper>
+      </EditTagContainer>
+    </PostSection>
   );
 };
 

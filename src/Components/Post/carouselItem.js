@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import styled, { keyframes } from 'styled-components';
 import DOMPurify from 'isomorphic-dompurify';
+import { useNavigate } from 'react-router-dom';
 
 const ItemWrapper = styled.article`
   display: flex;
@@ -81,24 +82,17 @@ const AnimatedCarouselItem = styled.div`
   animation: ${fadeIn} 0.5s ease;
 `;
 
-const CarouselItem = ({
-  title,
-  content,
-  createdAt,
-  id,
-  setComp,
-  setSelectedId
-}) => {
+const CarouselItem = ({ title, content, createdAt, id }) => {
   const [isHovered, setIsHovered] = useState(false);
   const formattedDate = new window.Date(createdAt.seconds * 1000);
+  const navigate = useNavigate();
 
   const handleMouse = useCallback(() => {
     setIsHovered(!isHovered);
   }, [isHovered]);
 
-  const handleClick = useCallback(() => {
-    setComp('detail');
-    setSelectedId(id);
+  const handleNavigate = useCallback(() => {
+    navigate(`/postDetail/${id}`);
   }, [id]);
 
   const truncateContent = (text, maxLength) => {
@@ -135,7 +129,7 @@ const CarouselItem = ({
       style={{
         backgroundColor: isHovered ? '#f8f8f8' : '#ffffff'
       }}
-      onClick={handleClick}
+      onClick={handleNavigate}
     >
       <AnimatedCarouselItem>
         <Title
