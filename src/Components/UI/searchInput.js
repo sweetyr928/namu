@@ -52,6 +52,7 @@ const SearchInput = ({ placeholder, setSearchInputText }) => {
       <Input
         type="text"
         placeholder={`${placeholder}`}
+        value={inputText}
         onChange={handleChange}
       />
       <SearchIcon fontSize="small" />

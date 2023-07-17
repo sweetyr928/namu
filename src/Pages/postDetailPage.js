@@ -2,14 +2,13 @@ import styled from 'styled-components';
 import { useState, useCallback, useEffect } from 'react';
 import DOMPurify from 'isomorphic-dompurify';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { deleteDoc, doc, getDoc } from 'firebase/firestore';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import Swal from 'sweetalert2';
-import { db } from '../firebase';
 import { GreenButton } from '../Components/UI/button';
 import RequestModal from '../Components/Post/requestModal';
 import 'react-quill/dist/quill.core.css';
 import PostSection from '../Components/UI/postSection';
+import { getPost, deletePost } from '../Components/API/Post/fetchPost';
 
 const ContentContainer = styled.article`
   display: flex;
@@ -90,7 +89,7 @@ const MenuItem = styled.button`
   padding: 5px 5px 5px 5px;
   font-size: medium;
   width: 100%;
-  text-align: left;
+  text-align: center;
 
   &:hover {
     background-color: #f5f5f5;
@@ -165,23 +164,7 @@ const ModalBackground = styled.div`
   align-items: center;
 `;
 
-const fetchPostData = async (id) => {
-  try {
-    const docRef = doc(db, 'posts', id);
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      const postData = docSnap.data();
-      return postData;
-    } else {
-      console.log('No such document!');
-    }
-  } catch (error) {
-    console.error('Error fetching post data: ', error);
-  }
-};
-
-const PostDetail = ({ uid }) => {
+const PostDetailPage = ({ uid }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [postData, setPostData] = useState({});
@@ -194,7 +177,7 @@ const PostDetail = ({ uid }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await fetchPostData(id);
+      const data = await getPost(id);
       setPostData(data);
     };
     fetchData();
@@ -205,8 +188,20 @@ const PostDetail = ({ uid }) => {
   };
 
   const handleEdit = () => {
-    // Implement the edit functionality here
+    navigate(`/posts/${id}/edit`, { state: { id, postData } });
   };
+
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'top',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: false,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer);
+      toast.addEventListener('mouseleave', Swal.resumeTimer);
+    }
+  });
 
   const handleDelete = async () => {
     try {
@@ -220,8 +215,19 @@ const PostDetail = ({ uid }) => {
       });
 
       if (result.isConfirmed) {
-        await deleteDoc(doc(db, 'posts', id));
-        navigate('/');
+        const isSuccess = await deletePost(id);
+        if (isSuccess) {
+          Toast.fire({
+            icon: 'success',
+            title: '삭제 완료되었습니다.'
+          });
+          navigate(`/`);
+        } else {
+          Toast.fire({
+            icon: 'error',
+            title: '삭제 실패했습니다. 다시 시도해주십시오.'
+          });
+        }
       }
     } catch (error) {
       console.error('Error deleting post: ', error);
@@ -294,4 +300,4 @@ const PostDetail = ({ uid }) => {
   );
 };
 
-export default PostDetail;
+export default PostDetailPage;

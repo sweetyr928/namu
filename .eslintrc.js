@@ -42,7 +42,8 @@ module.exports = {
     'no-shadow': 'off',
     'consistent-return': 'off',
     'no-else-return': 'off',
-    'no-console': 'off'
+    'no-console': 'off',
+    'import/prefer-default-export': 'off'
   },
   parser: '@babel/eslint-parser',
   settings: {

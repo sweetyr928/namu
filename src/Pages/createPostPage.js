@@ -1,20 +1,13 @@
 import { useState, useCallback } from 'react';
-import {
-  collection,
-  addDoc,
-  serverTimestamp,
-  doc,
-  getDoc,
-  writeBatch
-} from 'firebase/firestore';
+import { serverTimestamp } from 'firebase/firestore';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import { db } from '../firebase';
 import PostSection from '../Components/UI/postSection';
 import TextEditor from '../Components/Post/textEditor';
 import TagInput from '../Components/UI/tagInput';
 import { GreenButton } from '../Components/UI/button';
+import { createPost } from '../Components/API/Post/fetchPost';
 
 const TitleInput = styled.input`
   border: 2px solid #c7d36f;
@@ -53,52 +46,15 @@ const ButtonWrapper = styled.footer`
   }
 `;
 
-const CreatePost = ({ uid }) => {
+const CreatePostPage = ({ uid }) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [tagList, setTagList] = useState([]);
-  let newPostID = '';
+
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setTitle(e.target.value);
-  };
-
-  const createPost = async () => {
-    const currentTime = serverTimestamp();
-    try {
-      const docRef = await addDoc(collection(db, 'posts'), {
-        author: uid,
-        content,
-        title,
-        tags: tagList,
-        isSolved: false,
-        createdAt: currentTime
-      });
-
-      newPostID = docRef.id;
-
-      const tagsRef = collection(db, 'tags');
-      const batch = writeBatch(db);
-
-      for (const tag of tagList) {
-        const tagDocRef = doc(tagsRef, tag);
-        const tagDoc = await getDoc(tagDocRef);
-
-        if (tagDoc.exists()) {
-          batch.update(tagDocRef, { [docRef.id]: true });
-        } else {
-          const initialTagData = {
-            [docRef.id]: true
-          };
-          batch.set(tagDocRef, initialTagData);
-        }
-      }
-
-      await batch.commit();
-    } catch (e) {
-      console.error('Error adding document: ', e);
-    }
   };
 
   const Toast = Swal.mixin({
@@ -120,12 +76,29 @@ const CreatePost = ({ uid }) => {
         title: '모든 항목(제목/내용/태그)을 정확히 입력했는지 확인해주세요.'
       });
     } else {
-      await createPost();
-      Toast.fire({
-        icon: 'success',
-        title: '질문이 등록되었습니다.'
-      });
-      navigate('/', { state: { comp: 'detail', id: newPostID } });
+      const currentTime = serverTimestamp();
+      const postData = {
+        author: uid,
+        title,
+        content,
+        tags: tagList,
+        isSolved: false,
+        createdAt: currentTime
+      };
+      const newPostID = await createPost(postData);
+
+      if (newPostID) {
+        Toast.fire({
+          icon: 'success',
+          title: '질문이 등록되었습니다.'
+        });
+        navigate(`/posts/${newPostID}`);
+      } else {
+        Toast.fire({
+          icon: 'error',
+          title: '질문이 등록에 실패했습니다.'
+        });
+      }
     }
   };
 
@@ -138,6 +111,7 @@ const CreatePost = ({ uid }) => {
       <TitleInput
         type="text"
         placeholder="제목을 입력하세요."
+        value={title}
         onChange={handleChange}
       />
       <EditorWrapper>
@@ -157,4 +131,4 @@ const CreatePost = ({ uid }) => {
   );
 };
 
-export default CreatePost;
+export default CreatePostPage;

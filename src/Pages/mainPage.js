@@ -2,7 +2,7 @@ import { useState } from 'react';
 import PostSection from '../Components/UI/postSection';
 import Carousel from '../Components/Post/carousel';
 
-const Main = () => {
+const MainPage = () => {
   const [tagList, setTagList] = useState(['리액트', '뷰']);
 
   return (
@@ -12,4 +12,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default MainPage;

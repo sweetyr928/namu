@@ -3,19 +3,10 @@ import Slider from 'react-slick';
 import styled from 'styled-components';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import {
-  doc,
-  collection,
-  query,
-  where,
-  onSnapshot,
-  getDoc,
-  orderBy
-} from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
-import { db } from '../../firebase';
 import CarouselItem from './carouselItem';
 import { GreenButton } from '../UI/button';
+import { getPostsByTags } from '../API/Post/fetchPost';
 
 const CarouselWrapper = styled.article`
   width: calc(90%);
@@ -93,43 +84,16 @@ const Carousel = ({ setComp, tagList }) => {
   const [carouselData, setCarouselData] = useState({});
   const navigate = useNavigate();
 
-  const fetchPostsByTags = async (selectedTagIdx) => {
-    try {
-      const updatedCarouselData = JSON.parse(JSON.stringify(carouselData));
-
-      const tagRef = doc(db, 'tags', tagList[selectedTagIdx]);
-      const tagSnapshot = await getDoc(tagRef);
-
-      if (tagSnapshot.exists()) {
-        const q = query(
-          collection(db, 'posts'),
-          where('tags', 'array-contains', tagList[selectedTagIdx]),
-          orderBy('createdAt', 'desc')
-        );
-        const unsubscribe = onSnapshot(q, (snapshot) => {
-          const tagPosts = [];
-          snapshot.forEach((d) => {
-            const postData = d.data();
-            tagPosts.push({ id: d.id, ...postData });
-          });
-
-          updatedCarouselData[tagList[selectedTagIdx]] = tagPosts;
-          setCarouselData(updatedCarouselData);
-        });
-
-        return () => unsubscribe();
-      }
-    } catch (error) {
-      console.error('Error fetching posts by tags: ', error);
-    }
-  };
-
   const handleNavigate = useCallback(() => {
     navigate('/tag');
   }, []);
 
   useEffect(() => {
-    fetchPostsByTags(tagIdx);
+    const fetchData = async () => {
+      const resultData = await getPostsByTags(tagIdx, carouselData, tagList);
+      setCarouselData(resultData);
+    };
+    fetchData();
   }, [tagIdx]);
 
   const settings = {

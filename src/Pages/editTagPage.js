@@ -10,7 +10,7 @@ import TagInput from '../Components/UI/tagInput';
 import { GreenButton } from '../Components/UI/button';
 import PostSection from '../Components/UI/postSection';
 
-const EditTagContainer = styled.article`
+const EditTagPageContainer = styled.article`
   width: 100%;
   height: 100%;
   display: flex;
@@ -44,7 +44,7 @@ const GuideWrapper = styled.section`
   }
 `;
 
-const EditTag = () => {
+const EditTagPage = () => {
   const [tagList, setTagList] = useState([]);
   const [searchInputText, setSearchInputText] = useState('');
   const [searchedTagList, setSearchedTagList] = useState([]);
@@ -91,7 +91,7 @@ const EditTag = () => {
 
   return (
     <PostSection>
-      <EditTagContainer>
+      <EditTagPageContainer>
         <SearchInput
           placeholder={`추가하고픈 태그를 검색해주세요!`}
           setSearchInputText={setSearchInputText}
@@ -123,9 +123,9 @@ const EditTag = () => {
           <GreenButton onClick={handleSave}>저장</GreenButton>
           <GreenButton onClick={handleGoBack}>취소</GreenButton>
         </ButtonWrapper>
-      </EditTagContainer>
+      </EditTagPageContainer>
     </PostSection>
   );
 };
 
-export default EditTag;
+export default EditTagPage;

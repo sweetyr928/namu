@@ -92,7 +92,7 @@ const CarouselItem = ({ title, content, createdAt, id }) => {
   }, [isHovered]);
 
   const handleNavigate = useCallback(() => {
-    navigate(`/postDetail/${id}`);
+    navigate(`/posts/${id}`);
   }, [id]);
 
   const truncateContent = (text, maxLength) => {

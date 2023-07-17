@@ -84,7 +84,7 @@ const SearchItem = ({ title, content, createdAt, id, searchResult }) => {
   const navigate = useNavigate();
 
   const handleNavigate = useCallback(() => {
-    navigate(`/postDetail/${id}`, { state: { searchResult } });
+    navigate(`/posts/${id}`, { state: { searchResult } });
   }, [id]);
 
   const handleMouse = useCallback(() => {
