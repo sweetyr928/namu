@@ -11,7 +11,7 @@ import {
 } from 'firebase/auth';
 import { auth } from '../../firebase';
 
-const HeaderContainer = styled.div`
+const HeaderContainer = styled.header`
   height: 50px;
   display: flex;
   justify-content: space-between;
@@ -21,7 +21,7 @@ const HeaderContainer = styled.div`
   padding: 10px;
 `;
 
-const ElementWrapper = styled.div`
+const ElementWrapper = styled.article`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -38,10 +38,8 @@ const ElementWrapper = styled.div`
   }
 `;
 
-const IconWrapper = styled.div`
-  margin: 3px 10px 0px 0px;
-  justify-content: center;
-  align-items: center;
+const IconWrapper = styled.section`
+  margin: 0px 10px 0px 0px;
 `;
 
 const LogoDetail = styled.div`

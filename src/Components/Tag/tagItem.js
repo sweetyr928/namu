@@ -1,7 +1,8 @@
 import styled from 'styled-components';
+import Swal from 'sweetalert2';
 import { GreenButton } from '../UI/button';
 
-const ResultItem = styled.div`
+const ResultItem = styled.article`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -40,9 +41,25 @@ const ResultItem = styled.div`
 `;
 
 const TagItem = ({ category, postCount, tagList, setTagList }) => {
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'top',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: false,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer);
+      toast.addEventListener('mouseleave', Swal.resumeTimer);
+    }
+  });
+
   const handleAddTag = () => {
     if (!tagList.includes(category)) setTagList([...tagList, category]);
-    else alert('이미 추가된 카테고리 입니다!');
+    else
+      Toast.fire({
+        icon: 'error',
+        title: '이미 추가된 태그입니다.'
+      });
   };
 
   return (

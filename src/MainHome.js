@@ -1,16 +1,22 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Main from './Pages/main';
-import Search from './Pages/search';
-import CreatePost from './Pages/post';
+import MainPage from './Pages/mainPage';
+import SearchPage from './Pages/searchPage';
+import CreatePostPage from './Pages/createPostPage';
 import ChatSection from './Components/UI/chatSection';
+import PostDetailPage from './Pages/postDetailPage';
+import EditTagPage from './Pages/editTagPage';
+import UpdatePostPage from './Pages/updatePostPage';
 
-function MainHome() {
+function MainHome({ uid }) {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/search" element={<Search />} />
-        <Route path="/newPost" element={<CreatePost />} />
+        <Route path="/" element={<MainPage uid={uid} />} />
+        <Route path="/posts/:id" element={<PostDetailPage uid={uid} />} />
+        <Route path="/tag" element={<EditTagPage uid={uid} />} />
+        <Route path="/search" element={<SearchPage />} />
+        <Route path="/newPost" element={<CreatePostPage uid={uid} />} />
+        <Route path="/posts/:id/edit" element={<UpdatePostPage uid={uid} />} />
       </Routes>
       <ChatSection></ChatSection>
     </>

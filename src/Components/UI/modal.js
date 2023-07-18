@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const ModalContent = styled.div`
+const ModalContent = styled.article`
   width: 40vw;
   height: 43vh;
   position: fixed;

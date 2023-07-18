@@ -1,7 +1,7 @@
 import styled, { createGlobalStyle } from 'styled-components';
 import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import SideBar from './Components/UI/Sidebar';
+import SideBar from './Components/UI/sidebar';
 import Header from './Components/UI/header';
 import MyPage from './Pages/mypage';
 import MainHome from './MainHome';
@@ -27,7 +27,7 @@ const AppContainer = styled.div`
   overflow: hidden;
 `;
 
-const MainContainer = styled.div`
+const MainContainer = styled.main`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -37,6 +37,7 @@ const MainContainer = styled.div`
 
 function App() {
   const [name, setName] = useState('');
+  const [uid, setUid] = useState('');
   const [userData, setUserData] = useState(null);
   const [isLogin, setIsLogin] = useState(false);
 
@@ -46,6 +47,7 @@ function App() {
       if (sessions[i].includes('firebase:authUser:')) {
         setIsLogin(true);
         setName(JSON.parse(sessionStorage.getItem(sessions[i])).displayName);
+        setUid(JSON.parse(sessionStorage.getItem(sessions[i])).uid);
       }
     }
   }, [userData]);
@@ -62,7 +64,7 @@ function App() {
         <Router>
           <SideBar />
           <Routes>
-            <Route path="/*" element={<MainHome />} />
+            <Route path="/*" element={<MainHome uid={uid} />} />
             <Route path="/mypage" element={<MyPage name={name} />} />
           </Routes>
         </Router>

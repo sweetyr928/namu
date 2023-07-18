@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
-import { collection, query, getDocs, orderBy } from 'firebase/firestore';
-import { db } from '../firebase';
+import { useLocation } from 'react-router-dom';
 import PostSection from '../Components/UI/postSection';
 import SearchInput from '../Components/UI/searchInput';
 import SearchPostResult from '../Components/Search/searchList';
 import SearchItem from '../Components/Search/searchItem';
+import { searchPosts } from '../Components/API/Post/fetchPost';
 
-const GuideWrapper = styled.div`
+const GuideWrapper = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -20,38 +20,23 @@ const GuideWrapper = styled.div`
   }
 `;
 
-const Search = () => {
+const SearchPage = () => {
+  const { state } = useLocation();
   const [searchInputText, setSearchInputText] = useState('');
-  const [searchResult, setSearchResult] = useState([]);
-
-  const searchPosts = async (text) => {
-    const postsRef = collection(db, 'posts');
-    const q = query(postsRef, orderBy('createdAt', 'desc'));
-
-    try {
-      const querySnapshot = await getDocs(q);
-      const results = [];
-
-      querySnapshot.forEach((doc) => {
-        const post = doc.data();
-        if (
-          post.title.indexOf(text) !== -1 ||
-          post.content.indexOf(text) !== -1
-        ) {
-          results.push({ id: doc.id, ...post });
-        }
-      });
-
-      setSearchResult(results);
-      setSearchInputText('');
-    } catch (error) {
-      console.error('Error searching posts: ', error);
-    }
-  };
+  const [searchResult, setSearchResult] = useState(
+    state ? state.searchResult : []
+  );
 
   useEffect(() => {
-    if (searchInputText.length) searchPosts(searchInputText);
-  }, [searchInputText]);
+    const fetchSearchResult = async () => {
+      if (searchInputText.trim() !== '') {
+        const result = await searchPosts(searchInputText);
+        setSearchResult(result);
+      }
+      if (searchInputText.trim() === '' && !state) setSearchResult([]);
+    };
+    fetchSearchResult();
+  }, [searchInputText, state]);
 
   return (
     <PostSection>
@@ -68,6 +53,7 @@ const Search = () => {
               content={el.content}
               createdAt={el.createdAt}
               id={el.id}
+              searchResult={searchResult}
             />
           ))
         ) : (
@@ -80,4 +66,4 @@ const Search = () => {
   );
 };
 
-export default Search;
+export default SearchPage;

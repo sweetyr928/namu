@@ -41,7 +41,9 @@ module.exports = {
     'no-await-in-loop': 'off',
     'no-shadow': 'off',
     'consistent-return': 'off',
-    'no-else-return': 'off'
+    'no-else-return': 'off',
+    'no-console': 'off',
+    'import/prefer-default-export': 'off'
   },
   parser: '@babel/eslint-parser',
   settings: {

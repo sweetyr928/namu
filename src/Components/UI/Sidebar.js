@@ -1,12 +1,12 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import {
   Home,
   SearchRounded,
   ModeEditOutlineRounded
 } from '@mui/icons-material';
 
-const SideBarContainer = styled.div`
+const SideBarContainer = styled.nav`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -42,8 +42,27 @@ const CustomIcon = styled(({ color, hoverColor, ...props }) => (
   }
 `;
 
-const SideBar = () => (
-  <SideBarContainer>
+const SideBar = () => {
+  const location = useLocation();
+  const isHomePage = location.pathname === '/';
+
+  const homeLink = isHomePage ? (
+    <Link
+      to="/"
+      state={{
+        comp: 'list'
+      }}
+    >
+      <IconWrapper>
+        <CustomIcon
+          component={Home}
+          color="#3F3F3F"
+          hoverColor="#c7d36f"
+          sx={{ fontSize: 35 }}
+        />
+      </IconWrapper>
+    </Link>
+  ) : (
     <Link to="/">
       <IconWrapper>
         <CustomIcon
@@ -54,27 +73,33 @@ const SideBar = () => (
         />
       </IconWrapper>
     </Link>
-    <Link to="/search">
-      <IconWrapper>
-        <CustomIcon
-          component={SearchRounded}
-          color="#3F3F3F"
-          hoverColor="#c7d36f"
-          sx={{ fontSize: 35 }}
-        />
-      </IconWrapper>
-    </Link>
-    <Link to="/newPost">
-      <IconWrapper>
-        <CustomIcon
-          component={ModeEditOutlineRounded}
-          color="#3F3F3F"
-          hoverColor="#c7d36f"
-          sx={{ fontSize: 35 }}
-        />
-      </IconWrapper>
-    </Link>
-  </SideBarContainer>
-);
+  );
+
+  return (
+    <SideBarContainer>
+      {homeLink}
+      <Link to="/search">
+        <IconWrapper>
+          <CustomIcon
+            component={SearchRounded}
+            color="#3F3F3F"
+            hoverColor="#c7d36f"
+            sx={{ fontSize: 35 }}
+          />
+        </IconWrapper>
+      </Link>
+      <Link to="/newPost">
+        <IconWrapper>
+          <CustomIcon
+            component={ModeEditOutlineRounded}
+            color="#3F3F3F"
+            hoverColor="#c7d36f"
+            sx={{ fontSize: 35 }}
+          />
+        </IconWrapper>
+      </Link>
+    </SideBarContainer>
+  );
+};
 
 export default SideBar;

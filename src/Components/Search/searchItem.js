@@ -1,17 +1,18 @@
 import styled, { keyframes } from 'styled-components';
 import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import DOMPurify from 'isomorphic-dompurify';
 
-const ItemWrapper = styled.div`
+const ItemWrapper = styled.article`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
   margin: 0px 10px 0px 0px;
-  padding: 10px 10px 10px 10px;
+  padding: 20px 20px 10px 20px;
   border-bottom: 2px solid #c7d36f;
   width: 98%;
-  height: calc(13%);
+  height: calc(12%);
   cursor: pointer;
   transition: all 0.3s ease;
 
@@ -77,18 +78,45 @@ const AnimatedCarouselItem = styled.div`
   animation: ${fadeIn} 0.5s ease;
 `;
 
-const SearchItem = ({ title, content, createdAt, id }) => {
+const SearchItem = ({ title, content, createdAt, id, searchResult }) => {
   const [isHovered, setIsHovered] = useState(false);
   const formattedDate = new window.Date(createdAt.seconds * 1000);
   const navigate = useNavigate();
 
-  const handleNavigate = () => {
-    navigate('/', { state: { comp: 'detail', id } });
-  };
+  const handleNavigate = useCallback(() => {
+    navigate(`/posts/${id}`, { state: { searchResult } });
+  }, [id]);
 
   const handleMouse = useCallback(() => {
     setIsHovered(!isHovered);
   }, [isHovered]);
+
+  const truncateContent = (text, maxLength) => {
+    if (text.length > maxLength) {
+      return `${text.slice(0, maxLength)}...`;
+    }
+
+    return text;
+  };
+
+  const stripHTMLTags = (html) => {
+    const tmp = document.createElement('div');
+    tmp.innerHTML = html;
+
+    return tmp.textContent || tmp.innerText || '';
+  };
+
+  const mergedContent = content.replace(/\n/g, '');
+  const sanitizedContent = stripHTMLTags(mergedContent);
+  const truncatedContent = truncateContent(sanitizedContent, 62);
+
+  const options = {
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true
+  };
 
   return (
     <ItemWrapper
@@ -107,15 +135,18 @@ const SearchItem = ({ title, content, createdAt, id }) => {
         >
           {title}
         </Title>
-        <Content
-          style={{
-            color: isHovered ? '#555555' : '#3f3f3f'
-          }}
-        >
-          {content}
-        </Content>
+        {truncatedContent && (
+          <Content
+            style={{
+              color: isHovered ? '#555555' : '#3f3f3f'
+            }}
+            dangerouslySetInnerHTML={{
+              __html: DOMPurify.sanitize(truncatedContent)
+            }}
+          ></Content>
+        )}
       </AnimatedCarouselItem>
-      <Date>{formattedDate.toLocaleString()}</Date>
+      <Date>{formattedDate.toLocaleString('ko-KR', options)}</Date>
     </ItemWrapper>
   );
 };
