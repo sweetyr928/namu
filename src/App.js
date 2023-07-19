@@ -2,7 +2,7 @@ import styled, { createGlobalStyle } from 'styled-components';
 import { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import SideBar from './Components/UI/sidebar';
+import SideBar from './Components/UI/Sidebar';
 import Header from './Components/UI/header';
 import MyPage from './Pages/mypage';
 import MainHome from './MainHome';
@@ -47,13 +47,13 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <AppContainer>
         <GlobalStyle />
-        <Header isLogin={isLogin} setUserData={setUserData} name={name} />
+        <Header />
         <MainContainer>
           <Router>
             <SideBar />
             <Routes>
-              <Route path="/*" element={<MainHome uid={uid} />} />
-              <Route path="/mypage" element={<MyPage name={name} />} />
+              <Route path="/*" element={<MainHome />} />
+              <Route path="/mypage" element={<MyPage />} />
             </Routes>
           </Router>
         </MainContainer>

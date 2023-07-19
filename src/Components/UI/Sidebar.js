@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useLocation, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {
   Home,
   SearchRounded,
@@ -42,9 +42,7 @@ const CustomIcon = styled(({ color, hoverColor, ...props }) => (
   }
 `;
 
-const SideBar = () => {
-  const location = useLocation();
-
+function SideBar() {
   return (
     <SideBarContainer>
       <Link to="/">
@@ -79,6 +77,6 @@ const SideBar = () => {
       </Link>
     </SideBarContainer>
   );
-};
+}
 
 export default SideBar;
