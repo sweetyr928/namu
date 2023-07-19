@@ -44,40 +44,19 @@ const CustomIcon = styled(({ color, hoverColor, ...props }) => (
 
 const SideBar = () => {
   const location = useLocation();
-  const isHomePage = location.pathname === '/';
-
-  const homeLink = isHomePage ? (
-    <Link
-      to="/"
-      state={{
-        comp: 'list'
-      }}
-    >
-      <IconWrapper>
-        <CustomIcon
-          component={Home}
-          color="#3F3F3F"
-          hoverColor="#c7d36f"
-          sx={{ fontSize: 35 }}
-        />
-      </IconWrapper>
-    </Link>
-  ) : (
-    <Link to="/">
-      <IconWrapper>
-        <CustomIcon
-          component={Home}
-          color="#3F3F3F"
-          hoverColor="#c7d36f"
-          sx={{ fontSize: 35 }}
-        />
-      </IconWrapper>
-    </Link>
-  );
 
   return (
     <SideBarContainer>
-      {homeLink}
+      <Link to="/">
+        <IconWrapper>
+          <CustomIcon
+            component={Home}
+            color="#3F3F3F"
+            hoverColor="#c7d36f"
+            sx={{ fontSize: 35 }}
+          />
+        </IconWrapper>
+      </Link>
       <Link to="/search">
         <IconWrapper>
           <CustomIcon
