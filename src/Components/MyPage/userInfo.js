@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import { ParkRounded } from '@mui/icons-material';
+import { useRecoilValue } from 'recoil';
+import { userData } from '../../Recoil/atoms';
 
 const InfoContainer = styled.article`
   display: flex;
@@ -22,14 +24,17 @@ const TwoLineText = styled.div`
   padding-top: 20px;
 `;
 
-const UserInfo = ({ name }) => (
-  <InfoContainer>
-    <ParkRounded sx={{ fontSize: 60 }} />
-    <TwoLineText>
-      <div>안녕하세요, 나는야 고수 {name} 님!</div>
-      <div>{name} 님의 나무는 현재 4단계입니다.</div>
-    </TwoLineText>
-  </InfoContainer>
-);
+function UserInfo() {
+  const currentUserData = useRecoilValue(userData);
+  return (
+    <InfoContainer>
+      <ParkRounded sx={{ fontSize: 60 }} />
+      <TwoLineText>
+        <div>안녕하세요, 나는야 고수 {currentUserData.displayName} 님!</div>
+        <div> {currentUserData.displayName} 님의 나무는 현재 4단계입니다.</div>
+      </TwoLineText>
+    </InfoContainer>
+  );
+}
 
 export default UserInfo;
