@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import GoogleIcon from '@mui/icons-material/Google';
 import { ForestRounded, ParkRounded, LogoutRounded } from '@mui/icons-material';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   GoogleAuthProvider,
   signInWithPopup,
@@ -10,6 +11,7 @@ import {
   browserSessionPersistence
 } from 'firebase/auth';
 import { auth } from '../../firebase';
+import { userData, isLoginState } from '../../Recoil/atoms';
 
 const HeaderContainer = styled.header`
   height: 50px;
@@ -35,6 +37,7 @@ const ElementWrapper = styled.article`
     justify-content: center;
     align-items: center;
     text-decoration: none;
+    color: #3f3f3f;
   }
 `;
 
@@ -59,15 +62,35 @@ const TwoLineText = styled.div`
   font-size: 15px;
 `;
 
-const Header = ({ isLogin, setUserData, name }) => {
+export const sessionUserData = () => {
+  for (const key of Object.keys(sessionStorage)) {
+    if (key.includes('firebase:authUser:')) {
+      return JSON.parse(sessionStorage.getItem(key) || '{}');
+    }
+  }
+};
+
+const Header = () => {
+  const setIsLoginState = useSetRecoilState(isLoginState);
+  const setUserData = useSetRecoilState(userData);
+  const isLogin = useRecoilValue(isLoginState);
+  const currentUserData = useRecoilValue(userData);
   const provider = new GoogleAuthProvider();
+
+  useEffect(() => {
+    const sessionData = sessionUserData();
+    if (sessionData) {
+      setUserData(sessionData);
+      setIsLoginState(true);
+    }
+  }, []);
 
   const handleGoogleLogin = () => {
     setPersistence(auth, browserSessionPersistence)
       .then(() => {
         signInWithPopup(auth, provider)
-          .then((data) => {
-            setUserData(data);
+          .then(() => {
+            window.location.reload();
           })
           .catch((err) => {
             console.log(err);
@@ -79,13 +102,14 @@ const Header = ({ isLogin, setUserData, name }) => {
   };
 
   const handleGoogleLogout = () => {
-    signOut(auth)
-      .then(() => {
-        window.location.reload();
-      })
-      .catch((err) => {
-        console.log(err);
+    const isLogout = window.confirm('로그아웃 하시겠습니까?');
+    if (isLogout) {
+      setIsLoginState(false);
+      window.location.reload();
+      signOut(auth).catch((error) => {
+        console.log(error);
       });
+    }
   };
 
   return (
@@ -101,7 +125,7 @@ const Header = ({ isLogin, setUserData, name }) => {
           <ElementWrapper>
             <a href="/mypage" className="mypage-link">
               <TwoLineText>
-                <div>나는야 고수 {name} 님!</div>
+                <div>나는야 고수 {currentUserData.displayName} 님!</div>
                 <div>오늘도 좋은 하루 보내세요!</div>
               </TwoLineText>
               <IconWrapper>

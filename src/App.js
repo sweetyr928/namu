@@ -1,5 +1,5 @@
 import styled, { createGlobalStyle } from 'styled-components';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import SideBar from './Components/UI/sidebar';
@@ -39,22 +39,6 @@ const MainContainer = styled.main`
 const queryClient = new QueryClient();
 
 function App() {
-  const [name, setName] = useState('');
-  const [uid, setUid] = useState('');
-  const [userData, setUserData] = useState(null);
-  const [isLogin, setIsLogin] = useState(false);
-
-  useEffect(() => {
-    const sessions = Object.keys(sessionStorage);
-    for (let i = 0; i < sessions.length; i += 1) {
-      if (sessions[i].includes('firebase:authUser:')) {
-        setIsLogin(true);
-        setName(JSON.parse(sessionStorage.getItem(sessions[i])).displayName);
-        setUid(JSON.parse(sessionStorage.getItem(sessions[i])).uid);
-      }
-    }
-  }, [userData]);
-
   useEffect(() => {
     document.body.style.overflow = 'hidden';
   }, []);
