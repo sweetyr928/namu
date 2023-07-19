@@ -10,7 +10,8 @@ import {
   setPersistence,
   browserSessionPersistence
 } from 'firebase/auth';
-import { auth } from '../../firebase';
+import { doc, setDoc } from 'firebase/firestore';
+import { auth, db } from '../../firebase';
 import { userData, isLoginState } from '../../Recoil/atoms';
 
 const HeaderContainer = styled.header`
@@ -70,6 +71,26 @@ export const sessionUserData = () => {
   }
 };
 
+export const addUser = async (data) => {
+  try {
+    await setDoc(
+      doc(db, 'users', data.uid),
+      {
+        name: data.displayName,
+        email: data.email,
+        userPosts: [],
+        userTags: [],
+        receivedRequest: [],
+        userBadges: [],
+        currentBadge: '나는야 고수'
+      },
+      { merge: true }
+    );
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const Header = () => {
   const setIsLoginState = useSetRecoilState(isLoginState);
   const setUserData = useSetRecoilState(userData);
@@ -81,6 +102,7 @@ const Header = () => {
     const sessionData = sessionUserData();
     if (sessionData) {
       setUserData(sessionData);
+      addUser(sessionData);
       setIsLoginState(true);
     }
   }, []);
