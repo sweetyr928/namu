@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { useNavigate } from 'react-router-dom';
+import { useQuery } from 'react-query';
 import CarouselItem from './carouselItem';
 import { GreenButton } from '../UI/button';
 import { getPostsByTags } from '../API/Post/fetchPost';
@@ -80,21 +81,30 @@ const GuideWrapper = styled.article`
 
 const Carousel = ({ setComp, tagList }) => {
   const carouselRef = useRef(null);
+
   const [tagIdx, setTagIdx] = useState(0);
-  const [carouselData, setCarouselData] = useState({});
+  const [savedCarouselData, setSavedCarouselData] = useState({});
+
   const navigate = useNavigate();
+
+  const {
+    data: carouselData,
+    isLoading,
+    isError
+  } = useQuery(
+    ['carouselData', tagList[tagIdx]],
+    () => getPostsByTags(tagIdx, savedCarouselData, tagList),
+    {
+      enabled: tagList.length > 0,
+      onSuccess: () => {
+        setSavedCarouselData(carouselData);
+      }
+    }
+  );
 
   const handleNavigate = useCallback(() => {
     navigate('/tag');
   }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const resultData = await getPostsByTags(tagIdx, carouselData, tagList);
-      setCarouselData(resultData);
-    };
-    fetchData();
-  }, [tagIdx]);
 
   const settings = {
     lazyLoad: true,
@@ -124,6 +134,22 @@ const Carousel = ({ setComp, tagList }) => {
     }
   };
 
+  if (isLoading) {
+    return (
+      <CarouselWrapper>
+        <div>Loading...</div>
+      </CarouselWrapper>
+    );
+  }
+
+  if (isError) {
+    return (
+      <CarouselWrapper>
+        <div>Error: {isError.message}</div>
+      </CarouselWrapper>
+    );
+  }
+
   return (
     <>
       {tagList.length ? (
@@ -135,7 +161,8 @@ const Carousel = ({ setComp, tagList }) => {
           <Slider ref={carouselRef} {...settings}>
             {tagList.map((_, idx) => (
               <CarouselItemContainer key={idx}>
-                {carouselData[tagList[tagIdx]] &&
+                {carouselData &&
+                  carouselData[tagList[tagIdx]] &&
                   carouselData[tagList[tagIdx]].map((post, i) => (
                     <CarouselItem
                       key={i}

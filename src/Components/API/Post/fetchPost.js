@@ -10,7 +10,10 @@ import {
   orderBy,
   getDocs,
   onSnapshot,
-  where
+  where,
+  FieldValue,
+  runTransaction,
+  FieldPath
 } from 'firebase/firestore';
 import { db } from '../../../firebase';
 
@@ -48,6 +51,7 @@ export const createPost = async (postData) => {
     return newPostId;
   } catch (e) {
     console.error('error adding document: ', e);
+    throw e;
   }
 };
 
@@ -64,12 +68,15 @@ export const getPost = async (id) => {
     }
   } catch (e) {
     console.error('error fetching post data: ', e);
+    throw e;
   }
 };
 
 export const getPostsByTags = async (selectedTagIdx, carouselData, tagList) => {
   try {
-    const updatedCarouselData = JSON.parse(JSON.stringify(carouselData));
+    const updatedCarouselData = carouselData
+      ? JSON.parse(JSON.stringify(carouselData))
+      : {};
 
     const tagRef = doc(db, 'tags', tagList[selectedTagIdx]);
     const tagSnapshot = await getDoc(tagRef);
@@ -99,18 +106,18 @@ export const getPostsByTags = async (selectedTagIdx, carouselData, tagList) => {
     return updatedCarouselData;
   } catch (e) {
     console.error('Error fetching posts by tags: ', e);
-    return carouselData;
+    return carouselData; // Return the original carouselData on error
   }
 };
 
-export const updatePost = async (id, title, content, tagList) => {
+export const updatePost = async (postData) => {
   try {
-    const postRef = doc(db, 'posts', id);
+    const postRef = doc(db, 'posts', postData.id);
 
     const updatedData = {
-      title,
-      content,
-      tags: tagList
+      title: postData.title,
+      content: postData.content,
+      tags: postData.tagList
     };
 
     await updateDoc(postRef, updatedData);
@@ -118,16 +125,46 @@ export const updatePost = async (id, title, content, tagList) => {
     return true;
   } catch (e) {
     console.error('Error updating post:', e);
+    throw e;
   }
 };
 
-export const deletePost = async (id) => {
+export const deletePost = async (postId) => {
   try {
-    deleteDoc(doc(db, 'posts', id));
+    const postRef = doc(db, 'posts', postId);
+    const postDoc = await getDoc(postRef);
 
-    return true;
+    if (!postDoc.exists()) {
+      console.error('Post document not found.');
+      return;
+    }
+
+    const postData = postDoc.data();
+    const tagsRef = collection(db, 'tags');
+
+    await runTransaction(db, async (transaction) => {
+      for (const tag of postData.tags) {
+        const tagRef = doc(tagsRef, tag);
+        const tagDoc = await transaction.get(tagRef);
+        if (tagDoc.exists()) {
+          const tagData = tagDoc.data();
+          delete tagData[postId];
+
+          transaction.set(tagRef, tagData);
+
+          if (Object.keys(tagData).length === 0) {
+            transaction.delete(tagRef);
+          }
+        }
+      }
+    });
+
+    await deleteDoc(postRef);
+
+    console.log('Post deleted successfully.');
   } catch (e) {
-    console.error('error deleting post data: ', e);
+    console.error('Error deleting post: ', e);
+    throw e;
   }
 };
 
@@ -162,5 +199,6 @@ export const searchPosts = async (text) => {
     return results;
   } catch (e) {
     console.error('Error searching posts: ', e);
+    throw e;
   }
 };

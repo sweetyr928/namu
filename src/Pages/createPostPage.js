@@ -2,12 +2,13 @@ import { useState, useCallback } from 'react';
 import { serverTimestamp } from 'firebase/firestore';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { useMutation } from 'react-query';
 import Swal from 'sweetalert2';
+import { createPost } from '../Components/API/Post/fetchPost';
 import PostSection from '../Components/UI/postSection';
 import TextEditor from '../Components/Post/textEditor';
 import TagInput from '../Components/UI/tagInput';
 import { GreenButton } from '../Components/UI/button';
-import { createPost } from '../Components/API/Post/fetchPost';
 
 const TitleInput = styled.input`
   border: 2px solid #c7d36f;
@@ -46,10 +47,14 @@ const ButtonWrapper = styled.footer`
   }
 `;
 
+const useCreatePostMutation = () =>
+  useMutation((postData) => createPost(postData));
+
 const CreatePostPage = ({ uid }) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [tagList, setTagList] = useState([]);
+  const createPostMutation = useCreatePostMutation();
 
   const navigate = useNavigate();
 
@@ -85,20 +90,23 @@ const CreatePostPage = ({ uid }) => {
         isSolved: false,
         createdAt: currentTime
       };
-      const newPostID = await createPost(postData);
 
-      if (newPostID) {
-        Toast.fire({
-          icon: 'success',
-          title: '질문이 등록되었습니다.'
-        });
-        navigate(`/posts/${newPostID}`);
-      } else {
-        Toast.fire({
-          icon: 'error',
-          title: '질문이 등록에 실패했습니다.'
-        });
-      }
+      createPostMutation.mutate(postData, {
+        onSuccess: (newPostID) => {
+          Toast.fire({
+            icon: 'success',
+            title: '질문이 등록되었습니다.'
+          });
+          navigate(`/posts/${newPostID}`);
+        },
+        onError: (e) => {
+          console.error('Error creating post:', e);
+          Toast.fire({
+            icon: 'error',
+            title: '질문이 등록에 실패했습니다.'
+          });
+        }
+      });
     }
   };
 

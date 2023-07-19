@@ -1,6 +1,7 @@
 import styled, { createGlobalStyle } from 'styled-components';
 import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import SideBar from './Components/UI/sidebar';
 import Header from './Components/UI/header';
 import MyPage from './Pages/mypage';
@@ -35,6 +36,8 @@ const MainContainer = styled.main`
   height: 100vh;
 `;
 
+const queryClient = new QueryClient();
+
 function App() {
   const [name, setName] = useState('');
   const [uid, setUid] = useState('');
@@ -57,19 +60,21 @@ function App() {
   }, []);
 
   return (
-    <AppContainer>
-      <GlobalStyle />
-      <Header isLogin={isLogin} setUserData={setUserData} name={name} />
-      <MainContainer>
-        <Router>
-          <SideBar />
-          <Routes>
-            <Route path="/*" element={<MainHome uid={uid} />} />
-            <Route path="/mypage" element={<MyPage name={name} />} />
-          </Routes>
-        </Router>
-      </MainContainer>
-    </AppContainer>
+    <QueryClientProvider client={queryClient}>
+      <AppContainer>
+        <GlobalStyle />
+        <Header isLogin={isLogin} setUserData={setUserData} name={name} />
+        <MainContainer>
+          <Router>
+            <SideBar />
+            <Routes>
+              <Route path="/*" element={<MainHome uid={uid} />} />
+              <Route path="/mypage" element={<MyPage name={name} />} />
+            </Routes>
+          </Router>
+        </MainContainer>
+      </AppContainer>
+    </QueryClientProvider>
   );
 }
 

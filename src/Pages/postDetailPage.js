@@ -1,9 +1,10 @@
 import styled from 'styled-components';
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 import DOMPurify from 'isomorphic-dompurify';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import Swal from 'sweetalert2';
+import { useQuery, useMutation } from 'react-query';
 import { GreenButton } from '../Components/UI/button';
 import RequestModal from '../Components/Post/requestModal';
 import 'react-quill/dist/quill.core.css';
@@ -164,24 +165,32 @@ const ModalBackground = styled.div`
   align-items: center;
 `;
 
+const useDeletePostMutation = () => useMutation((id) => deletePost(id));
+
 const PostDetailPage = ({ uid }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [postData, setPostData] = useState({});
+
   const navigate = useNavigate();
   const { id } = useParams();
   const { state } = useLocation();
+
+  const {
+    data: postData,
+    isLoading,
+    isError
+  } = useQuery(['post', id], () => getPost(id), {
+    enabled: !!id,
+    onError: (error) => {
+      console.error('Error fetching post:', error);
+    }
+  });
+
+  const deletePostMutation = useDeletePostMutation();
+
   const formattedDate = postData?.createdAt
     ? new window.Date(postData.createdAt.seconds * 1000)
     : null;
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await getPost(id);
-      setPostData(data);
-    };
-    fetchData();
-  }, [id]);
 
   const handleHamburgerClick = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -215,31 +224,35 @@ const PostDetailPage = ({ uid }) => {
       });
 
       if (result.isConfirmed) {
-        const isSuccess = await deletePost(id);
-        if (isSuccess) {
-          Toast.fire({
-            icon: 'success',
-            title: '삭제 완료되었습니다.'
-          });
-          navigate(`/`);
-        } else {
-          Toast.fire({
-            icon: 'error',
-            title: '삭제 실패했습니다. 다시 시도해주십시오.'
-          });
-        }
+        deletePostMutation.mutate(id, {
+          onSuccess: () => {
+            Toast.fire({
+              icon: 'success',
+              title: '삭제 완료되었습니다.'
+            });
+            navigate(`/`);
+          },
+          onError: (e) => {
+            console.error('Error deletings post:', e);
+            Toast.fire({
+              icon: 'error',
+              title: '삭제 실패했습니다. 다시 시도해주십시오.'
+            });
+          }
+        });
       }
     } catch (error) {
       console.error('Error deleting post: ', error);
     }
   };
+
   const handleGoBack = useCallback(() => {
     if (state && state.searchResult) {
       navigate('/search', { state: { searchResult: state.searchResult } });
     } else {
       navigate(-1);
     }
-  }, []);
+  }, [state, navigate]);
 
   const toggleModal = useCallback(() => {
     setIsModalOpen(!isModalOpen);
@@ -253,14 +266,38 @@ const PostDetailPage = ({ uid }) => {
     hour12: true
   };
 
+  if (isLoading) {
+    return (
+      <ContentContainer>
+        <div>Loading...</div>
+      </ContentContainer>
+    );
+  }
+
+  if (isError) {
+    return (
+      <ContentContainer>
+        <div>Error: {isError.message}</div>
+      </ContentContainer>
+    );
+  }
+
+  if (!postData) {
+    return (
+      <ContentContainer>
+        <div>해당 게시글을 찾을 수 없습니다.</div>
+      </ContentContainer>
+    );
+  }
+
   return (
     <PostSection>
-      {isModalOpen ? (
+      {isModalOpen && (
         <>
           <RequestModal toggleModal={toggleModal}></RequestModal>
           <ModalBackground onClick={toggleModal} />
         </>
-      ) : null}
+      )}
       <ContentContainer>
         <ContentHeader>
           <div className="div-wrapper">
