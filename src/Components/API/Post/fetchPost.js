@@ -11,9 +11,7 @@ import {
   getDocs,
   onSnapshot,
   where,
-  FieldValue,
-  runTransaction,
-  FieldPath
+  runTransaction
 } from 'firebase/firestore';
 import { db } from '../../../firebase';
 
@@ -106,7 +104,7 @@ export const getPostsByTags = async (selectedTagIdx, carouselData, tagList) => {
     return updatedCarouselData;
   } catch (e) {
     console.error('Error fetching posts by tags: ', e);
-    return carouselData; // Return the original carouselData on error
+    return carouselData;
   }
 };
 
@@ -160,8 +158,6 @@ export const deletePost = async (postId) => {
     });
 
     await deleteDoc(postRef);
-
-    console.log('Post deleted successfully.');
   } catch (e) {
     console.error('Error deleting post: ', e);
     throw e;
