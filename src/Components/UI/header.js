@@ -3,16 +3,11 @@ import GoogleIcon from '@mui/icons-material/Google';
 import { ForestRounded, ParkRounded, LogoutRounded } from '@mui/icons-material';
 import { useEffect } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import {
-  GoogleAuthProvider,
-  signInWithPopup,
-  signOut,
-  setPersistence,
-  browserSessionPersistence
-} from 'firebase/auth';
-import { doc, setDoc } from 'firebase/firestore';
+import { signOut } from 'firebase/auth';
+import { doc, getDoc } from 'firebase/firestore';
 import { auth, db } from '../../firebase';
 import { userData, isLoginState } from '../../Recoil/atoms';
+import { addUser, handleGoogleLogin } from '../API/Login/fetchUser';
 
 const HeaderContainer = styled.header`
   height: 50px;
@@ -71,60 +66,32 @@ export const sessionUserData = () => {
   }
 };
 
-export const addUser = async (data) => {
-  try {
-    await setDoc(
-      doc(db, 'users', data.uid),
-      {
-        name: data.displayName,
-        email: data.email,
-        userPosts: [],
-        userTags: [],
-        receivedRequest: [],
-        userBadges: [],
-        currentBadge: '나는야 고수'
-      },
-      { merge: true }
-    );
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 const Header = () => {
-  const setIsLoginState = useSetRecoilState(isLoginState);
-  const setUserData = useSetRecoilState(userData);
   const isLogin = useRecoilValue(isLoginState);
   const currentUserData = useRecoilValue(userData);
-  const provider = new GoogleAuthProvider();
+  const setIsLoginState = useSetRecoilState(isLoginState);
+  const setUserData = useSetRecoilState(userData);
 
-  useEffect(() => {
+  const userFunc = async () => {
     const sessionData = sessionUserData();
     if (sessionData) {
       setUserData(sessionData);
-      addUser(sessionData);
       setIsLoginState(true);
+      const docRef = doc(db, 'users', sessionData.uid);
+      const docSnap = await getDoc(docRef);
+      if (!docSnap.exists()) {
+        addUser(docRef, sessionData);
+      }
     }
-  }, []);
-
-  const handleGoogleLogin = () => {
-    setPersistence(auth, browserSessionPersistence)
-      .then(() => {
-        signInWithPopup(auth, provider)
-          .then(() => {
-            window.location.reload();
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
   };
+
+  useEffect(() => {
+    userFunc();
+  }, []);
 
   const handleGoogleLogout = () => {
     const isLogout = window.confirm('로그아웃 하시겠습니까?');
+
     if (isLogout) {
       setIsLoginState(false);
       window.location.reload();
