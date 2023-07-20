@@ -89,24 +89,10 @@ const Date = styled.span`
 
 const CarouselItem = ({ title, content, createdAt, id }) => {
   const [isHovered, setIsHovered] = useState(false);
-  const [maxCharacters, setMaxCharacters] = useState(62);
-
-  const itemWrapperRef = useRef(null);
 
   const navigate = useNavigate();
 
   const formattedDate = new window.Date(createdAt.seconds * 1000);
-
-  // useEffect(() => {
-  //   if (itemWrapperRef.current) {
-  //     const itemWrapperWidth = itemWrapperRef.current.clientWidth;
-
-  //     const maxWidth = itemWrapperWidth - 8;
-
-  //     const newMaxCharacters = Math.floor(maxWidth / 8);
-  //     setMaxCharacters(newMaxCharacters);
-  //   }
-  // }, [itemWrapperRef, maxCharacters]);
 
   const handleMouse = useCallback(() => {
     setIsHovered(!isHovered);
@@ -123,17 +109,8 @@ const CarouselItem = ({ title, content, createdAt, id }) => {
     return tmp.textContent || tmp.innerText || '';
   };
 
-  // const truncateContent = (text, maxLength) => {
-  //   if (text.length > maxLength) {
-  //     return `${text.slice(0, maxLength)}...`;
-  //   }
-
-  //   return text;
-  // };
-
   const mergedContent = content.replace(/\n/g, '');
   const sanitizedContent = stripHTMLTags(mergedContent);
-  // const truncatedContent = truncateContent(sanitizedContent, maxCharacters);
 
   const options = {
     month: '2-digit',
@@ -170,16 +147,6 @@ const CarouselItem = ({ title, content, createdAt, id }) => {
             }}
           ></Content>
         )}
-        {/* {truncatedContent && (
-          <Content
-            style={{
-              color: isHovered ? '#555555' : '#3f3f3f'
-            }}
-            dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(truncatedContent)
-            }}
-          ></Content>
-        )} */}
       </AnimatedCarouselItem>
       <Date>{formattedDate.toLocaleString('ko-KR', options)}</Date>
     </ItemWrapper>
