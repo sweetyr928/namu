@@ -8,6 +8,7 @@ import { useQuery } from 'react-query';
 import CarouselItem from './carouselItem';
 import { GreenButton } from '../UI/button';
 import { getPostsByTags } from '../API/Post/fetchPost';
+import { GreenLoading } from '../UI/loading';
 
 const CarouselWrapper = styled.article`
   width: calc(90%);
@@ -134,25 +135,10 @@ const Carousel = ({ setComp, tagList }) => {
     }
   };
 
-  if (isLoading) {
-    return (
-      <CarouselWrapper>
-        <div>Loading...</div>
-      </CarouselWrapper>
-    );
-  }
-
-  if (isError) {
-    return (
-      <CarouselWrapper>
-        <div>Error: {isError.message}</div>
-      </CarouselWrapper>
-    );
-  }
-
   return (
     <>
-      {tagList.length ? (
+      {isLoading && <GreenLoading />}
+      {!isLoading && tagList.length && (
         <CarouselWrapper>
           <TagWrapper>
             <p>{`# ${tagList[tagIdx]}`}</p>
@@ -177,7 +163,8 @@ const Carousel = ({ setComp, tagList }) => {
             ))}
           </Slider>
         </CarouselWrapper>
-      ) : (
+      )}
+      {!isLoading && !tagList.length && (
         <GuideWrapper>
           <div>아직 태그를 설정하지 않았어요!</div>
           <div>지금 태그를 설정하러 가볼까요?</div>

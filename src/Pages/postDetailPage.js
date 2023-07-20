@@ -10,6 +10,7 @@ import RequestModal from '../Components/Post/requestModal';
 import 'react-quill/dist/quill.core.css';
 import PostSection from '../Components/UI/postSection';
 import { getPost, deletePost } from '../Components/API/Post/fetchPost';
+import { WhiteLoading } from '../Components/UI/loading';
 
 const ContentContainer = styled.article`
   display: flex;
@@ -266,32 +267,9 @@ const PostDetailPage = ({ uid }) => {
     hour12: true
   };
 
-  if (isLoading) {
-    return (
-      <ContentContainer>
-        <div>Loading...</div>
-      </ContentContainer>
-    );
-  }
-
-  if (isError) {
-    return (
-      <ContentContainer>
-        <div>Error: {isError.message}</div>
-      </ContentContainer>
-    );
-  }
-
-  if (!postData) {
-    return (
-      <ContentContainer>
-        <div>해당 게시글을 찾을 수 없습니다.</div>
-      </ContentContainer>
-    );
-  }
-
   return (
     <PostSection>
+      {isLoading && <WhiteLoading />}
       {isModalOpen && (
         <>
           <RequestModal
@@ -303,41 +281,43 @@ const PostDetailPage = ({ uid }) => {
           <ModalBackground onClick={toggleModal} />
         </>
       )}
-      <ContentContainer>
-        <ContentHeader>
-          <div className="div-wrapper">
-            <div className="title">{postData.title}</div>
-            {postData.author === uid && (
-              <div className="icon">
-                <MenuRoundedIcon
-                  onClick={handleHamburgerClick}
-                  style={{ color: '#c7d36f', fontSize: '33px' }}
-                />
-              </div>
-            )}
-            <MenuContainer $isMenuOpen={isMenuOpen}>
-              <MenuItem onClick={handleEdit}>수정</MenuItem>
-              <MenuItem onClick={handleDelete}>삭제</MenuItem>
-            </MenuContainer>
-          </div>
-          <span>
-            {formattedDate && formattedDate.toLocaleString('ko-KR', options)}
-          </span>
-        </ContentHeader>
-        <Divider />
-        <ContentDetail>
-          <div
-            dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(postData.content)
-            }}
-          ></div>
-        </ContentDetail>
-        <Divider />
-        <ContentFooter>
-          <GreenButton onClick={toggleModal}>나무 하러 가기</GreenButton>
-          <GreenButton onClick={handleGoBack}>뒤로 가기</GreenButton>
-        </ContentFooter>
-      </ContentContainer>
+      {!isLoading && (
+        <ContentContainer>
+          <ContentHeader>
+            <div className="div-wrapper">
+              <div className="title">{postData.title}</div>
+              {postData.author === uid && (
+                <div className="icon">
+                  <MenuRoundedIcon
+                    onClick={handleHamburgerClick}
+                    style={{ color: '#c7d36f', fontSize: '33px' }}
+                  />
+                </div>
+              )}
+              <MenuContainer $isMenuOpen={isMenuOpen}>
+                <MenuItem onClick={handleEdit}>수정</MenuItem>
+                <MenuItem onClick={handleDelete}>삭제</MenuItem>
+              </MenuContainer>
+            </div>
+            <span>
+              {formattedDate && formattedDate.toLocaleString('ko-KR', options)}
+            </span>
+          </ContentHeader>
+          <Divider />
+          <ContentDetail>
+            <div
+              dangerouslySetInnerHTML={{
+                __html: DOMPurify.sanitize(postData.content)
+              }}
+            ></div>
+          </ContentDetail>
+          <Divider />
+          <ContentFooter>
+            <GreenButton onClick={toggleModal}>나무 하러 가기</GreenButton>
+            <GreenButton onClick={handleGoBack}>뒤로 가기</GreenButton>
+          </ContentFooter>
+        </ContentContainer>
+      )}
     </PostSection>
   );
 };
