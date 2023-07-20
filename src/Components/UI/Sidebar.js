@@ -12,29 +12,33 @@ const SideBarContainer = styled.nav`
   justify-content: center;
   align-items: center;
   position: fixed;
-  top: 30%;
-  left: 1.5%;
+  top: 35%;
+  left: calc(1.3%);
 `;
 
 const IconWrapper = styled.div`
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   background-color: #ffffff;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0px 0px 30px 0px;
+  margin: 0px 0px 20px 0px;
 
   &:hover {
     cursor: pointer;
   }
 `;
 
-const CustomIcon = styled(({ color, hoverColor, ...props }) => (
+const getResponsiveFontSize = (baseFontSize) =>
+  `calc(${baseFontSize}px + (${baseFontSize} * ((100vw - 320px) / 680)))`;
+
+const CustomIcon = styled(({ color, hoverColor, baseFontSize, ...props }) => (
   <props.component {...props} />
 ))`
   color: ${({ color }) => color};
+  font-size: ${({ baseFontSize }) => getResponsiveFontSize(baseFontSize)};
   transition: color 0.3s;
 
   &:hover {
@@ -51,7 +55,7 @@ function SideBar() {
             component={Home}
             color="#3F3F3F"
             hoverColor="#c7d36f"
-            sx={{ fontSize: 35 }}
+            baseFontSize={35}
           />
         </IconWrapper>
       </Link>
@@ -61,7 +65,7 @@ function SideBar() {
             component={SearchRounded}
             color="#3F3F3F"
             hoverColor="#c7d36f"
-            sx={{ fontSize: 35 }}
+            baseFontSize={35}
           />
         </IconWrapper>
       </Link>
@@ -71,7 +75,7 @@ function SideBar() {
             component={ModeEditOutlineRounded}
             color="#3F3F3F"
             hoverColor="#c7d36f"
-            sx={{ fontSize: 35 }}
+            baseFontSize={35}
           />
         </IconWrapper>
       </Link>

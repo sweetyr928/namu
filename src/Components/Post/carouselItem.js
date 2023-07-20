@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 import DOMPurify from 'isomorphic-dompurify';
 import { useNavigate } from 'react-router-dom';
@@ -8,10 +8,11 @@ const ItemWrapper = styled.article`
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
-  margin: 10px 10px 0px 10px;
+  margin: 10px auto 0px auto;
   padding: 20px 20px 10px 20px;
   border-radius: 20px;
   background-color: #ffffff;
+  width: 92%;
   height: calc(10%);
   cursor: pointer;
   transition: all 0.3s ease;
@@ -22,10 +23,27 @@ const ItemWrapper = styled.article`
   }
 `;
 
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
+
+const AnimatedCarouselItem = styled.div`
+  animation: ${fadeIn} 0.5s ease;
+  width: 100%;
+`;
+
 const Title = styled.div`
   font-size: 14px;
   font-weight: bold;
   transition: color 0.3s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 95%;
 
   @media (min-width: 1024px) {
     font-size: 16px;
@@ -41,10 +59,10 @@ const Content = styled.div`
   font-weight: 600;
   transition: color 0.3s ease;
   margin: 5px 0px 0px 0px;
-  white-space: nowrap;
+  width: calc(95%);
   overflow: hidden;
+  white-space: nowrap;
   text-overflow: ellipsis;
-  max-height: 18px;
 
   @media (min-width: 1024px) {
     font-size: 14px;
@@ -69,23 +87,12 @@ const Date = styled.span`
   }
 `;
 
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-`;
-
-const AnimatedCarouselItem = styled.div`
-  animation: ${fadeIn} 0.5s ease;
-`;
-
 const CarouselItem = ({ title, content, createdAt, id }) => {
   const [isHovered, setIsHovered] = useState(false);
-  const formattedDate = new window.Date(createdAt.seconds * 1000);
+
   const navigate = useNavigate();
+
+  const formattedDate = new window.Date(createdAt.seconds * 1000);
 
   const handleMouse = useCallback(() => {
     setIsHovered(!isHovered);
@@ -94,14 +101,6 @@ const CarouselItem = ({ title, content, createdAt, id }) => {
   const handleNavigate = useCallback(() => {
     navigate(`/posts/${id}`);
   }, [id]);
-
-  const truncateContent = (text, maxLength) => {
-    if (text.length > maxLength) {
-      return `${text.slice(0, maxLength)}...`;
-    }
-
-    return text;
-  };
 
   const stripHTMLTags = (html) => {
     const tmp = document.createElement('div');
@@ -112,7 +111,6 @@ const CarouselItem = ({ title, content, createdAt, id }) => {
 
   const mergedContent = content.replace(/\n/g, '');
   const sanitizedContent = stripHTMLTags(mergedContent);
-  const truncatedContent = truncateContent(sanitizedContent, 62);
 
   const options = {
     month: '2-digit',
@@ -139,13 +137,13 @@ const CarouselItem = ({ title, content, createdAt, id }) => {
         >
           {title}
         </Title>
-        {truncatedContent && (
+        {sanitizedContent && (
           <Content
             style={{
               color: isHovered ? '#555555' : '#3f3f3f'
             }}
             dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(truncatedContent)
+              __html: DOMPurify.sanitize(sanitizedContent)
             }}
           ></Content>
         )}

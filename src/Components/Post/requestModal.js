@@ -116,7 +116,7 @@ const ButtonWrapper = styled.div`
   }
 `;
 
-const RequestModal = ({ toggleModal }) => {
+const RequestModal = ({ toggleModal, postId, helperId, requesterId }) => {
   const [selectedTime, setSelectedTime] = useState('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
