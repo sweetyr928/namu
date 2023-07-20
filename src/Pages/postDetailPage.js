@@ -294,7 +294,12 @@ const PostDetailPage = ({ uid }) => {
     <PostSection>
       {isModalOpen && (
         <>
-          <RequestModal toggleModal={toggleModal}></RequestModal>
+          <RequestModal
+            toggleModal={toggleModal}
+            postId={id}
+            helperId={uid}
+            requesterId={postData.author}
+          ></RequestModal>
           <ModalBackground onClick={toggleModal} />
         </>
       )}
