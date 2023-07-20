@@ -1,7 +1,9 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { userData } from './Recoil/atoms';
+import { isLoginState, userData } from './Recoil/atoms';
 import MainPage from './Pages/mainPage';
+import NotFound from './Pages/notFoundPage';
+import LoginPage from './Pages/loginPage';
 import SearchPage from './Pages/searchPage';
 import CreatePostPage from './Pages/createPostPage';
 import ChatSection from './Components/UI/chatSection';
@@ -10,12 +12,18 @@ import EditTagPage from './Pages/editTagPage';
 import UpdatePostPage from './Pages/updatePostPage';
 
 function MainHome() {
+  const isLogin = useRecoilValue(isLoginState);
   const currentUserData = useRecoilValue(userData);
 
   return (
     <>
       <Routes>
-        <Route path="/" element={<MainPage uid={currentUserData.uid} />} />
+        <Route
+          path="/"
+          element={
+            isLogin ? <MainPage uid={currentUserData.uid} /> : <SearchPage />
+          }
+        />
         <Route
           path="/posts/:id"
           element={<PostDetailPage uid={currentUserData.uid} />}
@@ -27,12 +35,20 @@ function MainHome() {
         <Route path="/search" element={<SearchPage />} />
         <Route
           path="/newPost"
-          element={<CreatePostPage uid={currentUserData.uid} />}
+          element={
+            isLogin ? (
+              <CreatePostPage uid={currentUserData.uid} />
+            ) : (
+              <LoginPage />
+            )
+          }
         />
         <Route
           path="/posts/:id/edit"
           element={<UpdatePostPage uid={currentUserData.uid} />}
         />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/*" element={<NotFound />} />
       </Routes>
       <ChatSection></ChatSection>
     </>
