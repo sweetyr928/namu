@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
+import { useMutation } from 'react-query';
+import Swal from 'sweetalert2';
+import { serverTimestamp } from 'firebase/firestore';
 import Modal from '../UI/modal';
 import { WhiteButton } from '../UI/button';
+import { createRequest } from '../API/Request/fetchRequest';
 
 const ContentContainer = styled.article`
   display: flex;
@@ -17,7 +21,7 @@ const ContentContainer = styled.article`
 const DetailWrapper = styled.section`
   font-size: 20px;
   font-weight: 800;
-  margin: 15px 0px 15px 20px;
+  margin: 15px 0px 15px 25px;
 `;
 
 const Divider = styled.hr`
@@ -30,10 +34,11 @@ const TimeSelectWrapper = styled.section`
   display: flex;
   justify-items: center;
   align-items: center;
-  margin: 0px 0px 20px 10px;
+  width: 95%;
+  margin: 0px auto 20px auto;
 
   span {
-    margin: 0px 0px 0px 13px;
+    margin: 0px 0px 0px 10px;
     font-size: 16px;
     font-weight: 700;
   }
@@ -44,6 +49,21 @@ const DropdownWrapper = styled.div`
   margin: 0px 0px 0px 10px;
 `;
 
+const DropdownMenu = styled.ul`
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  width: 243px;
+  list-style-type: none;
+  background-color: #ffffff;
+  border-radius: 4px;
+  border: 2px solid #c7d36f;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+`;
+
 const DropdownButton = styled.div`
   display: flex;
   align-items: center;
@@ -52,21 +72,6 @@ const DropdownButton = styled.div`
   border-radius: 4px;
   border: 1px solid #c7d36f;
   cursor: pointer;
-`;
-
-const DropdownMenu = styled.ul`
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
-  background-color: #ffffff;
-  border-radius: 4px;
-  border: 2px solid #c7d36f;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  z-index: 2;
 `;
 
 const DropdownMenuItem = styled.li`
@@ -83,11 +88,12 @@ const TextWrapper = styled.section`
   flex-direction: column;
   justify-content: space-around;
   align-items: stretch;
-  margin: 0px 0px 5px 10px;
+  width: 95%;
+  margin: 0px auto 5px auto;
   height: 60%;
 
   div {
-    margin: 0px 0px 0px 13px;
+    margin: 0px 0px 0px 10px;
     font-size: 16px;
     font-weight: 700;
   }
@@ -105,8 +111,6 @@ const ModalTextArea = styled.textarea`
   outline: none;
 `;
 
-export { TextWrapper, ModalTextArea };
-
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
@@ -116,29 +120,88 @@ const ButtonWrapper = styled.div`
   }
 `;
 
-const RequestModal = ({ toggleModal, postId, helperId, requesterId }) => {
+const RequestModal = ({
+  title,
+  toggleModal,
+  postId,
+  helperId,
+  requesterId
+}) => {
   const [selectedTime, setSelectedTime] = useState('');
+  const [message, setMessage] = useState('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const handleTimeSelect = (time) => {
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'top',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: false,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer);
+      toast.addEventListener('mouseleave', Swal.resumeTimer);
+    }
+  });
+
+  const createRequestMutation = useMutation((requestData) =>
+    createRequest(`${postId}-${requesterId}-${helperId}`, requestData)
+  );
+
+  const handleTimeSelect = useCallback((time) => {
     setSelectedTime(time);
     setIsDropdownOpen(false);
+  }, []);
+
+  const handleSubmit = async () => {
+    if (message.trim() === '' || !selectedTime.length) {
+      Toast.fire({
+        icon: 'error',
+        title: '모든 항목(나무의 시간/한마디)을 정확히 입력했는지 확인해주세요.'
+      });
+      return;
+    }
+
+    try {
+      const currentTime = serverTimestamp();
+      const requestData = {
+        postId,
+        title,
+        helperId,
+        requesterId,
+        selectedTime,
+        message,
+        isMatched: false,
+        createdAt: currentTime
+      };
+
+      await createRequestMutation.mutateAsync(requestData);
+      Toast.fire({
+        icon: 'success',
+        title: '요청이 전송되었습니다.'
+      });
+
+      toggleModal();
+    } catch (error) {
+      console.error('Error checking request document:', error);
+      Toast.fire({
+        icon: 'error',
+        title: '요청 전송에 실패했습니다.'
+      });
+    }
   };
 
-  const handleSubmit = () => {
-    toggleModal();
+  const handleChange = (e) => {
+    setMessage(e.target.value);
   };
 
-  const handleCancel = () => {
+  const handleCancel = useCallback(() => {
     toggleModal();
-  };
+  }, []);
 
   return (
     <Modal>
       <ContentContainer>
-        <DetailWrapper>
-          filter 함수가 제대로 돌아가지 않습니다 ㅠㅠ 어떻게 해야 하나요?
-        </DetailWrapper>
+        <DetailWrapper>{title}</DetailWrapper>
         <Divider />
         <TimeSelectWrapper>
           <span>나무의 시간:</span>
@@ -148,7 +211,7 @@ const RequestModal = ({ toggleModal, postId, helperId, requesterId }) => {
             </DropdownButton>
             {isDropdownOpen && (
               <DropdownMenu>
-                <DropdownMenuItem onClick={() => handleTimeSelect('30 분')}>
+                <DropdownMenuItem onClick={() => handleTimeSelect('30분')}>
                   30분
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => handleTimeSelect('1시간')}>
@@ -171,7 +234,7 @@ const RequestModal = ({ toggleModal, postId, helperId, requesterId }) => {
         </TimeSelectWrapper>
         <TextWrapper>
           <div>나무의 한마디</div>
-          <ModalTextArea />
+          <ModalTextArea value={message} onChange={handleChange} />
         </TextWrapper>
       </ContentContainer>
       <ButtonWrapper>
