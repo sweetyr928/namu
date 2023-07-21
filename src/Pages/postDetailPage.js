@@ -166,8 +166,6 @@ const ModalBackground = styled.div`
   align-items: center;
 `;
 
-const useDeletePostMutation = () => useMutation((id) => deletePost(id));
-
 const PostDetailPage = ({ uid }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -187,7 +185,7 @@ const PostDetailPage = ({ uid }) => {
     }
   );
 
-  const deletePostMutation = useDeletePostMutation();
+  const deletePostMutation = useMutation((pid) => deletePost(uid, pid));
 
   const formattedDate = postData?.createdAt
     ? new window.Date(postData.createdAt.seconds * 1000)

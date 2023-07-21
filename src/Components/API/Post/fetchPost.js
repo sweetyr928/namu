@@ -15,7 +15,7 @@ import {
 } from 'firebase/firestore';
 import { db } from '../../../firebase';
 
-export const createPost = async (postData) => {
+export const createPost = async (uid, postData) => {
   try {
     const docRef = await addDoc(collection(db, 'posts'), {
       author: postData.author,
@@ -26,6 +26,19 @@ export const createPost = async (postData) => {
       createdAt: postData.createdAt
     });
     const newPostId = docRef.id;
+
+    const userDocRef = doc(db, 'users', uid);
+    const userDoc = await getDoc(userDocRef);
+    if (userDoc.exists()) {
+      const userData = userDoc.data();
+      const { userPosts } = userData;
+
+      const updatedUserPosts = userPosts
+        ? [...userPosts, newPostId]
+        : [newPostId];
+
+      await updateDoc(userDocRef, { userPosts: updatedUserPosts });
+    }
 
     const tagsRef = collection(db, 'tags');
     const batch = writeBatch(db);
@@ -127,7 +140,7 @@ export const updatePost = async (postData) => {
   }
 };
 
-export const deletePost = async (pid) => {
+export const deletePost = async (uid, pid) => {
   try {
     const postRef = doc(db, 'posts', pid);
     const postDoc = await getDoc(postRef);
@@ -156,6 +169,19 @@ export const deletePost = async (pid) => {
         }
       }
     });
+
+    const userDocRef = doc(db, 'users', uid);
+    const userDoc = await getDoc(userDocRef);
+
+    if (userDoc.exists()) {
+      const userData = userDoc.data();
+      const { userPosts } = userData;
+
+      if (userPosts && userPosts.includes(pid)) {
+        const updatedUserPosts = userPosts.filter((postId) => postId !== pid);
+        await updateDoc(userDocRef, { userPosts: updatedUserPosts });
+      }
+    }
 
     await deleteDoc(postRef);
   } catch (e) {
