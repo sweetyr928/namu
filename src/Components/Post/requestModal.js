@@ -122,7 +122,8 @@ const ButtonWrapper = styled.div`
 
 const RequestModal = ({
   title,
-  toggleModal,
+  openModal,
+  closeModal,
   postId,
   helperId,
   requesterId
@@ -144,7 +145,7 @@ const RequestModal = ({
   });
 
   const createRequestMutation = useMutation((requestData) =>
-    createRequest(`${postId}-${requesterId}-${helperId}`, requestData)
+    createRequest(`${postId}-${helperId}`, requestData)
   );
 
   const handleTimeSelect = useCallback((time) => {
@@ -180,7 +181,7 @@ const RequestModal = ({
         title: '요청이 전송되었습니다.'
       });
 
-      toggleModal();
+      closeModal();
     } catch (error) {
       console.error('Error checking request document:', error);
       Toast.fire({
@@ -195,7 +196,7 @@ const RequestModal = ({
   };
 
   const handleCancel = useCallback(() => {
-    toggleModal();
+    closeModal();
   }, []);
 
   return (
