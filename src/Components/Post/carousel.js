@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect, useCallback } from 'react';
+import { useRef, useState, useCallback } from 'react';
 import Slider from 'react-slick';
 import styled from 'styled-components';
 import 'slick-carousel/slick/slick.css';
@@ -9,6 +9,7 @@ import CarouselItem from './carouselItem';
 import { GreenButton } from '../UI/button';
 import { getPostsByTags } from '../API/Post/fetchPost';
 import { GreenLoading } from '../UI/loading';
+import { getUserTag } from '../API/Tag/fetchTag';
 
 const CarouselWrapper = styled.article`
   width: calc(90%);
@@ -80,7 +81,7 @@ const GuideWrapper = styled.article`
   }
 `;
 
-const Carousel = ({ setComp, tagList }) => {
+const Carousel = ({ tagList, uid }) => {
   const carouselRef = useRef(null);
 
   const [tagIdx, setTagIdx] = useState(0);
@@ -88,11 +89,7 @@ const Carousel = ({ setComp, tagList }) => {
 
   const navigate = useNavigate();
 
-  const {
-    data: carouselData,
-    isLoading,
-    isError
-  } = useQuery(
+  const { data: carouselData, isLoading } = useQuery(
     ['carouselData', tagList[tagIdx]],
     () => getPostsByTags(tagIdx, savedCarouselData, tagList),
     {
@@ -104,7 +101,7 @@ const Carousel = ({ setComp, tagList }) => {
   );
 
   const handleNavigate = useCallback(() => {
-    navigate('/tag');
+    navigate('/tag', { state: { tagList } });
   }, []);
 
   const settings = {
@@ -156,7 +153,6 @@ const Carousel = ({ setComp, tagList }) => {
                       content={post.content}
                       createdAt={post.createdAt}
                       id={post.id}
-                      setComp={setComp}
                     />
                   ))}
               </CarouselItemContainer>
