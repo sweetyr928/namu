@@ -134,7 +134,7 @@ const Carousel = ({ tagList }) => {
   return (
     <>
       {isLoading && <GreenLoading />}
-      {!isLoading && tagList.length && (
+      {!isLoading && tagList.length ? (
         <CarouselWrapper>
           <TagWrapper>
             <p>{`# ${tagList[tagIdx]}`}</p>
@@ -158,8 +158,7 @@ const Carousel = ({ tagList }) => {
             ))}
           </Slider>
         </CarouselWrapper>
-      )}
-      {!isLoading && !tagList.length && (
+      ) : (
         <GuideWrapper>
           <div>아직 태그를 설정하지 않았어요!</div>
           <div>지금 태그를 설정하러 가볼까요?</div>
