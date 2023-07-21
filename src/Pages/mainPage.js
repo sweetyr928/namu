@@ -1,13 +1,22 @@
-import { useState } from 'react';
+import { useQuery } from 'react-query';
+import { getUserTags } from '../Components/API/Tag/fetchTag';
 import PostSection from '../Components/UI/postSection';
 import Carousel from '../Components/Post/carousel';
+import { GreenLoading } from '../Components/UI/loading';
 
-const MainPage = () => {
-  const [tagList, setTagList] = useState(['리액트', '뷰']);
+const MainPage = ({ uid }) => {
+  const { data: tagList, isLoading } = useQuery(
+    ['userData', uid],
+    () => getUserTags(uid),
+    {
+      enabled: !!uid
+    }
+  );
 
   return (
     <PostSection>
-      <Carousel tagList={tagList} />
+      {isLoading && <GreenLoading />}
+      {!isLoading && tagList && <Carousel tagList={tagList} />}
     </PostSection>
   );
 };

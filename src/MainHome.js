@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { isLoginState, userData } from './Recoil/atoms';
 import MainPage from './Pages/mainPage';

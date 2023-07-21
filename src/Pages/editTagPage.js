@@ -1,7 +1,11 @@
 import styled from 'styled-components';
 import { useState, useCallback, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { collection, getDocs } from 'firebase/firestore';
+import Swal from 'sweetalert2';
+import { useMutation } from 'react-query';
+import { useRecoilValue } from 'recoil';
+import { updateUserTags } from '../Components/API/Tag/fetchTag';
 import { db } from '../firebase';
 import SearchInput from '../Components/UI/searchInput';
 import SearchedTagResult from '../Components/Tag/tagList';
@@ -9,6 +13,7 @@ import TagItem from '../Components/Tag/tagItem';
 import TagInput from '../Components/UI/tagInput';
 import { GreenButton } from '../Components/UI/button';
 import PostSection from '../Components/UI/postSection';
+import { userData } from '../Recoil/atoms';
 
 const EditTagPageContainer = styled.article`
   width: 100%;
@@ -45,13 +50,54 @@ const GuideWrapper = styled.section`
 `;
 
 const EditTagPage = () => {
-  const [tagList, setTagList] = useState([]);
+  const navigate = useNavigate();
+  const { state } = useLocation();
+
+  const [tagList, setTagList] = useState(state ? state.tagList : []);
   const [searchInputText, setSearchInputText] = useState('');
   const [searchedTagList, setSearchedTagList] = useState([]);
-  const navigate = useNavigate();
+
+  const currentUserData = useRecoilValue(userData);
+  const updateTagMutation = useMutation((updatedTags) =>
+    updateUserTags(currentUserData.uid, updatedTags)
+  );
+
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'top',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: false,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer);
+      toast.addEventListener('mouseleave', Swal.resumeTimer);
+    }
+  });
 
   const handleSave = () => {
-    navigate('/');
+    if (tagList.length < 2 || !tagList.length) {
+      Toast.fire({
+        icon: 'error',
+        title: '태그를 최소 두 개 이상 설정해주세요.'
+      });
+    } else {
+      updateTagMutation.mutate(tagList, {
+        onSuccess: () => {
+          Toast.fire({
+            icon: 'success',
+            title: '태그 목록이 수정되었습니다.'
+          });
+          navigate('/');
+        },
+        onError: (e) => {
+          console.error('Error updating userTags:', e);
+          Toast.fire({
+            icon: 'error',
+            title: '태그 목록 수정에 실패하였습니다. 다시 시도해주십시오.'
+          });
+        }
+      });
+    }
   };
 
   const handleGoBack = useCallback(() => {

@@ -47,14 +47,14 @@ const ButtonWrapper = styled.footer`
   }
 `;
 
-const useCreatePostMutation = () =>
-  useMutation((postData) => createPost(postData));
-
 const CreatePostPage = ({ uid }) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [tagList, setTagList] = useState([]);
-  const createPostMutation = useCreatePostMutation();
+
+  const createPostMutation = useMutation((postData) =>
+    createPost(uid, postData)
+  );
 
   const navigate = useNavigate();
 
