@@ -176,16 +176,16 @@ const PostDetailPage = ({ uid }) => {
   const { id } = useParams();
   const { state } = useLocation();
 
-  const {
-    data: postData,
-    isLoading,
-    isError
-  } = useQuery(['post', id], () => getPost(id), {
-    enabled: !!id,
-    onError: (error) => {
-      console.error('Error fetching post:', error);
+  const { data: postData, isLoading } = useQuery(
+    ['post', id],
+    () => getPost(id),
+    {
+      enabled: !!id,
+      onError: (error) => {
+        console.error('Error fetching post:', error);
+      }
     }
-  });
+  );
 
   const deletePostMutation = useDeletePostMutation();
 
