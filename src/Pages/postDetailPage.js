@@ -11,7 +11,7 @@ import RequestModal from '../Components/Post/requestModal';
 import 'react-quill/dist/quill.core.css';
 import PostSection from '../Components/UI/postSection';
 import { getPost, deletePost } from '../Components/API/Post/fetchPost';
-import { WhiteLoading } from '../Components/UI/loading';
+import { GreenLoading } from '../Components/UI/loading';
 import { db } from '../firebase';
 
 const ContentContainer = styled.article`
@@ -169,18 +169,19 @@ const ModalBackground = styled.div`
 `;
 
 const PostDetailPage = ({ uid }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   const navigate = useNavigate();
   const { id } = useParams();
   const { state } = useLocation();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const { data: postData, isLoading } = useQuery(
     ['post', id],
     () => getPost(id),
     {
       enabled: !!id,
+
       onError: (error) => {
         console.error('Error fetching post:', error);
       }
@@ -255,9 +256,9 @@ const PostDetailPage = ({ uid }) => {
     }
   }, [state, navigate]);
 
-  const toggleModal = useCallback(async () => {
-    const docId = `${id}-${postData.author}-${uid}`;
-    const docRef = doc(db, 'requests', docId);
+  const openModal = useCallback(async () => {
+    const requestId = `${id}-${uid}`;
+    const docRef = doc(db, 'requests', requestId);
 
     const docSnapshot = await getDoc(docRef);
     if (docSnapshot.exists()) {
@@ -270,6 +271,10 @@ const PostDetailPage = ({ uid }) => {
     }
   }, [isModalOpen]);
 
+  const closeModal = useCallback(async () => {
+    setIsModalOpen(!isModalOpen);
+  }, [isModalOpen]);
+
   const options = {
     month: '2-digit',
     day: '2-digit',
@@ -280,17 +285,18 @@ const PostDetailPage = ({ uid }) => {
 
   return (
     <PostSection>
-      {isLoading && <WhiteLoading />}
+      {isLoading && <GreenLoading />}
       {isModalOpen && (
         <>
           <RequestModal
             title={postData.title}
-            toggleModal={toggleModal}
+            openModal={openModal}
+            closeModal={closeModal}
             postId={id}
             helperId={uid}
             requesterId={postData.author}
           ></RequestModal>
-          <ModalBackground onClick={toggleModal} />
+          <ModalBackground onClick={closeModal} />
         </>
       )}
       {!isLoading && (
@@ -325,7 +331,7 @@ const PostDetailPage = ({ uid }) => {
           </ContentDetail>
           <Divider />
           <ContentFooter>
-            <GreenButton onClick={toggleModal}>나무 하러 가기</GreenButton>
+            <GreenButton onClick={openModal}>나무 하러 가기</GreenButton>
             <GreenButton onClick={handleGoBack}>뒤로 가기</GreenButton>
           </ContentFooter>
         </ContentContainer>
