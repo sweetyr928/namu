@@ -50,7 +50,7 @@ function MainHome() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
-      <ChatSection></ChatSection>
+      <ChatSection isLogin={isLogin} />
     </>
   );
 }
