@@ -2,9 +2,12 @@ import styled, { createGlobalStyle } from 'styled-components';
 import { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { useRecoilValue } from 'recoil';
+import { isLoginState } from './Recoil/atoms';
 import SideBar from './Components/UI/Sidebar';
 import Header from './Components/UI/header';
 import MyPage from './Pages/mypage';
+import LoginPage from './Pages/loginPage';
 import MainHome from './MainHome';
 
 const GlobalStyle = createGlobalStyle`
@@ -39,6 +42,7 @@ const MainContainer = styled.main`
 const queryClient = new QueryClient();
 
 function App() {
+  const isLogin = useRecoilValue(isLoginState);
   useEffect(() => {
     document.body.style.overflow = 'hidden';
   }, []);
@@ -53,7 +57,10 @@ function App() {
             <SideBar />
             <Routes>
               <Route path="/*" element={<MainHome />} />
-              <Route path="/mypage" element={<MyPage />} />
+              <Route
+                path="/mypage"
+                element={isLogin ? <MyPage /> : <LoginPage />}
+              />
             </Routes>
           </Router>
         </MainContainer>
