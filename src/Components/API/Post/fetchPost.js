@@ -53,9 +53,9 @@ export const createPost = async (postData) => {
   }
 };
 
-export const getPost = async (id) => {
+export const getPost = async (pid) => {
   try {
-    const docRef = doc(db, 'posts', id);
+    const docRef = doc(db, 'posts', pid);
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
@@ -127,9 +127,9 @@ export const updatePost = async (postData) => {
   }
 };
 
-export const deletePost = async (postId) => {
+export const deletePost = async (pid) => {
   try {
-    const postRef = doc(db, 'posts', postId);
+    const postRef = doc(db, 'posts', pid);
     const postDoc = await getDoc(postRef);
 
     if (!postDoc.exists()) {
@@ -146,7 +146,7 @@ export const deletePost = async (postId) => {
         const tagDoc = await transaction.get(tagRef);
         if (tagDoc.exists()) {
           const tagData = tagDoc.data();
-          delete tagData[postId];
+          delete tagData[pid];
 
           transaction.set(tagRef, tagData);
 
@@ -164,7 +164,7 @@ export const deletePost = async (postId) => {
   }
 };
 
-export const searchPosts = async (text) => {
+export const searchPosts = async (keyword) => {
   const postsRef = collection(db, 'posts');
   const q = query(postsRef, orderBy('createdAt', 'desc'));
 
@@ -185,8 +185,8 @@ export const searchPosts = async (text) => {
       const sanitizedContent = stripHTMLTags(post.content);
 
       if (
-        post.title.indexOf(text) !== -1 ||
-        (sanitizedContent && sanitizedContent.indexOf(text) !== -1)
+        post.title.indexOf(keyword) !== -1 ||
+        (sanitizedContent && sanitizedContent.indexOf(keyword) !== -1)
       ) {
         results.push({ id: doc.id, ...post });
       }

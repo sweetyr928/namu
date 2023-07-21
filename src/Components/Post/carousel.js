@@ -9,7 +9,6 @@ import CarouselItem from './carouselItem';
 import { GreenButton } from '../UI/button';
 import { getPostsByTags } from '../API/Post/fetchPost';
 import { GreenLoading } from '../UI/loading';
-import { getUserTag } from '../API/Tag/fetchTag';
 
 const CarouselWrapper = styled.article`
   width: calc(90%);
@@ -81,7 +80,7 @@ const GuideWrapper = styled.article`
   }
 `;
 
-const Carousel = ({ tagList, uid }) => {
+const Carousel = ({ tagList }) => {
   const carouselRef = useRef(null);
 
   const [tagIdx, setTagIdx] = useState(0);

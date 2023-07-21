@@ -1,6 +1,5 @@
 import { useQuery } from 'react-query';
-import { getUserTag } from '../Components/API/Tag/fetchTag';
-
+import { getUserTags } from '../Components/API/Tag/fetchTag';
 import PostSection from '../Components/UI/postSection';
 import Carousel from '../Components/Post/carousel';
 import { GreenLoading } from '../Components/UI/loading';
@@ -8,7 +7,7 @@ import { GreenLoading } from '../Components/UI/loading';
 const MainPage = ({ uid }) => {
   const { data: tagList, isLoading } = useQuery(
     ['userData', uid],
-    () => getUserTag(uid),
+    () => getUserTags(uid),
     {
       enabled: !!uid
     }
@@ -17,7 +16,7 @@ const MainPage = ({ uid }) => {
   return (
     <PostSection>
       {isLoading && <GreenLoading />}
-      {!isLoading && tagList && <Carousel tagList={tagList} uid={uid} />}
+      {!isLoading && tagList && <Carousel tagList={tagList} />}
     </PostSection>
   );
 };

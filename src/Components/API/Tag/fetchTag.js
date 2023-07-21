@@ -1,9 +1,9 @@
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../../firebase';
 
-export const getUserTag = async (id) => {
+export const getUserTags = async (uid) => {
   try {
-    const docRef = doc(db, 'users', id);
+    const docRef = doc(db, 'users', uid);
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
@@ -16,6 +16,21 @@ export const getUserTag = async (id) => {
     }
   } catch (e) {
     console.error('Error fetching user tags:', e);
-    throw new Error('Failed to fetch user tags');
+    throw e;
   }
 };
+
+export const updateUserTags = async (uid, updatedTags) => {
+  try {
+    const docRef = doc(db, 'users', uid);
+    await updateDoc(docRef, {
+      userTags: updatedTags
+    });
+
+    return true;
+  } catch (e) {
+    console.error('Error updating user tags: ', e);
+    throw e;
+  }
+};
+
