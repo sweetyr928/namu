@@ -5,12 +5,14 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import Swal from 'sweetalert2';
 import { useQuery, useMutation } from 'react-query';
+import { getDoc, doc } from 'firebase/firestore';
 import { GreenButton } from '../Components/UI/button';
 import RequestModal from '../Components/Post/requestModal';
 import 'react-quill/dist/quill.core.css';
 import PostSection from '../Components/UI/postSection';
 import { getPost, deletePost } from '../Components/API/Post/fetchPost';
 import { WhiteLoading } from '../Components/UI/loading';
+import { db } from '../firebase';
 
 const ContentContainer = styled.article`
   display: flex;
@@ -253,8 +255,19 @@ const PostDetailPage = ({ uid }) => {
     }
   }, [state, navigate]);
 
-  const toggleModal = useCallback(() => {
-    setIsModalOpen(!isModalOpen);
+  const toggleModal = useCallback(async () => {
+    const docId = `${id}-${postData.author}-${uid}`;
+    const docRef = doc(db, 'requests', docId);
+
+    const docSnapshot = await getDoc(docRef);
+    if (docSnapshot.exists()) {
+      Toast.fire({
+        icon: 'info',
+        title: '이미 요청을 보냈던 게시글입니다.'
+      });
+    } else {
+      setIsModalOpen(!isModalOpen);
+    }
   }, [isModalOpen]);
 
   const options = {
@@ -271,6 +284,7 @@ const PostDetailPage = ({ uid }) => {
       {isModalOpen && (
         <>
           <RequestModal
+            title={postData.title}
             toggleModal={toggleModal}
             postId={id}
             helperId={uid}
