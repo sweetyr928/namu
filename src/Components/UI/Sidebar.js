@@ -38,11 +38,11 @@ const CustomIcon = styled(({ color, hoverColor, baseFontSize, ...props }) => (
   <props.component {...props} />
 ))`
   color: ${({ color }) => color};
-  font-size: ${({ baseFontSize }) => getResponsiveFontSize(baseFontSize)};
+  font-size: ${({ $baseFontSize }) => getResponsiveFontSize($baseFontSize)};
   transition: color 0.3s;
 
   &:hover {
-    color: ${({ hoverColor }) => hoverColor};
+    color: ${({ $hoverColor }) => $hoverColor};
   }
 `;
 
@@ -54,8 +54,8 @@ function SideBar() {
           <CustomIcon
             component={Home}
             color="#3F3F3F"
-            hoverColor="#c7d36f"
-            baseFontSize={35}
+            $hoverColor="#c7d36f"
+            $baseFontSize={35}
           />
         </IconWrapper>
       </Link>
@@ -64,8 +64,8 @@ function SideBar() {
           <CustomIcon
             component={SearchRounded}
             color="#3F3F3F"
-            hoverColor="#c7d36f"
-            baseFontSize={35}
+            $hoverColor="#c7d36f"
+            $baseFontSize={35}
           />
         </IconWrapper>
       </Link>
@@ -74,8 +74,8 @@ function SideBar() {
           <CustomIcon
             component={ModeEditOutlineRounded}
             color="#3F3F3F"
-            hoverColor="#c7d36f"
-            baseFontSize={35}
+            $hoverColor="#c7d36f"
+            $baseFontSize={35}
           />
         </IconWrapper>
       </Link>
