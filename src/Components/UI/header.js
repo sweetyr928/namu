@@ -28,6 +28,14 @@ const ElementWrapper = styled.article`
     font-weight: 800;
   }
 
+  .home-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: #3f3f3f;
+  }
+
   .mypage-link {
     display: flex;
     justify-content: center;
@@ -105,10 +113,12 @@ const Header = () => {
     <>
       <HeaderContainer>
         <ElementWrapper>
-          <IconWrapper>
-            <ForestRounded sx={{ fontSize: 40 }} />
-          </IconWrapper>
-          <LogoDetail>나누고 나눔 받는 무한 지식 품앗이</LogoDetail>
+          <a href="/" className="home-link">
+            <IconWrapper>
+              <ForestRounded sx={{ fontSize: 40 }} />
+            </IconWrapper>
+            <LogoDetail>나누고 나눔 받는 무한 지식 품앗이</LogoDetail>
+          </a>
         </ElementWrapper>
         {isLogin ? (
           <ElementWrapper>

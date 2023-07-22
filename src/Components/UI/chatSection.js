@@ -1,17 +1,40 @@
 import styled from 'styled-components';
+import ChatRoom from '../Chat/chatRoom';
 
-const ChatContainer = styled.div`
+const ChatContainer = styled.article`
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   border-radius: 30px;
   width: calc(33.33% - 30px);
   height: calc(80%);
   background-color: #ffffff;
-  margin: 0px 20px 50px 0px;
+  overflow: hidden;
+  font-weight: 600;
+  font-size: 15px;
+  margin-top: -50px;
+
+  h1 {
+    font-size: 20px;
+  }
+
+  button {
+    border-bottom: 2px solid #ebebeb;
+    font-size: 20px;
+  }
+  .active {
+    background-color: #c7d36f;
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 20px;
+    border: none;
+  }
 `;
 
-const ChatSection = (props) => <ChatContainer>{props.children}</ChatContainer>;
+const ChatSection = ({ isLogin }) => (
+  <ChatContainer>
+    {isLogin ? <ChatRoom /> : <h1>나무와 함께 해야 볼 수 있어요!</h1>}
+  </ChatContainer>
+);
 
 export default ChatSection;
