@@ -120,14 +120,7 @@ const ButtonWrapper = styled.div`
   }
 `;
 
-const RequestModal = ({
-  title,
-  openModal,
-  closeModal,
-  postId,
-  helperId,
-  requesterId
-}) => {
+const RequestModal = ({ title, closeModal, postId, helperId, requesterId }) => {
   const [selectedTime, setSelectedTime] = useState('');
   const [message, setMessage] = useState('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -145,7 +138,7 @@ const RequestModal = ({
   });
 
   const createRequestMutation = useMutation((requestData) =>
-    createRequest(`${postId}-${helperId}`, requestData)
+    createRequest(`${postId}-${helperId}`, helperId, requesterId, requestData)
   );
 
   const handleTimeSelect = useCallback((time) => {

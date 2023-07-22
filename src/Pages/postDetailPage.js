@@ -290,7 +290,6 @@ const PostDetailPage = ({ uid }) => {
         <>
           <RequestModal
             title={postData.title}
-            openModal={openModal}
             closeModal={closeModal}
             postId={id}
             helperId={uid}
