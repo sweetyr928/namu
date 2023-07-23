@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import styled from 'styled-components';
+import RequestListModal from '../UI/requestListModal';
 
 const ReqListContainer = styled.section`
   display: flex;
@@ -16,6 +18,18 @@ const ReqListContainer = styled.section`
     padding: 6px;
     border-bottom: 2px solid #ebebeb;
   }
+`;
+
+const ModalBackground = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const requests = [
@@ -36,21 +50,37 @@ const requests = [
   }
 ];
 
-const RequestList = ({ setIsStarted }) => (
-  <ReqListContainer>
-    {requests.map((el, idx) => (
-      <section
-        key={idx}
-        onClick={() => {
-          setIsStarted(true);
-        }}
-      >
-        <div>{el.title}</div>
-        <div>{el.content}</div>
-        <div>{el.createdAt}</div>
-      </section>
-    ))}
-  </ReqListContainer>
-);
+const RequestList = () => {
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  return (
+    <>
+      {isModalOpen && (
+        <>
+          <RequestListModal />
+          <ModalBackground
+            onClick={() => {
+              setModalOpen(false);
+            }}
+          />
+        </>
+      )}
+      <ReqListContainer>
+        {requests.map((el, idx) => (
+          <section
+            key={idx}
+            onClick={() => {
+              setModalOpen(true);
+            }}
+          >
+            <div>{el.title}</div>
+            <div>{el.content}</div>
+            <div>{el.createdAt}</div>
+          </section>
+        ))}
+      </ReqListContainer>
+    </>
+  );
+};
 
 export default RequestList;

@@ -30,8 +30,13 @@ function UserInfo() {
     <InfoContainer>
       <ParkRounded sx={{ fontSize: 60 }} />
       <TwoLineText>
-        <div>안녕하세요, 나는야 고수 {currentUserData.displayName} 님!</div>
-        <div> {currentUserData.displayName} 님의 나무는 현재 4단계입니다.</div>
+        <div>
+          안녕하세요, {currentUserData.currentBadge} {currentUserData.name} 님!
+        </div>
+        <div>
+          {currentUserData.name} 님의 나무는 현재 {currentUserData.userLevel}
+          단계입니다.
+        </div>
       </TwoLineText>
     </InfoContainer>
   );

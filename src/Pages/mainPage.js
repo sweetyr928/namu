@@ -1,15 +1,18 @@
 import { useQuery } from 'react-query';
+import { useRecoilValue } from 'recoil';
 import { getUserTags } from '../Components/API/Tag/fetchTag';
+import { userData } from '../Recoil/atoms';
 import PostSection from '../Components/UI/postSection';
 import Carousel from '../Components/Post/carousel';
 import { GreenLoading } from '../Components/UI/loading';
 
-const MainPage = ({ uid }) => {
+const MainPage = () => {
+  const currentUserData = useRecoilValue(userData);
   const { data: tagList, isLoading } = useQuery(
-    ['userData', uid],
-    () => getUserTags(uid),
+    ['userData', currentUserData.uuid],
+    () => getUserTags(currentUserData.uuid),
     {
-      enabled: !!uid
+      enabled: !!currentUserData.uuid
     }
   );
 
