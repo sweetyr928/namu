@@ -44,17 +44,11 @@ const RequestList = () => {
   const currentUserData = useRecoilValue(userData);
   const requests = currentUserData.receivedRequests;
 
-  const { data: requestData, isLoading } = useQuery(
-    'requestData',
-    async () => {
-      const requestPromises = requests.map((id) => getReqestById(id));
-      const requestList = await Promise.all(requestPromises);
-      return requestList;
-    },
-    {
-      enabled: requests.length > 0
-    }
-  );
+  const { data: requestData, isLoading } = useQuery('requestData', async () => {
+    const requestPromises = requests.map((id) => getReqestById(id));
+    const requestList = await Promise.all(requestPromises);
+    return requestList;
+  });
 
   return (
     <>
