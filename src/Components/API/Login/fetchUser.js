@@ -19,9 +19,10 @@ export const addUser = async (ref, data) => {
         userTags: [],
         userRequests: [],
         receivedRequests: [],
-        userBadges: [],
-        currentBadge: '',
-        userLevel: 1
+        userBadges: ['나무 심기'],
+        currentBadge: '나무 심기',
+        userLevel: 1,
+        userPoint: 0
       },
       { merge: true }
     );
