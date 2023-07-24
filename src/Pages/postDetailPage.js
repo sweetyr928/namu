@@ -299,6 +299,7 @@ const PostDetailPage = () => {
             closeModal={closeModal}
             postId={id}
             helperId={currentUserData.uuid}
+            helperLevel={currentUserData.userLevel}
             requesterId={postData.author}
           ></RequestModal>
           <ModalBackground onClick={closeModal} />

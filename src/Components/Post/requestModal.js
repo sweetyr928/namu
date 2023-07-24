@@ -120,7 +120,14 @@ const ButtonWrapper = styled.div`
   }
 `;
 
-const RequestModal = ({ title, closeModal, postId, helperId, requesterId }) => {
+const RequestModal = ({
+  title,
+  closeModal,
+  postId,
+  helperId,
+  helperLevel,
+  requesterId
+}) => {
   const [selectedTime, setSelectedTime] = useState('');
   const [message, setMessage] = useState('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -161,6 +168,7 @@ const RequestModal = ({ title, closeModal, postId, helperId, requesterId }) => {
         postId,
         title,
         helperId,
+        helperLevel,
         requesterId,
         selectedTime,
         message,
