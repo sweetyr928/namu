@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import styled from 'styled-components';
 
 const TagInputWrapper = styled.section`
@@ -86,11 +87,11 @@ const TagsInput = styled.div`
 `;
 
 const TagInput = ({ tagList = [], setTagList, explainText, inputWidth }) => {
-  const removeTags = (idxToRemove) => {
+  const removeTags = useCallback((idxToRemove) => {
     setTagList(tagList.filter((_, idx) => idx !== idxToRemove));
-  };
+  }, []);
 
-  const addTags = (e) => {
+  const addTags = useCallback((e) => {
     const newTag = e.target.value.trim();
     const filtered = tagList.filter((el) => el === newTag);
     if (newTag !== '' && filtered.length === 0 && e.key === 'Enter') {
@@ -98,7 +99,7 @@ const TagInput = ({ tagList = [], setTagList, explainText, inputWidth }) => {
       setTagList(updatedTagList);
       e.target.value = '';
     }
-  };
+  }, []);
 
   return (
     <TagInputWrapper style={{ width: inputWidth ? `${inputWidth}%` : '90%' }}>

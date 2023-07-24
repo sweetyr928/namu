@@ -200,13 +200,13 @@ const PostDetailPage = () => {
     ? new window.Date(postData.createdAt.seconds * 1000)
     : null;
 
-  const handleHamburgerClick = () => {
+  const handleHamburgerClick = useCallback(() => {
     setIsMenuOpen(!isMenuOpen);
-  };
+  }, []);
 
-  const handleEdit = () => {
+  const handleEdit = useCallback(() => {
     navigate(`/posts/${id}/edit`, { state: { id, postData } });
-  };
+  }, []);
 
   const Toast = Swal.mixin({
     toast: true,
@@ -220,7 +220,7 @@ const PostDetailPage = () => {
     }
   });
 
-  const handleDelete = async () => {
+  const handleDelete = useCallback(async () => {
     try {
       const result = await Swal.fire({
         text: '정말로 이 게시글을 삭제하시겠습니까?',
@@ -252,7 +252,7 @@ const PostDetailPage = () => {
     } catch (error) {
       console.error('Error deleting post: ', error);
     }
-  };
+  }, []);
 
   const handleGoBack = useCallback(() => {
     if (state && state.searchResult) {

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Swal from 'sweetalert2';
+import { useCallback } from 'react';
 import { GreenButton } from '../UI/button';
 
 const ResultItem = styled.article`
@@ -53,14 +54,14 @@ const TagItem = ({ category, postCount, tagList, setTagList }) => {
     }
   });
 
-  const handleAddTag = () => {
+  const handleAddTag = useCallback(() => {
     if (!tagList.includes(category)) setTagList([...tagList, category]);
     else
       Toast.fire({
         icon: 'error',
         title: '이미 추가된 태그입니다.'
       });
-  };
+  }, []);
 
   return (
     <ResultItem onClick={handleAddTag}>

@@ -62,9 +62,9 @@ const CreatePostPage = () => {
 
   const navigate = useNavigate();
 
-  const handleChange = (e) => {
+  const handleChange = useCallback((e) => {
     setTitle(e.target.value);
-  };
+  }, []);
 
   const Toast = Swal.mixin({
     toast: true,
@@ -78,7 +78,7 @@ const CreatePostPage = () => {
     }
   });
 
-  const handleSave = async () => {
+  const handleSave = useCallback(async () => {
     if (!title.length || content.trim() === '' || !tagList.length) {
       Toast.fire({
         icon: 'error',
@@ -112,7 +112,7 @@ const CreatePostPage = () => {
         }
       });
     }
-  };
+  }, []);
 
   const handleGoBack = useCallback(() => {
     navigate('/');

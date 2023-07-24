@@ -102,12 +102,12 @@ const CarouselItem = ({ title, content, createdAt, id }) => {
     navigate(`/posts/${id}`);
   }, [id]);
 
-  const stripHTMLTags = (html) => {
+  const stripHTMLTags = useCallback((html) => {
     const tmp = document.createElement('div');
     tmp.innerHTML = html;
 
     return tmp.textContent || tmp.innerText || '';
-  };
+  }, []);
 
   const mergedContent = content.replace(/\n/g, '');
   const sanitizedContent = stripHTMLTags(mergedContent);
