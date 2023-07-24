@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { useRecoilValue } from 'recoil';
 import { isLoginState } from './Recoil/atoms';
-import SideBar from './Components/UI/Sidebar';
+import SideBar from './Components/UI/sidebar';
 import Header from './Components/UI/header';
 import MyPage from './Pages/mypage';
 import LoginPage from './Pages/loginPage';

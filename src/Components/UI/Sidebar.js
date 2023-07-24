@@ -35,7 +35,7 @@ const getResponsiveFontSize = (baseFontSize) =>
   `calc(${baseFontSize}px + (${baseFontSize} * ((100vw - 320px) / 680)))`;
 
 const CustomIcon = styled(({ color, hoverColor, baseFontSize, ...props }) => (
-  <props.component {...props} />
+  <props.as {...props} />
 ))`
   color: ${({ color }) => color};
   font-size: ${({ $baseFontSize }) => getResponsiveFontSize($baseFontSize)};
@@ -52,7 +52,7 @@ function SideBar() {
       <Link to="/">
         <IconWrapper>
           <CustomIcon
-            component={Home}
+            as={Home}
             color="#3F3F3F"
             $hoverColor="#c7d36f"
             $baseFontSize={35}
@@ -62,7 +62,7 @@ function SideBar() {
       <Link to="/search">
         <IconWrapper>
           <CustomIcon
-            component={SearchRounded}
+            as={SearchRounded}
             color="#3F3F3F"
             $hoverColor="#c7d36f"
             $baseFontSize={35}
@@ -72,7 +72,7 @@ function SideBar() {
       <Link to="/newPost">
         <IconWrapper>
           <CustomIcon
-            component={ModeEditOutlineRounded}
+            as={ModeEditOutlineRounded}
             color="#3F3F3F"
             $hoverColor="#c7d36f"
             $baseFontSize={35}
