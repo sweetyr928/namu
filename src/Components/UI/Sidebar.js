@@ -35,14 +35,14 @@ const getResponsiveFontSize = (baseFontSize) =>
   `calc(${baseFontSize}px + (${baseFontSize} * ((100vw - 320px) / 680)))`;
 
 const CustomIcon = styled(({ color, hoverColor, baseFontSize, ...props }) => (
-  <props.component {...props} />
+  <props.as {...props} />
 ))`
   color: ${({ color }) => color};
-  font-size: ${({ baseFontSize }) => getResponsiveFontSize(baseFontSize)};
+  font-size: ${({ $baseFontSize }) => getResponsiveFontSize($baseFontSize)};
   transition: color 0.3s;
 
   &:hover {
-    color: ${({ hoverColor }) => hoverColor};
+    color: ${({ $hoverColor }) => $hoverColor};
   }
 `;
 
@@ -52,30 +52,30 @@ function SideBar() {
       <Link to="/">
         <IconWrapper>
           <CustomIcon
-            component={Home}
+            as={Home}
             color="#3F3F3F"
-            hoverColor="#c7d36f"
-            baseFontSize={35}
+            $hoverColor="#c7d36f"
+            $baseFontSize={35}
           />
         </IconWrapper>
       </Link>
       <Link to="/search">
         <IconWrapper>
           <CustomIcon
-            component={SearchRounded}
+            as={SearchRounded}
             color="#3F3F3F"
-            hoverColor="#c7d36f"
-            baseFontSize={35}
+            $hoverColor="#c7d36f"
+            $baseFontSize={35}
           />
         </IconWrapper>
       </Link>
       <Link to="/newPost">
         <IconWrapper>
           <CustomIcon
-            component={ModeEditOutlineRounded}
+            as={ModeEditOutlineRounded}
             color="#3F3F3F"
-            hoverColor="#c7d36f"
-            baseFontSize={35}
+            $hoverColor="#c7d36f"
+            $baseFontSize={35}
           />
         </IconWrapper>
       </Link>

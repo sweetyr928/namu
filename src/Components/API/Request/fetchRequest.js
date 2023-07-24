@@ -46,10 +46,19 @@ export const createRequest = async (
   }
 };
 
-export const getReq = async (id) => {
-  const docRef = doc(db, 'requests', id);
-  await getDoc(docRef).then((result) => {
-    console.log('getReq의 출력값', result.data());
-    return result.data();
-  });
+export const getReqestById = async (id) => {
+  try {
+    const docRef = doc(db, 'requests', id);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const requestData = docSnap.data();
+      return requestData;
+    } else {
+      console.log('No such document!');
+    }
+  } catch (e) {
+    console.error('Error fetching request data:', e);
+    throw new Error('Failed to fetch request data');
+  }
 };

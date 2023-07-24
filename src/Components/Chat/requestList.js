@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
+import { useQuery } from 'react-query';
 import RequestListModal from '../UI/requestListModal';
-import { getReq } from '../API/Request/fetchRequest';
+import { getReqestById } from '../API/Request/fetchRequest';
 import { userData } from '../../Recoil/atoms';
+import { GreenLoading } from '../UI/loading';
 
 const ReqListContainer = styled.section`
   display: flex;
@@ -37,14 +39,28 @@ const ModalBackground = styled.div`
 
 const RequestList = () => {
   const [isModalOpen, setModalOpen] = useState(false);
+  const [selectedId, setSelectedId] = useState(0);
+
   const currentUserData = useRecoilValue(userData);
   const requests = currentUserData.receivedRequests;
+
+  const { data: requestData, isLoading } = useQuery(
+    'requestData',
+    async () => {
+      const requestPromises = requests.map((id) => getReqestById(id));
+      const requestList = await Promise.all(requestPromises);
+      return requestList;
+    },
+    {
+      enabled: requests.length > 0
+    }
+  );
 
   return (
     <>
       {isModalOpen && (
         <>
-          <RequestListModal />
+          <RequestListModal requestDetail={requestData[selectedId]} />
           <ModalBackground
             onClick={() => {
               setModalOpen(false);
@@ -53,16 +69,21 @@ const RequestList = () => {
         </>
       )}
       <ReqListContainer>
-        {requests.map((el, idx) => (
-          <section
-            key={idx}
-            onClick={() => {
-              setModalOpen(true);
-            }}
-          >
-            <p>{el}</p>
-          </section>
-        ))}
+        {isLoading ? (
+          <GreenLoading />
+        ) : (
+          requestData.map((data, idx) => (
+            <section
+              key={idx}
+              onClick={() => {
+                setSelectedId(idx);
+                setModalOpen(true);
+              }}
+            >
+              <p>{data.message}</p>
+            </section>
+          ))
+        )}
       </ReqListContainer>
     </>
   );

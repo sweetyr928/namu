@@ -4,11 +4,13 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from 'react-query';
 import Swal from 'sweetalert2';
+import { useRecoilValue } from 'recoil';
 import { createPost } from '../Components/API/Post/fetchPost';
 import PostSection from '../Components/UI/postSection';
 import TextEditor from '../Components/Post/textEditor';
 import TagInput from '../Components/UI/tagInput';
 import { GreenButton } from '../Components/UI/button';
+import { userData } from '../Recoil/atoms';
 
 const TitleInput = styled.input`
   border: 2px solid #c7d36f;
@@ -47,13 +49,15 @@ const ButtonWrapper = styled.footer`
   }
 `;
 
-const CreatePostPage = ({ uid }) => {
+const CreatePostPage = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [tagList, setTagList] = useState([]);
 
+  const currentUserData = useRecoilValue(userData);
+
   const createPostMutation = useMutation((postData) =>
-    createPost(uid, postData)
+    createPost(currentUserData.uuid, postData)
   );
 
   const navigate = useNavigate();
@@ -83,7 +87,7 @@ const CreatePostPage = ({ uid }) => {
     } else {
       const currentTime = serverTimestamp();
       const postData = {
-        author: uid,
+        author: currentUserData.uuid,
         title,
         content,
         tags: tagList,

@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { isLoginState, userData } from './Recoil/atoms';
+import { isLoginState } from './Recoil/atoms';
 import MainPage from './Pages/mainPage';
 import NotFound from './Pages/notFoundPage';
 import LoginPage from './Pages/loginPage';
@@ -13,35 +13,19 @@ import UpdatePostPage from './Pages/updatePostPage';
 
 function MainHome() {
   const isLogin = useRecoilValue(isLoginState);
-  const currentUserData = useRecoilValue(userData);
 
   return (
     <>
       <Routes>
         <Route path="/" element={isLogin ? <MainPage /> : <SearchPage />} />
-        <Route
-          path="/posts/:id"
-          element={<PostDetailPage uid={currentUserData.uuid} />}
-        />
-        <Route
-          path="/tag"
-          element={<EditTagPage uid={currentUserData.uuid} />}
-        />
+        <Route path="/posts/:id" element={<PostDetailPage />} />
+        <Route path="/tag" element={<EditTagPage />} />
         <Route path="/search" element={<SearchPage />} />
         <Route
           path="/newPost"
-          element={
-            isLogin ? (
-              <CreatePostPage uid={currentUserData.uuid} />
-            ) : (
-              <LoginPage />
-            )
-          }
+          element={isLogin ? <CreatePostPage /> : <LoginPage />}
         />
-        <Route
-          path="/posts/:id/edit"
-          element={<UpdatePostPage uid={currentUserData.uid} />}
-        />
+        <Route path="/posts/:id/edit" element={<UpdatePostPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
