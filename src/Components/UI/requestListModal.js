@@ -4,10 +4,10 @@ import Modal from './modal';
 const TimeSection = styled.section``;
 const ContentSection = styled.section``;
 
-const RequestListModal = () => (
+const RequestListModal = ({ requestDetail }) => (
   <Modal>
-    <TimeSection>나무의 시간 : 30분</TimeSection>
-    <ContentSection>나무의 한마디 : 도와드리겠습니다!</ContentSection>
+    <TimeSection>나무의 시간 : {requestDetail.selectedTime}</TimeSection>
+    <ContentSection>나무의 한마디 : {requestDetail.message}</ContentSection>
   </Modal>
 );
 
