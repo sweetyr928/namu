@@ -83,13 +83,13 @@ const Header = () => {
   const userFunc = async () => {
     const sessionData = sessionUserData();
     if (sessionData) {
-      setUserData(sessionData);
       setIsLoginState(true);
       const docRef = doc(db, 'users', sessionData.uid);
       const docSnap = await getDoc(docRef);
       if (!docSnap.exists()) {
         addUser(docRef, sessionData);
       }
+      setUserData(docSnap.data());
     }
   };
 
@@ -102,7 +102,6 @@ const Header = () => {
 
     if (isLogout) {
       setIsLoginState(false);
-      window.location.reload();
       signOut(auth).catch((error) => {
         console.log(error);
       });
@@ -124,7 +123,9 @@ const Header = () => {
           <ElementWrapper>
             <a href="/mypage" className="mypage-link">
               <TwoLineText>
-                <div>나는야 고수 {currentUserData.displayName} 님!</div>
+                <div>
+                  {currentUserData.currentBadge} {currentUserData.name} 님!
+                </div>
                 <div>오늘도 좋은 하루 보내세요!</div>
               </TwoLineText>
               <IconWrapper>

@@ -18,26 +18,21 @@ function MainHome() {
   return (
     <>
       <Routes>
-        <Route
-          path="/"
-          element={
-            isLogin ? <MainPage uid={currentUserData.uid} /> : <SearchPage />
-          }
-        />
+        <Route path="/" element={isLogin ? <MainPage /> : <SearchPage />} />
         <Route
           path="/posts/:id"
-          element={<PostDetailPage uid={currentUserData.uid} />}
+          element={<PostDetailPage uid={currentUserData.uuid} />}
         />
         <Route
           path="/tag"
-          element={<EditTagPage uid={currentUserData.uid} />}
+          element={<EditTagPage uid={currentUserData.uuid} />}
         />
         <Route path="/search" element={<SearchPage />} />
         <Route
           path="/newPost"
           element={
             isLogin ? (
-              <CreatePostPage uid={currentUserData.uid} />
+              <CreatePostPage uid={currentUserData.uuid} />
             ) : (
               <LoginPage />
             )
