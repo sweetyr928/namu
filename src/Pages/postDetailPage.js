@@ -6,6 +6,7 @@ import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import Swal from 'sweetalert2';
 import { useQuery, useMutation } from 'react-query';
 import { getDoc, doc } from 'firebase/firestore';
+import { useRecoilValue } from 'recoil';
 import { GreenButton } from '../Components/UI/button';
 import RequestModal from '../Components/Post/requestModal';
 import 'react-quill/dist/quill.core.css';
@@ -13,6 +14,7 @@ import PostSection from '../Components/UI/postSection';
 import { getPost, deletePost } from '../Components/API/Post/fetchPost';
 import { GreenLoading } from '../Components/UI/loading';
 import { db } from '../firebase';
+import { userData } from '../Recoil/atoms';
 
 const ContentContainer = styled.article`
   display: flex;
@@ -168,13 +170,15 @@ const ModalBackground = styled.div`
   align-items: center;
 `;
 
-const PostDetailPage = ({ uid }) => {
+const PostDetailPage = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const { state } = useLocation();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const currentUserData = useRecoilValue(userData);
 
   const { data: postData, isLoading } = useQuery(
     ['post', id],
@@ -188,7 +192,9 @@ const PostDetailPage = ({ uid }) => {
     }
   );
 
-  const deletePostMutation = useMutation((pid) => deletePost(uid, pid));
+  const deletePostMutation = useMutation((pid) =>
+    deletePost(currentUserData.uuid, pid)
+  );
 
   const formattedDate = postData?.createdAt
     ? new window.Date(postData.createdAt.seconds * 1000)
@@ -257,7 +263,7 @@ const PostDetailPage = ({ uid }) => {
   }, [state, navigate]);
 
   const openModal = useCallback(async () => {
-    const requestId = `${id}-${uid}`;
+    const requestId = `${id}-${currentUserData.uuid}`;
     const docRef = doc(db, 'requests', requestId);
 
     const docSnapshot = await getDoc(docRef);
@@ -292,7 +298,7 @@ const PostDetailPage = ({ uid }) => {
             title={postData.title}
             closeModal={closeModal}
             postId={id}
-            helperId={uid}
+            helperId={currentUserData.uuid}
             requesterId={postData.author}
           ></RequestModal>
           <ModalBackground onClick={closeModal} />
@@ -303,7 +309,7 @@ const PostDetailPage = ({ uid }) => {
           <ContentHeader>
             <div className="div-wrapper">
               <div className="title">{postData.title}</div>
-              {postData.author === uid && (
+              {postData.author === currentUserData.uuid && (
                 <div className="icon">
                   <MenuRoundedIcon
                     onClick={handleHamburgerClick}

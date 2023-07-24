@@ -8,6 +8,7 @@ import { GreenLoading } from '../Components/UI/loading';
 
 const MainPage = () => {
   const currentUserData = useRecoilValue(userData);
+
   const { data: tagList, isLoading } = useQuery(
     ['userData', currentUserData.uuid],
     () => getUserTags(currentUserData.uuid),
