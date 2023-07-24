@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import styled from 'styled-components';
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import RequestListModal from '../UI/requestListModal';
+import { WhiteLoading } from '../UI/loading';
 
 const UserRequestContainer = styled.section`
   display: flex;
@@ -32,31 +35,15 @@ const ModalBackground = styled.div`
   align-items: center;
 `;
 
-const userRequests = [
-  {
-    title: '제가 도와드립니다',
-    content: '뭐가 문제인가요?',
-    createdAt: '2023.06.17'
-  },
-  {
-    title: '제가 도와드립니다',
-    content: '뭐가 문제인가요?',
-    createdAt: '2023.06.17'
-  },
-  {
-    title: '제가 도와드립니다',
-    content: '뭐가 문제인가요?',
-    createdAt: '2023.06.17'
-  }
-];
-
-const UserRequestList = () => {
+const UserRequestList = ({ isLoading, requestUserData }) => {
   const [isModalOpen, setModalOpen] = useState(false);
+  const [selectedId, setSelectedId] = useState(0);
+
   return (
     <>
       {isModalOpen && (
         <>
-          <RequestListModal />
+          <RequestListModal requestDetail={requestUserData[selectedId]} />
           <ModalBackground
             onClick={() => {
               setModalOpen(false);
@@ -65,18 +52,31 @@ const UserRequestList = () => {
         </>
       )}
       <UserRequestContainer>
-        {userRequests.map((el, idx) => (
-          <section
-            key={idx}
-            onClick={() => {
-              setModalOpen(true);
-            }}
-          >
-            <div>{el.title}</div>
-            <div>{el.content}</div>
-            <div>{el.createdAt}</div>
-          </section>
-        ))}
+        {isLoading ? (
+          <WhiteLoading />
+        ) : (
+          requestUserData.map((data, idx) => (
+            <section
+              key={idx}
+              onClick={() => {
+                setSelectedId(idx);
+                setModalOpen(true);
+              }}
+            >
+              <div className="text-container">
+                <p className="title">{data.title}</p>
+                <p>{data.message}</p>
+              </div>
+              <div className="checking-container">
+                {data.isMatched ? (
+                  <CheckBoxIcon />
+                ) : (
+                  <CheckBoxOutlineBlankIcon />
+                )}
+              </div>
+            </section>
+          ))
+        )}
       </UserRequestContainer>
     </>
   );
