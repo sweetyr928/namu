@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import styled from 'styled-components';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import RequestListModal from '../UI/requestListModal';
+import { getReq } from '../API/Request/fetchRequest';
+import { userData } from '../../Recoil/atoms';
 
 const ReqListContainer = styled.section`
   display: flex;
@@ -32,26 +35,10 @@ const ModalBackground = styled.div`
   align-items: center;
 `;
 
-const requests = [
-  {
-    title: '헬프미 헬프미',
-    content: '헬프미 헬프미 헬프미',
-    createdAt: '2023.06.17'
-  },
-  {
-    title: '헬프미 헬프미',
-    content: '헬프미 헬프미 헬프미',
-    createdAt: '2023.06.17'
-  },
-  {
-    title: '헬프미 헬프미',
-    content: '헬프미 헬프미 헬프미',
-    createdAt: '2023.06.17'
-  }
-];
-
 const RequestList = () => {
   const [isModalOpen, setModalOpen] = useState(false);
+  const currentUserData = useRecoilValue(userData);
+  const requests = currentUserData.receivedRequests;
 
   return (
     <>
@@ -73,9 +60,7 @@ const RequestList = () => {
               setModalOpen(true);
             }}
           >
-            <div>{el.title}</div>
-            <div>{el.content}</div>
-            <div>{el.createdAt}</div>
+            <p>{el}</p>
           </section>
         ))}
       </ReqListContainer>

@@ -45,3 +45,11 @@ export const createRequest = async (
     throw e;
   }
 };
+
+export const getReq = async (id) => {
+  const docRef = doc(db, 'requests', id);
+  await getDoc(docRef).then((result) => {
+    console.log('getReq의 출력값', result.data());
+    return result.data();
+  });
+};

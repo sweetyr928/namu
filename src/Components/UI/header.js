@@ -87,9 +87,24 @@ const Header = () => {
       const docRef = doc(db, 'users', sessionData.uid);
       const docSnap = await getDoc(docRef);
       if (!docSnap.exists()) {
-        addUser(docRef, sessionData);
+        addUser(docRef, sessionData).then(() =>
+          setUserData({
+            uuid: sessionData.uid,
+            name: sessionData.displayName,
+            email: sessionData.email,
+            userPosts: [],
+            userTags: [],
+            userRequests: [],
+            receivedRequests: [],
+            userBadges: ['나무 심기'],
+            currentBadge: '나무 심기',
+            userLevel: 1,
+            userPoint: 0
+          })
+        );
+      } else {
+        setUserData(docSnap.data());
       }
-      setUserData(docSnap.data());
     }
   };
 
