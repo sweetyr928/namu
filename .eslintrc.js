@@ -43,7 +43,8 @@ module.exports = {
     'consistent-return': 'off',
     'no-else-return': 'off',
     'no-console': 'off',
-    'import/prefer-default-export': 'off'
+    'import/prefer-default-export': 'off',
+    'no-nested-ternary': 'off'
   },
   parser: '@babel/eslint-parser',
   settings: {
