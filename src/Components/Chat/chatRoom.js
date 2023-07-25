@@ -70,7 +70,7 @@ const ChatRoom = () => {
   const setIsStarted = useSetRecoilState(isStarted);
   const tabs = [
     { name: '채팅', content: <ChatList setIsStarted={setIsStarted} /> },
-    { name: '요청', content: <RequestList setIsStarted={setIsStarted} /> }
+    { name: '요청', content: <RequestList /> }
   ];
 
   return (
