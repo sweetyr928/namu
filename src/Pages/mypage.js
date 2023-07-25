@@ -1,12 +1,11 @@
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
-import { useQuery } from 'react-query';
 import UserInfo from '../Components/MyPage/userInfo';
 import UserTitle from '../Components/MyPage/userTitle';
 import UserPostList from '../Components/MyPage/userPostList';
-import UserRequestList from '../Components/MyPage/userRequestList';
 import TabMenu from '../Components/UI/TabMenu';
-import { getReqestById } from '../Components/API/Request/fetchRequest';
+import UserRequestList from '../Components/MyPage/userRequestList';
+import { getRequestById } from '../Components/API/Request/fetchRequest';
 import { userData } from '../Recoil/atoms';
 
 const MyPageContainer = styled.section`
@@ -56,22 +55,10 @@ const UserList = styled.article`
 `;
 
 const MyPage = () => {
-  const currentUserData = useRecoilValue(userData);
-  const requests = currentUserData.userRequests;
-
-  const { data: reqData, isLoading } = useQuery('reqData', async () => {
-    const requestPromises = requests.map((id) => getReqestById(id));
-    const requestList = await Promise.all(requestPromises);
-    console.log(requestList);
-    return requestList;
-  });
-
   const tabs = [
     {
       name: '나의 요청들',
-      content: (
-        <UserRequestList isLoading={isLoading} requestUserData={reqData} />
-      )
+      content: <UserRequestList />
     },
     { name: '나의 질문들', content: <UserPostList /> }
   ];

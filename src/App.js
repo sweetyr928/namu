@@ -51,9 +51,9 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <AppContainer>
         <GlobalStyle />
-        <Header />
-        <MainContainer>
-          <Router>
+        <Router>
+          <Header />
+          <MainContainer>
             <SideBar />
             <Routes>
               <Route path="/*" element={<MainHome />} />
@@ -62,8 +62,8 @@ function App() {
                 element={isLogin ? <MyPage /> : <LoginPage />}
               />
             </Routes>
-          </Router>
-        </MainContainer>
+          </MainContainer>
+        </Router>
       </AppContainer>
     </QueryClientProvider>
   );

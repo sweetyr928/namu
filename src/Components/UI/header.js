@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { signOut } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
+import { useNavigate } from 'react-router-dom';
 import { auth, db } from '../../firebase';
 import { userData, isLoginState } from '../../Recoil/atoms';
 import { addUser, handleGoogleLogin } from '../API/Login/fetchUser';
@@ -23,6 +24,7 @@ const ElementWrapper = styled.article`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  cursor: pointer;
 
   div {
     font-weight: 800;
@@ -79,6 +81,15 @@ const Header = () => {
   const currentUserData = useRecoilValue(userData);
   const setIsLoginState = useSetRecoilState(isLoginState);
   const setUserData = useSetRecoilState(userData);
+  const navigate = useNavigate();
+
+  const navigateToHome = () => {
+    navigate('/');
+  };
+
+  const navigateToMyPage = () => {
+    navigate('/mypage');
+  };
 
   const userFunc = async () => {
     const sessionData = sessionUserData();
@@ -126,27 +137,23 @@ const Header = () => {
   return (
     <>
       <HeaderContainer>
-        <ElementWrapper>
-          <a href="/" className="home-link">
-            <IconWrapper>
-              <ForestRounded sx={{ fontSize: 40 }} />
-            </IconWrapper>
-            <LogoDetail>나누고 나눔 받는 무한 지식 품앗이</LogoDetail>
-          </a>
+        <ElementWrapper onClick={navigateToHome}>
+          <IconWrapper>
+            <ForestRounded sx={{ fontSize: 40 }} />
+          </IconWrapper>
+          <LogoDetail>나누고 나눔 받는 무한 지식 품앗이</LogoDetail>
         </ElementWrapper>
         {isLogin ? (
-          <ElementWrapper>
-            <a href="/mypage" className="mypage-link">
-              <TwoLineText>
-                <div>
-                  {currentUserData.currentBadge} {currentUserData.name} 님!
-                </div>
-                <div>오늘도 좋은 하루 보내세요!</div>
-              </TwoLineText>
-              <IconWrapper>
-                <ParkRounded sx={{ fontSize: 30 }} />
-              </IconWrapper>
-            </a>
+          <ElementWrapper onClick={navigateToMyPage}>
+            <TwoLineText>
+              <div>
+                {currentUserData.currentBadge} {currentUserData.name} 님!
+              </div>
+              <div>오늘도 좋은 하루 보내세요!</div>
+            </TwoLineText>
+            <IconWrapper>
+              <ParkRounded sx={{ fontSize: 30 }} />
+            </IconWrapper>
             <LogoutRounded sx={{ fontSize: 30 }} onClick={handleGoogleLogout} />
           </ElementWrapper>
         ) : (

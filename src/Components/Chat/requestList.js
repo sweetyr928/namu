@@ -7,7 +7,7 @@ import { PiPlantDuotone } from 'react-icons/pi';
 import { BiSolidTree } from 'react-icons/bi';
 import { MdForest } from 'react-icons/md';
 import RequestListModal from '../UI/requestListModal';
-import { getReqestById } from '../API/Request/fetchRequest';
+import { getRequestById } from '../API/Request/fetchRequest';
 import { userData } from '../../Recoil/atoms';
 import { GreenLoading } from '../UI/loading';
 
@@ -36,7 +36,7 @@ const ReqListContainer = styled.article`
     border: 2px solid #3f3f3f;
     border-radius: 50%;
     width: 30px;
-    heigth: 30px;
+    height: 30px;
     padding: 5px;
     margin-right: 9px;
   }
@@ -82,7 +82,7 @@ const RequestList = () => {
   const requests = currentUserData.receivedRequests;
 
   const { data: requestData, isLoading } = useQuery('requestData', async () => {
-    const requestPromises = requests.map((id) => getReqestById(id));
+    const requestPromises = requests.map((id) => getRequestById(id));
     const requestList = await Promise.all(requestPromises);
     return requestList;
   });
