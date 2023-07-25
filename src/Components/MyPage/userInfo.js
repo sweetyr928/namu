@@ -14,6 +14,7 @@ const InfoContainer = styled.article`
   padding: 30px 0px;
   margin-bottom: 20px;
 `;
+
 const TwoLineText = styled.div`
   display: flex;
   flex-direction: column;
@@ -26,6 +27,7 @@ const TwoLineText = styled.div`
 
 function UserInfo() {
   const currentUserData = useRecoilValue(userData);
+
   return (
     <InfoContainer>
       <ParkRounded sx={{ fontSize: 60 }} />
