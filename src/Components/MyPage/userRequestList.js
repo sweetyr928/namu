@@ -1,11 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
-import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import { GiPlantSeed } from 'react-icons/gi';
+import { PiPlantDuotone } from 'react-icons/pi';
+import { BiSolidTree } from 'react-icons/bi';
+import { MdForest } from 'react-icons/md';
+import { useRecoilValue } from 'recoil';
+import { useQuery, refetch } from 'react-query';
 import RequestListModal from '../UI/requestListModal';
 import { WhiteLoading } from '../UI/loading';
+import { userData } from '../../Recoil/atoms';
+import { getRequestById } from '../API/Request/fetchRequest';
 
-const UserRequestContainer = styled.section`
+const ReqListContainer = styled.article`
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -13,13 +19,39 @@ const UserRequestContainer = styled.section`
   align-items: center;
   border-radius: 0px 0px 30px 30px;
   background-color: #c7d36f;
-  padding: 10px;
+  padding: 10px 0px;
   section {
+    display: flex;
     width: 90%;
     background-color: #ffffff;
-    margin: 10px;
-    padding: 18px;
-    border-radius: 30px;
+    margin: 6px;
+    padding: 6px;
+    border-bottom: 2px solid #ebebeb;
+    justify-content: space-around;
+  }
+  div {
+    display: flex;
+  }
+  .icon-container {
+    border: 2px solid #3f3f3f;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    padding: 5px;
+    margin-right: 9px;
+  }
+  .message-container {
+    flex-direction: column;
+    width: 300px;
+    font-size: 14px;
+    .title {
+      margin-bottom: 8px;
+      font-size: 15px;
+      font-weight: 800;
+    }
+  }
+  .time-container {
+    font-size: 13px;
   }
 `;
 
@@ -35,15 +67,41 @@ const ModalBackground = styled.div`
   align-items: center;
 `;
 
-const UserRequestList = ({ isLoading, requestUserData }) => {
+const profiles = [
+  <GiPlantSeed key={0} size="30" />,
+  <PiPlantDuotone key={1} size="30" />,
+  <BiSolidTree key={2} size="30" />,
+  <MdForest key={3} size="30" />
+];
+
+const RequestList = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState(0);
+  const currentUserData = useRecoilValue(userData);
+  const requests = currentUserData.userRequests;
+
+  const { data: requestData, isLoading } = useQuery(
+    'userRequestData',
+    async () => {
+      const requestPromises = requests.map((id) => getRequestById(id));
+      const requestList = await Promise.all(requestPromises);
+      return requestList;
+    }
+  );
+
+  const handlerCloseModal = () => {
+    setModalOpen(false);
+  };
 
   return (
     <>
       {isModalOpen && (
         <>
-          <RequestListModal requestDetail={requestUserData[selectedId]} />
+          <RequestListModal
+            profiles={profiles}
+            requestDetail={requestData[selectedId]}
+            handlerCloseModal={handlerCloseModal}
+          />
           <ModalBackground
             onClick={() => {
               setModalOpen(false);
@@ -51,35 +109,43 @@ const UserRequestList = ({ isLoading, requestUserData }) => {
           />
         </>
       )}
-      <UserRequestContainer>
+      <ReqListContainer>
         {isLoading ? (
           <WhiteLoading />
         ) : (
-          requestUserData.map((data, idx) => (
+          requestData?.map((data, idx) => (
             <section
+              className="item-container"
               key={idx}
               onClick={() => {
                 setSelectedId(idx);
                 setModalOpen(true);
               }}
             >
-              <div className="text-container">
-                <p className="title">{data.title}</p>
-                <p>{data.message}</p>
+              <div className="icon-container">
+                {profiles[data.helperLevel - 1]}
               </div>
-              <div className="checking-container">
-                {data.isMatched ? (
-                  <CheckBoxIcon />
-                ) : (
-                  <CheckBoxOutlineBlankIcon />
-                )}
+              <div className="message-container">
+                <p className="title">{data.title}</p>
+                <p>
+                  {data.message.length > 12
+                    ? `${data.message.slice(0, 12)}…`
+                    : data.message}
+                </p>
+              </div>
+              <div className="time-container">
+                {`${new Date(
+                  data.createdAt.seconds * 1000
+                ).getHours()}:${new Date(
+                  data.createdAt.seconds * 1000
+                ).getMinutes()}`}
               </div>
             </section>
           ))
         )}
-      </UserRequestContainer>
+      </ReqListContainer>
     </>
   );
 };
 
-export default UserRequestList;
+export default RequestList;

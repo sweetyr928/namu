@@ -46,7 +46,7 @@ export const createRequest = async (
   }
 };
 
-export const getReqestById = async (id) => {
+export const getRequestById = async (id) => {
   try {
     const docRef = doc(db, 'requests', id);
     const docSnap = await getDoc(docRef);

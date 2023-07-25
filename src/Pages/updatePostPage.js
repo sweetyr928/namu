@@ -46,9 +46,6 @@ const ButtonWrapper = styled.footer`
   }
 `;
 
-const useUpdatePostMutation = () =>
-  useMutation((postData) => updatePost(postData));
-
 const UpdatePostPage = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
@@ -57,11 +54,12 @@ const UpdatePostPage = () => {
   const [content, setContent] = useState(state.postData.content);
   const [tagList, setTagList] = useState(state.postData.tags);
 
-  const updatePostMutation = useUpdatePostMutation();
+  const updatePostMutation = () =>
+    useMutation((postData) => updatePost(postData));
 
-  const handleChange = (e) => {
+  const handleChange = useCallback((e) => {
     setTitle(e.target.value);
-  };
+  }, []);
 
   const Toast = Swal.mixin({
     toast: true,
@@ -75,7 +73,7 @@ const UpdatePostPage = () => {
     }
   });
 
-  const handleSave = async () => {
+  const handleSave = useCallback(async () => {
     if (!title.length || content.trim() === '' || !tagList.length) {
       Toast.fire({
         icon: 'error',
@@ -106,7 +104,7 @@ const UpdatePostPage = () => {
         }
       });
     }
-  };
+  }, []);
 
   const handleGoBack = useCallback(() => {
     navigate(-1);

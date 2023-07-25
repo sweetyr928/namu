@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import 'react-quill/dist/quill.snow.css';
 import ReactQuill, { Quill } from 'react-quill';
 import ImageResize from 'quill-image-resize';
@@ -10,7 +10,7 @@ Quill.register('modules/ImageResize', ImageResize);
 const TextEditor = ({ content, setContent }) => {
   const quillRef = useRef();
 
-  const imageHandler = () => {
+  const imageHandler = useCallback(() => {
     const input = document.createElement('input');
     input.setAttribute('type', 'file');
     input.setAttribute('accept', 'image/*');
@@ -31,7 +31,7 @@ const TextEditor = ({ content, setContent }) => {
         console.log(error);
       }
     });
-  };
+  }, []);
 
   const modules = useMemo(
     () => ({

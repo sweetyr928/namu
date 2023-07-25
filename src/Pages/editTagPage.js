@@ -74,7 +74,7 @@ const EditTagPage = () => {
     }
   });
 
-  const handleSave = () => {
+  const handleSave = useCallback(() => {
     if (tagList.length < 2 || !tagList.length) {
       Toast.fire({
         icon: 'error',
@@ -98,13 +98,13 @@ const EditTagPage = () => {
         }
       });
     }
-  };
+  }, []);
 
   const handleGoBack = useCallback(() => {
     navigate('/');
   }, []);
 
-  const searchTags = async (text) => {
+  const searchTags = useCallback(async (text) => {
     const tagsRef = collection(db, 'tags');
 
     try {
@@ -125,7 +125,7 @@ const EditTagPage = () => {
     } catch (error) {
       console.error('Error searching tags: ', error);
     }
-  };
+  }, []);
 
   useEffect(() => {
     if (searchInputText) {

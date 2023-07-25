@@ -153,7 +153,7 @@ const RequestModal = ({
     setIsDropdownOpen(false);
   }, []);
 
-  const handleSubmit = async () => {
+  const handleSubmit = useCallback(async () => {
     if (message.trim() === '' || !selectedTime.length) {
       Toast.fire({
         icon: 'error',
@@ -190,11 +190,11 @@ const RequestModal = ({
         title: '요청 전송에 실패했습니다.'
       });
     }
-  };
+  }, []);
 
-  const handleChange = (e) => {
+  const handleChange = useCallback((e) => {
     setMessage(e.target.value);
-  };
+  }, []);
 
   const handleCancel = useCallback(() => {
     closeModal();
