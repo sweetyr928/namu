@@ -181,7 +181,7 @@ const UserTitle = () => {
         console.error('Error updating currentBadge:', e);
         Toast.fire({
           icon: 'error',
-          title: '대표 목패가 변경에 실패하였습니다. 다시 시도해주십시오.'
+          title: '대표 목패 변경에 실패하였습니다. 다시 시도해주십시오.'
         });
       }
     });
