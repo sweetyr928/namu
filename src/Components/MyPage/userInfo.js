@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import { ParkRounded } from '@mui/icons-material';
 import { useRecoilValue } from 'recoil';
-import { userData } from '../../Recoil/atoms';
+import { useEffect } from 'react';
+import { userData, currentBadge } from '../../Recoil/atoms';
 
 const InfoContainer = styled.article`
   display: flex;
@@ -27,13 +28,16 @@ const TwoLineText = styled.div`
 
 function UserInfo() {
   const currentUserData = useRecoilValue(userData);
+  const selectedBadge = useRecoilValue(currentBadge);
+
+  useEffect(() => {}, [selectedBadge]);
 
   return (
     <InfoContainer>
       <ParkRounded sx={{ fontSize: 60 }} />
       <TwoLineText>
         <div>
-          안녕하세요, {currentUserData.currentBadge} {currentUserData.name} 님!
+          안녕하세요, {selectedBadge} {currentUserData.name} 님!
         </div>
         <div>
           {currentUserData.name} 님의 나무는 현재 {currentUserData.userLevel}

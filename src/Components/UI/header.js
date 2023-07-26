@@ -7,7 +7,7 @@ import { signOut } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import { auth, db } from '../../firebase';
-import { userData, isLoginState } from '../../Recoil/atoms';
+import { userData, isLoginState, currentBadge } from '../../Recoil/atoms';
 import { addUser, handleGoogleLogin } from '../API/Login/fetchUser';
 
 const HeaderContainer = styled.header`
@@ -79,8 +79,10 @@ export const sessionUserData = () => {
 const Header = () => {
   const isLogin = useRecoilValue(isLoginState);
   const currentUserData = useRecoilValue(userData);
+  const selectedBadge = useRecoilValue(currentBadge);
   const setIsLoginState = useSetRecoilState(isLoginState);
   const setUserData = useSetRecoilState(userData);
+  const setSelectedBadge = useSetRecoilState(currentBadge);
   const navigate = useNavigate();
 
   const navigateToHome = () => {
@@ -116,9 +118,12 @@ const Header = () => {
         );
       } else {
         setUserData(docSnap.data());
+        setSelectedBadge(docSnap.data().currentBadge);
       }
     }
   };
+
+  useEffect(() => {}, [selectedBadge]);
 
   useEffect(() => {
     userFunc();
@@ -148,7 +153,7 @@ const Header = () => {
           <ElementWrapper onClick={navigateToMyPage}>
             <TwoLineText>
               <div>
-                {currentUserData.currentBadge} {currentUserData.name} 님!
+                {selectedBadge} {currentUserData.name} 님!
               </div>
               <div>오늘도 좋은 하루 보내세요!</div>
             </TwoLineText>
