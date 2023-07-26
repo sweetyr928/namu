@@ -38,10 +38,10 @@ const SearchIcon = styled(Search)`
 const SearchInput = ({ placeholder, setSearchInputText }) => {
   const [inputText, setInputText] = useState('');
 
-  const handleChange = useCallback((e) => {
+  const handleChange = (e) => {
     const text = e.target.value.trim();
     setInputText(text);
-  }, []);
+  };
 
   useEffect(() => {
     setSearchInputText(inputText);

@@ -148,12 +148,12 @@ const RequestModal = ({
     createRequest(`${postId}-${helperId}`, helperId, requesterId, requestData)
   );
 
-  const handleTimeSelect = useCallback((time) => {
+  const handleTimeSelect = (time) => {
     setSelectedTime(time);
     setIsDropdownOpen(false);
-  }, []);
+  };
 
-  const handleSubmit = useCallback(async () => {
+  const handleSubmit = async () => {
     if (message.trim() === '' || !selectedTime.length) {
       Toast.fire({
         icon: 'error',
@@ -190,11 +190,11 @@ const RequestModal = ({
         title: '요청 전송에 실패했습니다.'
       });
     }
-  }, []);
+  };
 
-  const handleChange = useCallback((e) => {
+  const handleChange = (e) => {
     setMessage(e.target.value);
-  }, []);
+  };
 
   const handleCancel = useCallback(() => {
     closeModal();

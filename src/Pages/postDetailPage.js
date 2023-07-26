@@ -206,7 +206,7 @@ const PostDetailPage = () => {
 
   const handleEdit = useCallback(() => {
     navigate(`/posts/${id}/edit`, { state: { id, postData } });
-  }, []);
+  }, [id, postData]);
 
   const Toast = Swal.mixin({
     toast: true,
@@ -337,7 +337,9 @@ const PostDetailPage = () => {
           </ContentDetail>
           <Divider />
           <ContentFooter>
-            <GreenButton onClick={openModal}>나무 하러 가기</GreenButton>
+            {currentUserData.uuid !== postData.author && (
+              <GreenButton onClick={openModal}>나무 하러 가기</GreenButton>
+            )}
             <GreenButton onClick={handleGoBack}>뒤로 가기</GreenButton>
           </ContentFooter>
         </ContentContainer>

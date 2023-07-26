@@ -78,7 +78,7 @@ const CreatePostPage = () => {
     }
   });
 
-  const handleSave = useCallback(async () => {
+  const handleSave = async () => {
     if (!title.length || content.trim() === '' || !tagList.length) {
       Toast.fire({
         icon: 'error',
@@ -112,7 +112,7 @@ const CreatePostPage = () => {
         }
       });
     }
-  }, []);
+  };
 
   const handleGoBack = useCallback(() => {
     navigate('/');
