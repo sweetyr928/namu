@@ -87,11 +87,11 @@ const TagsInput = styled.div`
 `;
 
 const TagInput = ({ tagList = [], setTagList, explainText, inputWidth }) => {
-  const removeTags = useCallback((idxToRemove) => {
+  const removeTags = (idxToRemove) => {
     setTagList(tagList.filter((_, idx) => idx !== idxToRemove));
-  }, []);
+  };
 
-  const addTags = useCallback((e) => {
+  const addTags = (e) => {
     const newTag = e.target.value.trim();
     const filtered = tagList.filter((el) => el === newTag);
     if (newTag !== '' && filtered.length === 0 && e.key === 'Enter') {
@@ -99,7 +99,7 @@ const TagInput = ({ tagList = [], setTagList, explainText, inputWidth }) => {
       setTagList(updatedTagList);
       e.target.value = '';
     }
-  }, []);
+  };
 
   return (
     <TagInputWrapper style={{ width: inputWidth ? `${inputWidth}%` : '90%' }}>

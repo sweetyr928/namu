@@ -206,7 +206,7 @@ const PostDetailPage = () => {
 
   const handleEdit = useCallback(() => {
     navigate(`/posts/${id}/edit`, { state: { id, postData } });
-  }, []);
+  }, [id, postData]);
 
   const Toast = Swal.mixin({
     toast: true,

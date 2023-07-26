@@ -54,12 +54,11 @@ const UpdatePostPage = () => {
   const [content, setContent] = useState(state.postData.content);
   const [tagList, setTagList] = useState(state.postData.tags);
 
-  const updatePostMutation = () =>
-    useMutation((postData) => updatePost(postData));
+  const updatePostMutation = useMutation((postData) => updatePost(postData));
 
-  const handleChange = useCallback((e) => {
+  const handleChange = (e) => {
     setTitle(e.target.value);
-  }, []);
+  };
 
   const Toast = Swal.mixin({
     toast: true,
@@ -73,7 +72,7 @@ const UpdatePostPage = () => {
     }
   });
 
-  const handleSave = useCallback(async () => {
+  const handleSave = async () => {
     if (!title.length || content.trim() === '' || !tagList.length) {
       Toast.fire({
         icon: 'error',
@@ -104,7 +103,7 @@ const UpdatePostPage = () => {
         }
       });
     }
-  }, []);
+  };
 
   const handleGoBack = useCallback(() => {
     navigate(-1);
