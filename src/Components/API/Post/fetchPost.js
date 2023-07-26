@@ -224,3 +224,20 @@ export const searchPosts = async (keyword) => {
     throw e;
   }
 };
+
+export const getPostById = (id) => {
+  const docRef = doc(db, 'posts', id);
+
+  return new Promise((resolve, reject) => {
+    const unsubscribe = onSnapshot(docRef, (docSnap) => {
+      if (docSnap.exists()) {
+        const postData = docSnap.data();
+        resolve(postData);
+      } else {
+        reject(new Error('No such document!'));
+      }
+    });
+
+    return () => unsubscribe();
+  });
+};

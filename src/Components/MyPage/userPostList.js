@@ -1,4 +1,9 @@
 import styled from 'styled-components';
+import { useRecoilValue } from 'recoil';
+import { useQuery } from 'react-query';
+import { WhiteLoading } from '../UI/loading';
+import { userData } from '../../Recoil/atoms';
+import { getPostById } from '../API/Post/fetchPost';
 
 const UserPostContainer = styled.section`
   display: flex;
@@ -17,34 +22,48 @@ const UserPostContainer = styled.section`
     border-radius: 30px;
   }
 `;
-const userPosts = [
-  {
-    title: '헬프미 헬프미',
-    content: '헬프미 헬프미 헬프미',
-    createdAt: '2023.06.17'
-  },
-  {
-    title: '헬프미 헬프미',
-    content: '헬프미 헬프미 헬프미',
-    createdAt: '2023.06.17'
-  },
-  {
-    title: '헬프미 헬프미',
-    content: '헬프미 헬프미 헬프미',
-    createdAt: '2023.06.17'
-  }
-];
 
-const UserPostList = () => (
-  <UserPostContainer>
-    {userPosts.map((el, idx) => (
-      <section key={idx}>
-        <div>{el.title}</div>
-        <div>{el.content}</div>
-        <div>{el.createdAt}</div>
-      </section>
-    ))}
-  </UserPostContainer>
-);
+const UserPostList = () => {
+  const currentUserData = useRecoilValue(userData);
+  const posts = currentUserData.userPosts;
+
+  const { data: userPostsData, isLoading } = useQuery(
+    'userPostsData',
+    async () => {
+      const postPromises = posts.map((id) => getPostById(id));
+      const postList = await Promise.all(postPromises);
+      return postList;
+    }
+  );
+
+  return (
+    <UserPostContainer>
+      {isLoading ? (
+        <WhiteLoading />
+      ) : (
+        <>
+          {userPostsData.map((data, idx) => (
+            <section key={idx}>
+              <div>{data.title}</div>
+              <div>
+                {data.content.length > 30
+                  ? `${data.content.slice(0, 30)}…`
+                  : data.content}
+              </div>
+              <div>
+                {' '}
+                {`${new Date(
+                  data.createdAt.seconds * 1000
+                ).getHours()}:${new Date(
+                  data.createdAt.seconds * 1000
+                ).getMinutes()}`}
+              </div>
+            </section>
+          ))}
+        </>
+      )}
+    </UserPostContainer>
+  );
+};
 
 export default UserPostList;
