@@ -1,8 +1,9 @@
 import styled from 'styled-components';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import Modal from './modal';
 import { WhiteButton } from './button';
-import { isStarted } from '../../Recoil/atoms';
+import { isStarted, userData } from '../../Recoil/atoms';
+import { createChat } from '../API/Chat/fetchChat';
 
 const ContentSection = styled.section`
   display: flex;
@@ -59,6 +60,7 @@ const ButtonWrapper = styled.section`
 
 const RequestListModal = ({ requestDetail, profiles, handlerCloseModal }) => {
   const setIsStarted = useSetRecoilState(isStarted);
+  const currentUserData = useRecoilValue(userData);
 
   return (
     <Modal>
@@ -78,6 +80,13 @@ const RequestListModal = ({ requestDetail, profiles, handlerCloseModal }) => {
       <ButtonWrapper>
         <WhiteButton
           onClick={() => {
+            createChat(
+              currentUserData.uuid,
+              requestDetail.helperId,
+              requestDetail.helperLevel,
+              requestDetail.postId,
+              requestDetail.title
+            );
             setIsStarted(true);
           }}
         >

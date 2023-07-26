@@ -18,6 +18,7 @@ export const addUser = async (ref, data) => {
         userPosts: [],
         userTags: [],
         userRequests: [],
+        userChatrooms: [],
         receivedRequests: [],
         userBadges: ['나무 심기'],
         currentBadge: '나무 심기',
