@@ -72,7 +72,6 @@ const ChatRoom = () => {
     { name: '채팅', content: <ChatList setIsStarted={setIsStarted} /> },
     { name: '요청', content: <RequestList /> }
   ];
-
   return (
     <>
       {chatStarted ? (

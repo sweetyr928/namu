@@ -9,6 +9,12 @@ export const userData = atom({
   effects_UNSTABLE: [persistAtom]
 });
 
+export const roomsData = atom({
+  key: 'chatroomData',
+  default: {},
+  effects_UNSTABLE: [persistAtom]
+});
+
 export const isLoginState = atom({
   key: 'isLoginState',
   default: false
