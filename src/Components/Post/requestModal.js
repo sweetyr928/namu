@@ -176,13 +176,16 @@ const RequestModal = ({
         createdAt: currentTime
       };
 
-      await createRequestMutation.mutateAsync(requestData);
-      Toast.fire({
-        icon: 'success',
-        title: '요청이 전송되었습니다.'
-      });
+      const newRequestID = await createRequestMutation.mutateAsync(requestData);
 
-      closeModal();
+      if (newRequestID) {
+        Toast.fire({
+          icon: 'success',
+          title: '요청이 전송되었습니다.'
+        });
+
+        closeModal();
+      }
     } catch (error) {
       console.error('Error checking request document:', error);
       Toast.fire({
