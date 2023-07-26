@@ -21,6 +21,7 @@
     "react-router-dom": "^6.14.1",
     "react-scripts": "5.0.1",
     "react-spinners": "^0.13.8",
+    "react-tooltip": "^5.18.1",
     "recoil": "^0.7.7",
     "recoil-persist": "^5.1.0",
     "styled-components": "^6.0.1",

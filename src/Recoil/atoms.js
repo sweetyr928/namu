@@ -24,3 +24,8 @@ export const isStarted = atom({
   key: 'isStarted',
   default: false
 });
+
+export const currentBadge = atom({
+  key: 'currentBadge',
+  default: ''
+});

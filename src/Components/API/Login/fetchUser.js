@@ -1,4 +1,4 @@
-import { setDoc, doc, getDoc, onSnapshot } from 'firebase/firestore';
+import { setDoc, doc, getDoc, updateDoc } from 'firebase/firestore';
 import {
   GoogleAuthProvider,
   signInWithPopup,
@@ -56,6 +56,7 @@ export const getUserData = async (userId) => {
 
     if (docSnap.exists()) {
       const userData = docSnap.data();
+
       return userData;
     } else {
       console.log('No such document!');
@@ -67,40 +68,16 @@ export const getUserData = async (userId) => {
   }
 };
 
-export const getUserBadges = async (uid) => {
+export const updateUserCurrentBadge = async (uid, badge) => {
   try {
     const docRef = doc(db, 'users', uid);
-    const docSnap = await getDoc(docRef);
+    await updateDoc(docRef, {
+      currentBadge: badge
+    });
 
-    if (docSnap.exists()) {
-      const userData = docSnap.data();
-      const { userBadges } = userData;
-
-      return userBadges;
-    } else {
-      console.log('No such document!');
-    }
+    return true;
   } catch (e) {
-    console.error('Error fetching user badges:', e);
-    throw e;
-  }
-};
-
-export const getCurrentBadge = async (uid) => {
-  try {
-    const docRef = doc(db, 'users', uid);
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      const userData = docSnap.data();
-      const { currentBadge } = userData;
-
-      return currentBadge;
-    } else {
-      console.log('No such document!');
-    }
-  } catch (e) {
-    console.error('Error fetching current user badges:', e);
+    console.error('Error updating user tags: ', e);
     throw e;
   }
 };
