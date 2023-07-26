@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { useQuery } from 'react-query';
@@ -10,6 +10,7 @@ import RequestListModal from '../UI/requestListModal';
 import { getRequestById } from '../API/Request/fetchRequest';
 import { userData } from '../../Recoil/atoms';
 import { GreenLoading } from '../UI/loading';
+import { getUserData } from '../API/Login/fetchUser';
 
 const ReqListContainer = styled.article`
   display: flex;
@@ -79,13 +80,22 @@ const RequestList = () => {
   const [selectedId, setSelectedId] = useState(0);
 
   const currentUserData = useRecoilValue(userData);
-  const requests = currentUserData.receivedRequests;
+  const userId = currentUserData.uuid;
 
-  const { data: requestData, isLoading } = useQuery('requestData', async () => {
-    const requestPromises = requests.map((id) => getRequestById(id));
-    const requestList = await Promise.all(requestPromises);
-    return requestList;
-  });
+  const { data: requestData, isLoading } = useQuery(
+    'requestData',
+    async () => {
+      const { receivedRequests } = await getUserData(userId);
+      const requestPromises = receivedRequests.map((id) => getRequestById(id));
+      const requestList = await Promise.all(requestPromises);
+
+      return requestList;
+    },
+    {
+      refetchInterval: 2000,
+      refetchIntervalInBackground: true
+    }
+  );
 
   const handlerCloseModal = () => {
     setModalOpen(false);

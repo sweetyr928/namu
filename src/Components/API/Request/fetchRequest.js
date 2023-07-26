@@ -1,4 +1,4 @@
-import { doc, setDoc, updateDoc, getDoc } from 'firebase/firestore';
+import { doc, setDoc, updateDoc, getDoc, onSnapshot } from 'firebase/firestore';
 import { db } from '../../../firebase';
 
 export const createRequest = async (
@@ -46,19 +46,19 @@ export const createRequest = async (
   }
 };
 
-export const getRequestById = async (id) => {
-  try {
-    const docRef = doc(db, 'requests', id);
-    const docSnap = await getDoc(docRef);
+export const getRequestById = (id) => {
+  const docRef = doc(db, 'requests', id);
 
-    if (docSnap.exists()) {
-      const requestData = docSnap.data();
-      return requestData;
-    } else {
-      console.log('No such document!');
-    }
-  } catch (e) {
-    console.error('Error fetching request data:', e);
-    throw new Error('Failed to fetch request data');
-  }
+  return new Promise((resolve, reject) => {
+    const unsubscribe = onSnapshot(docRef, (docSnap) => {
+      if (docSnap.exists()) {
+        const requestData = docSnap.data();
+        resolve(requestData);
+      } else {
+        reject(new Error('No such document!'));
+      }
+    });
+
+    return () => unsubscribe();
+  });
 };
