@@ -53,13 +53,14 @@ const EditTagPage = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
 
+  const currentUserData = useRecoilValue(userData);
+
   const [tagList, setTagList] = useState(state ? state.tagList : []);
   const [searchInputText, setSearchInputText] = useState('');
   const [searchedTagList, setSearchedTagList] = useState([]);
 
-  const currentUserData = useRecoilValue(userData);
   const updateTagMutation = useMutation((updatedTags) =>
-    updateUserTags(currentUserData.uid, updatedTags)
+    updateUserTags(currentUserData.uuid, updatedTags)
   );
 
   const Toast = Swal.mixin({
@@ -74,7 +75,7 @@ const EditTagPage = () => {
     }
   });
 
-  const handleSave = useCallback(() => {
+  const handleSave = () => {
     if (tagList.length < 2 || !tagList.length) {
       Toast.fire({
         icon: 'error',
@@ -98,7 +99,7 @@ const EditTagPage = () => {
         }
       });
     }
-  }, []);
+  };
 
   const handleGoBack = useCallback(() => {
     navigate('/');

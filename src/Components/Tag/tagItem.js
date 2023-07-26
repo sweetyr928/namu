@@ -54,14 +54,14 @@ const TagItem = ({ category, postCount, tagList, setTagList }) => {
     }
   });
 
-  const handleAddTag = useCallback(() => {
+  const handleAddTag = () => {
     if (!tagList.includes(category)) setTagList([...tagList, category]);
     else
       Toast.fire({
         icon: 'error',
         title: '이미 추가된 태그입니다.'
       });
-  }, []);
+  };
 
   return (
     <ResultItem onClick={handleAddTag}>
