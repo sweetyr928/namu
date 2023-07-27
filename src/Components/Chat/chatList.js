@@ -105,17 +105,10 @@ const ChatList = ({ setIsStarted }) => {
     }
   );
 
-  const handleClick = useCallback(
-    (idx) => {
-      if (chatroomData && chatroomData[idx]) {
-        setRoom(chatroomData[idx]);
-        setTimeout(() => {
-          setIsStarted(true);
-        }, 450);
-      }
-    },
-    [chatroomData, setIsStarted]
-  );
+  const handleClick = (idx) => {
+    setRoom(chatroomData[idx]);
+    setIsStarted(true);
+  };
 
   return (
     <ChatListContainer>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
@@ -136,12 +136,23 @@ const ChatRoom = () => {
     hour12: true
   };
 
-  const { data: chatData, isLoading } = useQuery(
-    'chatData',
+  useEffect(() => {
+    setIsStarted(true);
+    return () => {
+      setIsStarted(false);
+    };
+  }, []);
+
+  const {
+    data: chatData,
+    isLoading,
+    refetch
+  } = useQuery(
+    `chatData-${currentRoomData.chatId}`,
     async () => {
       try {
         const { chats } = await getChatroomById(currentRoomData.chatId);
-        if (chats) {
+        if (chats.length > 0) {
           const chatPromises = chats.map((id) => getChatById(id));
           const chatList = await Promise.all(chatPromises);
           return chatList;
@@ -156,9 +167,16 @@ const ChatRoom = () => {
     {
       refetchInterval: 3000,
       refetchIntervalInBackground: true,
-      enabled: chatStarted
+      enabled: chatStarted,
+      staleTime: 0
     }
   );
+
+  useEffect(() => {
+    if (chatStarted) {
+      refetch();
+    }
+  }, [chatStarted, refetch]);
 
   const handlerCloseModal = () => {
     setModalOpen(false);
