@@ -6,7 +6,11 @@ import { Tooltip } from 'react-tooltip';
 import Swal from 'sweetalert2';
 import { WhiteButton } from '../UI/button';
 import { userData, currentBadge } from '../../Recoil/atoms';
-import { getUserData, updateUserCurrentBadge } from '../API/Login/fetchUser';
+import {
+  getUserData,
+  updateUserCurrentBadge,
+  badges
+} from '../API/Login/fetchUser';
 import { WhiteLoading } from '../UI/loading';
 
 const UserTitleContainer = styled.article`
@@ -99,36 +103,6 @@ const UserTitleList = styled.section`
     }
   }
 `;
-
-const badges = [
-  { title: '나무 심기', description: '나무 첫 걸음' },
-  { title: '첫 번째 나무', description: '첫 번째 질문 글 작성 ' },
-  { title: '미니 수목원', description: '첫 번째 나무 요청' },
-  {
-    title: '친절의 씨앗',
-    description: '5번 이상 나무 요청 & 매칭 성공 기록 3회 이상'
-  },
-  {
-    title: '나는야 고수',
-    description: '5번 이상 질문 글 작성 & 매칭 성공 기록 3회 이상'
-  },
-  {
-    title: '배움의 매력',
-    description: '15번 이상 질문 글 작성 & 매칭 성공 기록 10회 이상'
-  },
-  {
-    title: '나눔의 즐거움',
-    description: '나무 평가 평점 6.5점 이상 & 매칭 성공 기록 15회 이상'
-  },
-  {
-    title: '성장의 열정',
-    description: '나무 평가 평점 8.5점 이상 & 매칭 성공 기록 25회 이상'
-  },
-  {
-    title: '품앗이 대장',
-    description: '25번 이상 질문 글 작성 & 매칭 성공 기록 20회 이상'
-  }
-];
 
 const UserTitle = () => {
   const currentUserData = useRecoilValue(userData);
