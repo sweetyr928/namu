@@ -86,7 +86,12 @@ const RequestList = () => {
     async () => {
       const requestPromises = requests.map((id) => getRequestById(id));
       const requestList = await Promise.all(requestPromises);
-      return requestList;
+
+      const sortedRequestList = requestList.sort(
+        (a, b) => b.createdAt.seconds - a.createdAt.seconds
+      );
+
+      return sortedRequestList;
     }
   );
 

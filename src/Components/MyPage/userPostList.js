@@ -61,7 +61,12 @@ const UserPostList = () => {
     async () => {
       const postPromises = posts.map((id) => getPostById(id));
       const postList = await Promise.all(postPromises);
-      return postList;
+
+      const sortedPostList = postList.sort(
+        (a, b) => b.createdAt.seconds - a.createdAt.seconds
+      );
+
+      return sortedPostList;
     }
   );
 

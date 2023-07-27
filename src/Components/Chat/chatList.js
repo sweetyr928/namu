@@ -76,15 +76,19 @@ const ChatList = ({ setIsStarted }) => {
     async () => {
       const chatroomPromises = chatrooms.map((id) => getChatroomById(id));
       const chatroomList = await Promise.all(chatroomPromises);
-      return chatroomList;
+      const sortedChatroomList = chatroomList.sort(
+        (a, b) => b.lastCreatedAt.seconds - a.lastCreatedAt.seconds
+      );
+
+      return sortedChatroomList;
     }
   );
   return (
     <ChatListContainer>
       {isLoading ? (
         <GreenLoading />
-      ) : (
-        chatroomData.map((data, idx) => (
+      ) : Array.isArray(chatroomData) ? (
+        chatroomData?.map((data, idx) => (
           <section
             key={idx}
             onClick={() => {
@@ -110,7 +114,7 @@ const ChatList = ({ setIsStarted }) => {
             </div>
           </section>
         ))
-      )}
+      ) : null}
     </ChatListContainer>
   );
 };

@@ -96,7 +96,11 @@ const RequestList = () => {
       const requestPromises = receivedRequests.map((id) => getRequestById(id));
       const requestList = await Promise.all(requestPromises);
 
-      return requestList;
+      const sortedRequestList = requestList.sort(
+        (a, b) => b.createdAt.seconds - a.createdAt.seconds
+      );
+
+      return sortedRequestList;
     },
     {
       refetchInterval: 2000,
