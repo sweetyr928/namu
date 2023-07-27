@@ -126,7 +126,7 @@ const RequestList = () => {
       <ReqListContainer>
         {isLoading ? (
           <GreenLoading />
-        ) : (
+        ) : Array.isArray(requestData) ? (
           requestData.map((data, idx) => (
             <section
               className="item-container"
@@ -155,7 +155,7 @@ const RequestList = () => {
               </div>
             </section>
           ))
-        )}
+        ) : null}
       </ReqListContainer>
     </>
   );

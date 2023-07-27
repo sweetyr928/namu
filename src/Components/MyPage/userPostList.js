@@ -68,7 +68,7 @@ const UserPostList = () => {
     <UserPostContainer>
       {isLoading ? (
         <WhiteLoading />
-      ) : (
+      ) : Array.isArray(userPostsData) ? (
         <>
           {userPostsData.map((data, idx) => (
             <section
@@ -95,7 +95,7 @@ const UserPostList = () => {
             </section>
           ))}
         </>
-      )}
+      ) : null}
     </UserPostContainer>
   );
 };
