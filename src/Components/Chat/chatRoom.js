@@ -19,6 +19,7 @@ import {
   getChatroomById
 } from '../API/Chat/fetchChat';
 import { SkeletonChatSectionItem } from '../UI/skeletonChatSectionItem';
+import { storage } from '../../firebase';
 
 const ChatRoomContainer = styled.article`
   display: flex;
@@ -120,6 +121,7 @@ const ModalBackground = styled.div`
 const ChatRoom = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [inputMessage, setInputMessage] = useState('');
+  const [inputImg, setInputImg] = useState(null);
 
   const chatStarted = useRecoilValue(isStarted);
   const currentRoomData = useRecoilValue(roomsData);
@@ -153,6 +155,16 @@ const ChatRoom = () => {
   };
   const handleInputChange = (event) => {
     setInputMessage(event.target.value);
+  };
+
+  const getImageFromStorage = async (photo) => {
+    try {
+      const ref = storage.ref(photo);
+      const url = await ref.getDownloadURL();
+      return url;
+    } catch (error) {
+      console.error('Error fetching image from Firebase Storage: ', error);
+    }
   };
 
   const tabs = [
@@ -223,6 +235,12 @@ const ChatRoom = () => {
                         : 'partner-chat'
                     }
                   >
+                    {data.photoURL && (
+                      <img
+                        src={getImageFromStorage(data.photoURL)}
+                        alt="Uploaded from Firebase Storage"
+                      />
+                    )}
                     {data.content}
                   </div>
                   <div className="time">
@@ -236,7 +254,17 @@ const ChatRoom = () => {
             )}
           </Room>
           <ChatInput>
-            <InsertPhotoIcon />
+            <input
+              type="file"
+              style={{ display: 'none' }}
+              id="file"
+              name="file"
+              accept="image/*"
+              onChange={(e) => setInputImg(e.target.files[0])}
+            />
+            <label htmlFor="file">
+              <InsertPhotoIcon />
+            </label>
             <input
               type="text"
               value={inputMessage}
@@ -244,11 +272,13 @@ const ChatRoom = () => {
               onKeyUp={(event) => {
                 if (event.key === 'Enter') {
                   handleSendChat(
-                    inputMessage,
                     currentUserData.uuid,
-                    currentRoomData.chatId
+                    currentRoomData.chatId,
+                    inputMessage,
+                    inputImg
                   );
                   setInputMessage('');
+                  setInputImg(null);
                 }
               }}
               placeholder="채팅을 입력해 주세요!"
