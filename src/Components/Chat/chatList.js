@@ -1,6 +1,7 @@
-import { useState } from 'react';
 import styled from 'styled-components';
 import { useQuery } from 'react-query';
+import moment from 'moment';
+import 'moment/locale/ko';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { GiPlantSeed } from 'react-icons/gi';
 import { PiPlantDuotone } from 'react-icons/pi';
@@ -62,11 +63,12 @@ const profiles = [
 ];
 
 const ChatList = ({ setIsStarted }) => {
-  const [selectedId, setSelectedId] = useState(0);
   const setRoom = useSetRecoilState(roomsData);
-
   const currentUserData = useRecoilValue(userData);
+
   const chatrooms = currentUserData.userChatrooms;
+
+  const timeFromNow = (timestamp) => moment(timestamp).fromNow();
 
   const { data: chatroomData, isLoading } = useQuery(
     'chatroomData',
@@ -81,12 +83,12 @@ const ChatList = ({ setIsStarted }) => {
       {isLoading ? (
         <GreenLoading />
       ) : (
-        chatroomData?.map((data, idx) => (
+        chatroomData.map((data, idx) => (
           <section
             key={idx}
             onClick={() => {
-              setRoom(chatroomData[idx]);
               setIsStarted(true);
+              setRoom(chatroomData[idx]);
             }}
           >
             <div className="icon-container">
@@ -103,11 +105,7 @@ const ChatList = ({ setIsStarted }) => {
               </p>
             </div>
             <div className="time-container">
-              {`${new Date(
-                data.lastCreatedAt.seconds * 1000
-              ).getHours()}:${new Date(
-                data.lastCreatedAt.seconds * 1000
-              ).getMinutes()}`}
+              {timeFromNow(data.lastCreatedAt.seconds * 1000)}
             </div>
           </section>
         ))

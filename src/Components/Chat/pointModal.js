@@ -70,7 +70,7 @@ const ButtonWrapper = styled.section`
   }
 `;
 
-const PointModal = ({ helperId, chatId, handlerCloseModal }) => {
+const PointModal = ({ postId, helperId, chatId, handlerCloseModal }) => {
   const [point, setPoint] = useState(0);
   const setIsStarted = useSetRecoilState(isStarted);
 
@@ -117,7 +117,7 @@ const PointModal = ({ helperId, chatId, handlerCloseModal }) => {
         </div>
         <WhiteButton
           onClick={() => {
-            givePoint(chatId, helperId, point, true);
+            givePoint(chatId, postId, helperId, point, true);
             handlerCloseModal();
             setIsStarted(false);
           }}
@@ -126,7 +126,7 @@ const PointModal = ({ helperId, chatId, handlerCloseModal }) => {
         </WhiteButton>
         <WhiteButton
           onClick={() => {
-            givePoint(chatId, helperId, point, false);
+            givePoint(chatId, postId, helperId, point, false);
             handlerCloseModal();
             setIsStarted(false);
           }}

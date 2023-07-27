@@ -120,6 +120,12 @@ const ChatRoom = () => {
 
   const navigate = useNavigate();
 
+  const options = {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true
+  };
+
   const { data: chatData, isLoading } = useQuery(
     'chatData',
     async () => {
@@ -211,11 +217,12 @@ const ChatRoom = () => {
                   >
                     {data.content}
                   </div>
-                  <div className="time">{`${new Date(
-                    data.createdAt.seconds * 1000
-                  ).getHours()}:${new Date(
-                    data.createdAt.seconds * 1000
-                  ).getMinutes()}`}</div>
+                  <div className="time">
+                    {new Date(data.createdAt.seconds * 1000).toLocaleString(
+                      'ko-KR',
+                      options
+                    )}
+                  </div>
                 </section>
               ))
             )}
