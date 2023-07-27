@@ -121,7 +121,7 @@ const RequestList = () => {
         {isLoading ? (
           <GreenLoading />
         ) : (
-          requestData.map((data, idx) => (
+          requestData?.map((data, idx) => (
             <section
               className="item-container"
               key={idx}
