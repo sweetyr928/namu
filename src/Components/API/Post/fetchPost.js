@@ -23,9 +23,18 @@ export const createPost = async (uid, postData) => {
       content: postData.content,
       tags: postData.tags,
       isSolved: postData.isSolved,
-      createdAt: postData.createdAt
+      createdAt: postData.createdAt,
+      postId: ''
     });
     const newPostId = docRef.id;
+
+    const postRef = doc(db, 'posts', newPostId);
+
+    const updatedData = {
+      postId: newPostId
+    };
+
+    await updateDoc(postRef, updatedData);
 
     const userDocRef = doc(db, 'users', uid);
     const userDoc = await getDoc(userDocRef);
