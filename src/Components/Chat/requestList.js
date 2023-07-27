@@ -82,6 +82,12 @@ const RequestList = () => {
   const currentUserData = useRecoilValue(userData);
   const userId = currentUserData.uuid;
 
+  const options = {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true
+  };
+
   const { data: requestData, isLoading } = useQuery(
     'requestData',
     async () => {
@@ -121,7 +127,7 @@ const RequestList = () => {
         {isLoading ? (
           <GreenLoading />
         ) : (
-          requestData?.map((data, idx) => (
+          requestData.map((data, idx) => (
             <section
               className="item-container"
               key={idx}
@@ -142,11 +148,10 @@ const RequestList = () => {
                 </p>
               </div>
               <div className="time-container">
-                {`${new Date(
-                  data.createdAt.seconds * 1000
-                ).getHours()}:${new Date(
-                  data.createdAt.seconds * 1000
-                ).getMinutes()}`}
+                {new Date(data.createdAt.seconds * 1000).toLocaleString(
+                  'ko-KR',
+                  options
+                )}
               </div>
             </section>
           ))
