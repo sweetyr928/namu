@@ -1,15 +1,15 @@
-import { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import { useState } from 'react';
 import { GiPlantSeed } from 'react-icons/gi';
 import { PiPlantDuotone } from 'react-icons/pi';
 import { BiSolidTree } from 'react-icons/bi';
 import { MdForest } from 'react-icons/md';
 import { useRecoilValue } from 'recoil';
-import { useQuery, refetch } from 'react-query';
+import { useQuery } from 'react-query';
+import styled from 'styled-components';
 import RequestListModal from '../UI/requestListModal';
-import { WhiteLoading } from '../UI/loading';
 import { userData } from '../../Recoil/atoms';
 import { getRequestById } from '../API/Request/fetchRequest';
+import { SkeletonMyPageItem } from '../UI/skeletonMyPageItem';
 
 const ReqListContainer = styled.article`
   display: flex;
@@ -118,7 +118,7 @@ const RequestList = () => {
       )}
       <ReqListContainer>
         {isLoading ? (
-          <WhiteLoading />
+          <SkeletonMyPageItem />
         ) : (
           requestData?.map((data, idx) => (
             <section

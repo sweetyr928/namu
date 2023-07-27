@@ -8,8 +8,8 @@ import { PiPlantDuotone } from 'react-icons/pi';
 import { BiSolidTree } from 'react-icons/bi';
 import { MdForest } from 'react-icons/md';
 import { userData, roomsData } from '../../Recoil/atoms';
-import { GreenLoading } from '../UI/loading';
 import { getChatroomById } from '../API/Chat/fetchChat';
+import { SkeletonChatSectionItem } from '../UI/skeletonChatSectionItem';
 
 const ChatListContainer = styled.section`
   display: flex;
@@ -87,7 +87,7 @@ const ChatList = ({ setIsStarted }) => {
   return (
     <ChatListContainer>
       {isLoading ? (
-        <GreenLoading />
+        <SkeletonChatSectionItem />
       ) : Array.isArray(chatroomData) ? (
         chatroomData?.map((data, idx) => (
           <section

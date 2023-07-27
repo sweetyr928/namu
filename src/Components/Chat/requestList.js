@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { useQuery } from 'react-query';
@@ -9,8 +9,8 @@ import { MdForest } from 'react-icons/md';
 import RequestListModal from '../UI/requestListModal';
 import { getRequestById } from '../API/Request/fetchRequest';
 import { userData } from '../../Recoil/atoms';
-import { GreenLoading } from '../UI/loading';
 import { getUserData } from '../API/Login/fetchUser';
+import { SkeletonChatSectionItem } from '../UI/skeletonChatSectionItem';
 
 const ReqListContainer = styled.article`
   display: flex;
@@ -131,7 +131,7 @@ const RequestList = () => {
       )}
       <ReqListContainer>
         {isLoading ? (
-          <GreenLoading />
+          <SkeletonChatSectionItem />
         ) : Array.isArray(requestData) ? (
           requestData.map((data, idx) => (
             <section

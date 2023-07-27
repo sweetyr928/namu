@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { useCallback } from 'react';
 import { useRecoilValue } from 'recoil';
 import { useQuery } from 'react-query';
-import { WhiteLoading } from '../UI/loading';
 import { userData } from '../../Recoil/atoms';
 import { getPostById } from '../API/Post/fetchPost';
+import { SkeletonMyPageItem } from '../UI/skeletonMyPageItem';
 
 const UserPostContainer = styled.section`
   display: flex;
@@ -74,7 +74,7 @@ const UserPostList = () => {
   return (
     <UserPostContainer>
       {isLoading ? (
-        <WhiteLoading />
+        <SkeletonMyPageItem />
       ) : Array.isArray(userPostsData) ? (
         <>
           {userPostsData.map((data, idx) => (
