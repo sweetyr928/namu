@@ -104,13 +104,13 @@ const MyPage = () => {
       )
         newUserBadges = [...newUserBadges, '배움의 매력'];
       if (
-        currentUserData.userPoint >= 6.5 &&
+        currentUserData.userPoint >= 3 &&
         currentUserData.userChatrooms.length >= 15 &&
         !currentUserData.userBadges.includes('품앗이 대장')
       )
         newUserBadges = [...newUserBadges, '품앗이 대장'];
       if (
-        currentUserData.userPoint >= 8.5 &&
+        currentUserData.userPoint >= 4.5 &&
         currentUserData.userChatrooms.length >= 20 &&
         !currentUserData.userBadges.includes('나는야 고수')
       )

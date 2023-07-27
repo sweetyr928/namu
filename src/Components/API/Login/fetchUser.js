@@ -25,11 +25,11 @@ export const badges = [
   },
   {
     title: '품앗이 대장',
-    description: '나무 평가 평점 6.5점 이상 & 매칭 성공 기록 15회 이상'
+    description: '나무 평가 평점 3점 이상 & 매칭 성공 기록 15회 이상'
   },
   {
     title: '나는야 고수',
-    description: '나무 평가 평점 8.5점 이상 & 매칭 성공 기록 25회 이상'
+    description: '나무 평가 평점 4.5점 이상 & 매칭 성공 기록 25회 이상'
   },
   {
     title: '미니 수목원',
