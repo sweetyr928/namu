@@ -8,8 +8,8 @@ import { PiPlantDuotone } from 'react-icons/pi';
 import { BiSolidTree } from 'react-icons/bi';
 import { MdForest } from 'react-icons/md';
 import { userData, roomsData } from '../../Recoil/atoms';
-import { GreenLoading } from '../UI/loading';
 import { getChatroomById } from '../API/Chat/fetchChat';
+import { SkeletonChatSectionItem } from '../UI/skeletonChatSectionItem';
 
 const ChatListContainer = styled.section`
   display: flex;
@@ -20,6 +20,7 @@ const ChatListContainer = styled.section`
   border-radius: 0px 0px 30px 30px;
   background-color: #ffffff;
   padding: 10px 0px;
+  margin: 0 auto;
   section {
     display: flex;
     width: 90%;
@@ -28,6 +29,7 @@ const ChatListContainer = styled.section`
     padding: 6px;
     border-bottom: 2px solid #ebebeb;
     justify-content: space-around;
+    cursor: pointer;
   }
   div {
     display: flex;
@@ -75,15 +77,19 @@ const ChatList = ({ setIsStarted }) => {
     async () => {
       const chatroomPromises = chatrooms.map((id) => getChatroomById(id));
       const chatroomList = await Promise.all(chatroomPromises);
-      return chatroomList;
+      const sortedChatroomList = chatroomList.sort(
+        (a, b) => b.lastCreatedAt.seconds - a.lastCreatedAt.seconds
+      );
+
+      return sortedChatroomList;
     }
   );
   return (
     <ChatListContainer>
       {isLoading ? (
-        <GreenLoading />
-      ) : (
-        chatroomData.map((data, idx) => (
+        <SkeletonChatSectionItem />
+      ) : Array.isArray(chatroomData) ? (
+        chatroomData?.map((data, idx) => (
           <section
             key={idx}
             onClick={() => {
@@ -109,7 +115,7 @@ const ChatList = ({ setIsStarted }) => {
             </div>
           </section>
         ))
-      )}
+      ) : null}
     </ChatListContainer>
   );
 };

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useQuery, useMutation } from 'react-query';
 import { useEffect } from 'react';
@@ -11,7 +11,6 @@ import {
   updateUserCurrentBadge,
   badges
 } from '../API/Login/fetchUser';
-import { WhiteLoading } from '../UI/loading';
 
 const UserTitleContainer = styled.article`
   display: flex;
@@ -26,6 +25,30 @@ const UserTitleContainer = styled.article`
   button {
     margin: 20px 0px 20px 0px;
   }
+`;
+
+const loadingAnimation = keyframes`
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+`;
+
+const SkeletonBadge = styled.div`
+  width: 100px;
+  height: 30px;
+  border-radius: 30px;
+  background: linear-gradient(
+    90deg,
+    rgba(240, 240, 240, 0.6) 25%,
+    rgba(240, 240, 240, 0.8) 37%,
+    rgba(240, 240, 240, 0.6) 63%
+  );
+  background-size: 200px;
+  animation: ${loadingAnimation} 1.8s infinite;
+  margin: 10px 10px 10px 10px;
 `;
 
 const UserTitleHeader = styled.section`
@@ -80,7 +103,7 @@ const UserTitleList = styled.section`
     margin: 0px 10px 0px 10px;
     padding: 10px;
     border-radius: 30px;
-    cursor: not-allowed;
+    cursor: default;
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.2s ease;
 
@@ -128,7 +151,8 @@ const UserTitle = () => {
   );
 
   const handleClick = (idx) => {
-    setSelectedBadge(badges[idx].title);
+    if (userTitleData.userBadges.includes(badges[idx].title))
+      setSelectedBadge(badges[idx].title);
   };
 
   const Toast = Swal.mixin({
@@ -166,7 +190,17 @@ const UserTitle = () => {
       <UserTitleHeader>나의 목패들</UserTitleHeader>
       <UserTitleList>
         {isLoading ? (
-          <WhiteLoading />
+          <>
+            <SkeletonBadge />
+            <SkeletonBadge />
+            <SkeletonBadge />
+            <SkeletonBadge />
+            <SkeletonBadge />
+            <SkeletonBadge />
+            <SkeletonBadge />
+            <SkeletonBadge />
+            <SkeletonBadge />
+          </>
         ) : (
           badges.map((el, idx) => (
             <div

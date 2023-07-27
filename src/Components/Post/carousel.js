@@ -8,7 +8,7 @@ import { useQuery } from 'react-query';
 import CarouselItem from './carouselItem';
 import { GreenButton } from '../UI/button';
 import { getPostsByTags } from '../API/Post/fetchPost';
-import { GreenLoading } from '../UI/loading';
+import { SkeletonCarousel } from '../UI/skeletonCarousel';
 
 const CarouselWrapper = styled.article`
   width: calc(90%);
@@ -133,42 +133,39 @@ const Carousel = ({ tagList }) => {
 
   return (
     <>
-      {isLoading && <GreenLoading />}
-      {!isLoading ? (
-        tagList.length ? (
-          <CarouselWrapper>
-            <TagWrapper>
-              <p>{`# ${tagList[tagIdx]}`}</p>
-              <button onClick={handleNavigate}>태그 추가</button>
-            </TagWrapper>
-            <Slider ref={carouselRef} {...settings}>
-              {tagList.map((_, idx) => (
-                <CarouselItemContainer key={idx}>
-                  {carouselData &&
-                    carouselData[tagList[tagIdx]] &&
-                    carouselData[tagList[tagIdx]].map((post, i) => (
-                      <CarouselItem
-                        key={i}
-                        title={post.title}
-                        content={post.content}
-                        createdAt={post.createdAt}
-                        id={post.id}
-                      />
-                    ))}
-                </CarouselItemContainer>
-              ))}
-            </Slider>
-          </CarouselWrapper>
-        ) : (
-          <GuideWrapper>
-            <div>아직 태그를 설정하지 않았어요!</div>
-            <div>지금 태그를 설정하러 가볼까요?</div>
-            <GreenButton onClick={handleNavigate}>
-              태그 설정하러 가기
-            </GreenButton>
-          </GuideWrapper>
-        )
-      ) : null}
+      {isLoading ? (
+        <SkeletonCarousel />
+      ) : tagList.length > 0 ? (
+        <CarouselWrapper>
+          <TagWrapper>
+            <p>{`# ${tagList[tagIdx]}`}</p>
+            <button onClick={handleNavigate}>태그 추가</button>
+          </TagWrapper>
+          <Slider ref={carouselRef} {...settings}>
+            {tagList.map((_, idx) => (
+              <CarouselItemContainer key={idx}>
+                {carouselData &&
+                  carouselData[tagList[tagIdx]] &&
+                  carouselData[tagList[tagIdx]].map((post, i) => (
+                    <CarouselItem
+                      key={i}
+                      title={post.title}
+                      content={post.content}
+                      createdAt={post.createdAt}
+                      id={post.id}
+                    />
+                  ))}
+              </CarouselItemContainer>
+            ))}
+          </Slider>
+        </CarouselWrapper>
+      ) : (
+        <GuideWrapper>
+          <div>아직 태그를 설정하지 않았어요!</div>
+          <div>지금 태그를 설정하러 가볼까요?</div>
+          <GreenButton onClick={handleNavigate}>태그 설정하러 가기</GreenButton>
+        </GuideWrapper>
+      )}
     </>
   );
 };

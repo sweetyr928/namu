@@ -1,15 +1,15 @@
-import { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import { useState } from 'react';
 import { GiPlantSeed } from 'react-icons/gi';
 import { PiPlantDuotone } from 'react-icons/pi';
 import { BiSolidTree } from 'react-icons/bi';
 import { MdForest } from 'react-icons/md';
 import { useRecoilValue } from 'recoil';
-import { useQuery, refetch } from 'react-query';
+import { useQuery } from 'react-query';
+import styled from 'styled-components';
 import RequestListModal from '../UI/requestListModal';
-import { WhiteLoading } from '../UI/loading';
 import { userData } from '../../Recoil/atoms';
 import { getRequestById } from '../API/Request/fetchRequest';
+import { SkeletonMyPageItem } from '../UI/skeletonMyPageItem';
 
 const ReqListContainer = styled.article`
   display: flex;
@@ -20,6 +20,7 @@ const ReqListContainer = styled.article`
   border-radius: 0px 0px 30px 30px;
   background-color: #c7d36f;
   padding: 10px 0px;
+  margin: 0 auto;
   section {
     display: flex;
     width: 90%;
@@ -28,6 +29,7 @@ const ReqListContainer = styled.article`
     padding: 6px;
     border-bottom: 2px solid #ebebeb;
     justify-content: space-around;
+    cursor: pointer;
   }
   div {
     display: flex;
@@ -85,7 +87,12 @@ const RequestList = () => {
     async () => {
       const requestPromises = requests.map((id) => getRequestById(id));
       const requestList = await Promise.all(requestPromises);
-      return requestList;
+
+      const sortedRequestList = requestList.sort(
+        (a, b) => b.createdAt.seconds - a.createdAt.seconds
+      );
+
+      return sortedRequestList;
     }
   );
 
@@ -111,7 +118,7 @@ const RequestList = () => {
       )}
       <ReqListContainer>
         {isLoading ? (
-          <WhiteLoading />
+          <SkeletonMyPageItem />
         ) : (
           requestData?.map((data, idx) => (
             <section

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { useQuery } from 'react-query';
@@ -9,8 +9,8 @@ import { MdForest } from 'react-icons/md';
 import RequestListModal from '../UI/requestListModal';
 import { getRequestById } from '../API/Request/fetchRequest';
 import { userData } from '../../Recoil/atoms';
-import { GreenLoading } from '../UI/loading';
 import { getUserData } from '../API/Login/fetchUser';
+import { SkeletonChatSectionItem } from '../UI/skeletonChatSectionItem';
 
 const ReqListContainer = styled.article`
   display: flex;
@@ -21,6 +21,7 @@ const ReqListContainer = styled.article`
   border-radius: 0px 0px 30px 30px;
   background-color: #ffffff;
   padding: 10px 0px;
+  margin: 0 auto;
   section {
     display: flex;
     width: 90%;
@@ -29,6 +30,7 @@ const ReqListContainer = styled.article`
     padding: 6px;
     border-bottom: 2px solid #ebebeb;
     justify-content: space-around;
+    cursor: pointer;
   }
   div {
     display: flex;
@@ -95,7 +97,11 @@ const RequestList = () => {
       const requestPromises = receivedRequests.map((id) => getRequestById(id));
       const requestList = await Promise.all(requestPromises);
 
-      return requestList;
+      const sortedRequestList = requestList.sort(
+        (a, b) => b.createdAt.seconds - a.createdAt.seconds
+      );
+
+      return sortedRequestList;
     },
     {
       refetchInterval: 2000,
@@ -125,8 +131,8 @@ const RequestList = () => {
       )}
       <ReqListContainer>
         {isLoading ? (
-          <GreenLoading />
-        ) : (
+          <SkeletonChatSectionItem />
+        ) : Array.isArray(requestData) ? (
           requestData.map((data, idx) => (
             <section
               className="item-container"
@@ -155,7 +161,7 @@ const RequestList = () => {
               </div>
             </section>
           ))
-        )}
+        ) : null}
       </ReqListContainer>
     </>
   );

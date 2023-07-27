@@ -4,7 +4,7 @@ import { getUserTags } from '../Components/API/Tag/fetchTag';
 import { userData } from '../Recoil/atoms';
 import PostSection from '../Components/UI/postSection';
 import Carousel from '../Components/Post/carousel';
-import { GreenLoading } from '../Components/UI/loading';
+import { SkeletonCarousel } from '../Components/UI/skeletonCarousel';
 
 const MainPage = () => {
   const currentUserData = useRecoilValue(userData);
@@ -19,7 +19,7 @@ const MainPage = () => {
 
   return (
     <PostSection>
-      {isLoading && <GreenLoading />}
+      {isLoading && <SkeletonCarousel />}
       {!isLoading && tagList && <Carousel tagList={tagList} />}
     </PostSection>
   );
