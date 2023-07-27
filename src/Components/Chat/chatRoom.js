@@ -13,7 +13,11 @@ import ChatList from './chatList';
 import RequestList from './requestList';
 import { isStarted, roomsData, userData } from '../../Recoil/atoms';
 import PointModal from './pointModal';
-import { handleSendChat, getChatById } from '../API/Chat/fetchChat';
+import {
+  handleSendChat,
+  getChatById,
+  getChatroomById
+} from '../API/Chat/fetchChat';
 import { GreenLoading } from '../UI/loading';
 
 const ChatRoomContainer = styled.article`
@@ -116,13 +120,19 @@ const ChatRoom = () => {
 
   const navigate = useNavigate();
 
-  const chatting = currentRoomData.chats;
-
-  const { data: chatData, isLoading } = useQuery('chatData', async () => {
-    const chatPromises = chatting.map((id) => getChatById(id));
-    const chatList = await Promise.all(chatPromises);
-    return chatList;
-  });
+  const { data: chatData, isLoading } = useQuery(
+    'chatData',
+    async () => {
+      const { chats } = await getChatroomById(currentRoomData.chatId);
+      const chatPromises = chats.map((id) => getChatById(id));
+      const chatList = await Promise.all(chatPromises);
+      return chatList;
+    },
+    {
+      refetchInterval: 100,
+      refetchIntervalInBackground: true
+    }
+  );
 
   const handlerCloseModal = () => {
     setModalOpen(false);
@@ -183,7 +193,7 @@ const ChatRoom = () => {
             {isLoading ? (
               <GreenLoading />
             ) : (
-              chatData.map((data, idx) => (
+              chatData?.map((data, idx) => (
                 <section
                   key={idx}
                   className={

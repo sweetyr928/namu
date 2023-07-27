@@ -81,12 +81,12 @@ const ChatList = ({ setIsStarted }) => {
       {isLoading ? (
         <GreenLoading />
       ) : (
-        chatroomData.map((data, idx) => (
+        chatroomData?.map((data, idx) => (
           <section
             key={idx}
             onClick={() => {
-              setIsStarted(true);
               setRoom(chatroomData[idx]);
+              setIsStarted(true);
             }}
           >
             <div className="icon-container">
