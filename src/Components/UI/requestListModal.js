@@ -77,23 +77,29 @@ const RequestListModal = ({ requestDetail, profiles, handlerCloseModal }) => {
           {requestDetail.message}
         </MessageSection>
       </ContentSection>
-      <ButtonWrapper>
-        <WhiteButton
-          onClick={() => {
-            createChatRoom(
-              currentUserData.uuid,
-              requestDetail.helperId,
-              requestDetail.helperLevel,
-              requestDetail.postId,
-              requestDetail.title
-            );
-            setIsStarted(true);
-          }}
-        >
-          나무 하러 가요!
-        </WhiteButton>
-        <WhiteButton onClick={handlerCloseModal}>다음에 만나요!</WhiteButton>
-      </ButtonWrapper>
+      {requestDetail.helperId !== currentUserData.uuid ? (
+        <ButtonWrapper>
+          <WhiteButton
+            onClick={() => {
+              createChatRoom(
+                currentUserData.uuid,
+                requestDetail.helperId,
+                requestDetail.helperLevel,
+                requestDetail.postId,
+                requestDetail.title
+              );
+              setIsStarted(true);
+            }}
+          >
+            나무 하러 가요!
+          </WhiteButton>
+          <WhiteButton onClick={handlerCloseModal}>다음에 만나요!</WhiteButton>
+        </ButtonWrapper>
+      ) : (
+        <ButtonWrapper>
+          <WhiteButton onClick={handlerCloseModal}>뒤로 가기</WhiteButton>
+        </ButtonWrapper>
+      )}
     </Modal>
   );
 };
