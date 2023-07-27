@@ -18,8 +18,8 @@ import {
   getChatById,
   getChatroomById
 } from '../API/Chat/fetchChat';
-import { SkeletonChatSectionItem } from '../UI/skeletonChatSectionItem';
 import { storage } from '../../firebase';
+import { GreenLoading } from '../UI/loading';
 
 const ChatRoomContainer = styled.article`
   display: flex;
@@ -139,14 +139,24 @@ const ChatRoom = () => {
   const { data: chatData, isLoading } = useQuery(
     'chatData',
     async () => {
-      const { chats } = await getChatroomById(currentRoomData.chatId);
-      const chatPromises = chats.map((id) => getChatById(id));
-      const chatList = await Promise.all(chatPromises);
-      return chatList;
+      try {
+        const { chats } = await getChatroomById(currentRoomData.chatId);
+        if (chats) {
+          const chatPromises = chats.map((id) => getChatById(id));
+          const chatList = await Promise.all(chatPromises);
+          return chatList;
+        } else {
+          return [];
+        }
+      } catch (error) {
+        console.error('Error fetching chat data:', error);
+        throw new Error('Failed to fetch chat data');
+      }
     },
     {
       refetchInterval: 3000,
-      refetchIntervalInBackground: true
+      refetchIntervalInBackground: true,
+      enabled: chatStarted
     }
   );
 
@@ -218,7 +228,7 @@ const ChatRoom = () => {
           </RoomHeader>
           <Room>
             {isLoading ? (
-              <SkeletonChatSectionItem />
+              <GreenLoading />
             ) : (
               chatData?.map((data, idx) => (
                 <section

@@ -94,14 +94,18 @@ const RequestList = () => {
     'requestData',
     async () => {
       const { receivedRequests } = await getUserData(userId);
-      const requestPromises = receivedRequests.map((id) => getRequestById(id));
-      const requestList = await Promise.all(requestPromises);
+      if (receivedRequests.length > 0) {
+        const requestPromises = receivedRequests.map((id) =>
+          getRequestById(id)
+        );
+        const requestList = await Promise.all(requestPromises);
 
-      const sortedRequestList = requestList.sort(
-        (a, b) => b.createdAt.seconds - a.createdAt.seconds
-      );
+        const sortedRequestList = requestList.sort(
+          (a, b) => b.createdAt.seconds - a.createdAt.seconds
+        );
 
-      return sortedRequestList;
+        return sortedRequestList;
+      }
     },
     {
       refetchInterval: 2000,
@@ -161,7 +165,9 @@ const RequestList = () => {
               </div>
             </section>
           ))
-        ) : null}
+        ) : (
+          <p>받은 요청이 없습니다.</p>
+        )}
       </ReqListContainer>
     </>
   );

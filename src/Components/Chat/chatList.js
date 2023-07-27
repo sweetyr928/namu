@@ -7,9 +7,11 @@ import { GiPlantSeed } from 'react-icons/gi';
 import { PiPlantDuotone } from 'react-icons/pi';
 import { BiSolidTree } from 'react-icons/bi';
 import { MdForest } from 'react-icons/md';
+import { useCallback } from 'react';
 import { userData, roomsData } from '../../Recoil/atoms';
 import { getChatroomById } from '../API/Chat/fetchChat';
 import { SkeletonChatSectionItem } from '../UI/skeletonChatSectionItem';
+import { getUserData } from '../API/Login/fetchUser';
 
 const ChatListContainer = styled.section`
   display: flex;
@@ -67,36 +69,61 @@ const profiles = [
 const ChatList = ({ setIsStarted }) => {
   const setRoom = useSetRecoilState(roomsData);
   const currentUserData = useRecoilValue(userData);
-
   const chatrooms = currentUserData.userChatrooms;
+  const userId = currentUserData.uuid;
 
   const timeFromNow = (timestamp) => moment(timestamp).fromNow();
 
-  const { data: chatroomData, isLoading } = useQuery(
+  const {
+    data: chatroomData,
+    isLoading,
+    isError
+  } = useQuery(
     'chatroomData',
     async () => {
-      const chatroomPromises = chatrooms.map((id) => getChatroomById(id));
-      const chatroomList = await Promise.all(chatroomPromises);
-      const sortedChatroomList = chatroomList.sort(
-        (a, b) => b.lastCreatedAt.seconds - a.lastCreatedAt.seconds
-      );
+      try {
+        const { userChatrooms } = await getUserData(userId);
+        if (userChatrooms.length > 0) {
+          const chatroomPromises = userChatrooms.map((id) =>
+            getChatroomById(id)
+          );
+          const chatroomList = await Promise.all(chatroomPromises);
+          const sortedChatroomList = chatroomList.sort(
+            (a, b) => b.lastCreatedAt.seconds - a.lastCreatedAt.seconds
+          );
 
-      return sortedChatroomList;
+          return sortedChatroomList;
+        }
+        return [];
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+        throw new Error('Failed to fetch chatroom data');
+      }
+    },
+    {
+      refetchInterval: false
     }
   );
+
+  const handleClick = useCallback(
+    (idx) => {
+      if (chatroomData && chatroomData[idx]) {
+        setRoom(chatroomData[idx]);
+        setTimeout(() => {
+          setIsStarted(true);
+        }, 450);
+      }
+    },
+    [chatroomData, setIsStarted]
+  );
+
   return (
     <ChatListContainer>
       {isLoading ? (
         <SkeletonChatSectionItem />
-      ) : Array.isArray(chatroomData) ? (
+      ) : Array.isArray(chatroomData) && chatroomData.length > 0 ? (
         chatroomData?.map((data, idx) => (
-          <section
-            key={idx}
-            onClick={() => {
-              setIsStarted(true);
-              setRoom(chatroomData[idx]);
-            }}
-          >
+          <section key={idx} onClick={() => handleClick(idx)}>
             <div className="icon-container">
               {profiles[data.helperLevel - 1]}
             </div>
@@ -115,7 +142,9 @@ const ChatList = ({ setIsStarted }) => {
             </div>
           </section>
         ))
-      ) : null}
+      ) : (
+        <p>채팅방이 없습니다.</p>
+      )}
     </ChatListContainer>
   );
 };
