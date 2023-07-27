@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -18,6 +18,7 @@ import {
   getChatById,
   getChatroomById
 } from '../API/Chat/fetchChat';
+import { SkeletonChatSectionItem } from '../UI/skeletonChatSectionItem';
 
 const ChatRoomContainer = styled.article`
   display: flex;
@@ -82,34 +83,6 @@ const Room = styled.section`
     padding: 8px 15px;
     border-radius: 30px;
   }
-`;
-
-const loadingAnimation = keyframes`
-  0% {
-    background-position: -200px 0;
-  }
-  100% {
-    background-position: calc(200px + 100%) 0;
-  }
-`;
-
-const SkeletonItem = styled.div`
-  width: 60%;
-  height: 30px;
-  background: linear-gradient(
-    90deg,
-    rgba(240, 240, 240, 0.9) 25%,
-    rgba(240, 240, 240, 1) 37%,
-    rgba(240, 240, 240, 0.9) 63%
-  );
-  background-size: 200px;
-  animation: ${loadingAnimation} 1.8s infinite;
-  margin: 6px;
-  padding: 6px;
-  border-radius: 20px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
 `;
 
 const ChatInput = styled.section`
@@ -232,13 +205,7 @@ const ChatRoom = () => {
           </RoomHeader>
           <Room>
             {isLoading ? (
-              <>
-                <SkeletonItem />
-                <SkeletonItem />
-                <SkeletonItem />
-                <SkeletonItem />
-                <SkeletonItem />
-              </>
+              <SkeletonChatSectionItem />
             ) : (
               chatData?.map((data, idx) => (
                 <section
