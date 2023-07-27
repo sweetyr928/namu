@@ -205,6 +205,7 @@ const ChatRoom = () => {
       {isModalOpen && (
         <>
           <PointModal
+            postId={currentRoomData.postId}
             helperId={currentRoomData.helperId}
             chatId={currentRoomData.chatId}
             handlerCloseModal={handlerCloseModal}
