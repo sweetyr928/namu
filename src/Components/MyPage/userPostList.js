@@ -42,7 +42,7 @@ const UserPostList = () => {
         <WhiteLoading />
       ) : (
         <>
-          {userPostsData.map((data, idx) => (
+          {userPostsData?.map((data, idx) => (
             <section key={idx}>
               <div>{data.title}</div>
               <div>
@@ -51,7 +51,6 @@ const UserPostList = () => {
                   : data.content}
               </div>
               <div>
-                {' '}
                 {`${new Date(
                   data.createdAt.seconds * 1000
                 ).getHours()}:${new Date(
