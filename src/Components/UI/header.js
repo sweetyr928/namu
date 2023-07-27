@@ -123,7 +123,7 @@ const Header = () => {
             receivedRequests: [],
             userBadges: ['나무 심기'],
             currentBadge: '나무 심기',
-            userLevel: 1,
+            userLevel: 0,
             userPoint: 0
           })
         );
