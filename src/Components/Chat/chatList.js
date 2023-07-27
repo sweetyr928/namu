@@ -28,6 +28,7 @@ const ChatListContainer = styled.section`
     padding: 6px;
     border-bottom: 2px solid #ebebeb;
     justify-content: space-around;
+    cursor: pointer;
   }
   div {
     display: flex;

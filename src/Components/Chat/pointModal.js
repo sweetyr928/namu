@@ -41,6 +41,7 @@ const PointSection = styled.section`
     align-items: center;
     margin-top: 20px;
     margin-right: 30px;
+    cursor: pointer;
     p {
       margin-top: 20px;
       font-weight: 700;

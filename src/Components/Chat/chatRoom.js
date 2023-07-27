@@ -37,11 +37,15 @@ const RoomHeader = styled.section`
     width: 100%;
     text-align: left;
   }
+  svg {
+    cursor: pointer;
+  }
 `;
 const ChatMenu = styled.section`
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 `;
 const Room = styled.section`
   width: 100%;
@@ -86,6 +90,7 @@ const ChatInput = styled.section`
   align-items: center;
   svg {
     padding: 5px;
+    cursor: pointer;
   }
   input {
     width: 85%;

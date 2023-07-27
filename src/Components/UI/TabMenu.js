@@ -15,6 +15,7 @@ const TabButtonContainer = styled.div`
   align-items: center;
   width: 100%;
   height: 15%;
+
   button {
     padding: 10px;
     justify-content: center;
@@ -22,6 +23,8 @@ const TabButtonContainer = styled.div`
     background-color: transparent;
     width: 100%;
     height: 100%;
+    cursor: pointer;
+  }
 `;
 
 const TabCotentContainer = styled.div`

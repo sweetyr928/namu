@@ -22,6 +22,7 @@ const UserPostContainer = styled.section`
     margin: 10px;
     padding: 20px;
     border-radius: 30px;
+    cursor: pointer;
   }
   .title {
     padding-top: 10px;
