@@ -3,16 +3,13 @@ import GoogleIcon from '@mui/icons-material/Google';
 import { ForestRounded, LogoutRounded } from '@mui/icons-material';
 import { useEffect } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { GiPlantSeed } from 'react-icons/gi';
-import { PiPlantDuotone } from 'react-icons/pi';
-import { BiSolidTree } from 'react-icons/bi';
-import { MdForest } from 'react-icons/md';
 import { signOut } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import { auth, db } from '../../firebase';
 import { userData, isLoginState, currentBadge } from '../../Recoil/atoms';
 import { addUser, handleGoogleLogin } from '../API/Login/fetchUser';
+import { profiles } from '../../../public/profiles';
 
 const HeaderContainer = styled.header`
   height: 50px;
@@ -71,13 +68,6 @@ const TwoLineText = styled.div`
   margin: 0px 10px 0px 0px;
   font-size: 15px;
 `;
-
-const profiles = [
-  <GiPlantSeed key={0} size="30" />,
-  <PiPlantDuotone key={1} size="30" />,
-  <BiSolidTree key={2} size="30" />,
-  <MdForest key={3} size="30" />
-];
 
 export const sessionUserData = () => {
   for (const key of Object.keys(sessionStorage)) {
@@ -168,7 +158,7 @@ const Header = () => {
               </div>
               <div>오늘도 좋은 하루 보내세요!</div>
             </TwoLineText>
-            <IconWrapper>{profiles[currentUserData.userLevel - 1]}</IconWrapper>
+            <IconWrapper>{profiles[currentUserData.userLevel]}</IconWrapper>
             <LogoutRounded sx={{ fontSize: 30 }} onClick={handleGoogleLogout} />
           </ElementWrapper>
         ) : (

@@ -4,6 +4,7 @@ import Modal from './modal';
 import { WhiteButton } from './button';
 import { isStarted, userData } from '../../Recoil/atoms';
 import { createChatRoom } from '../API/Chat/fetchChat';
+import { profiles } from '../../../public/profiles';
 
 const ContentSection = styled.section`
   display: flex;
@@ -58,7 +59,7 @@ const ButtonWrapper = styled.section`
   }
 `;
 
-const RequestListModal = ({ requestDetail, profiles, handlerCloseModal }) => {
+const RequestListModal = ({ requestDetail, handlerCloseModal }) => {
   const setIsStarted = useSetRecoilState(isStarted);
   const currentUserData = useRecoilValue(userData);
 
@@ -66,7 +67,7 @@ const RequestListModal = ({ requestDetail, profiles, handlerCloseModal }) => {
     <Modal>
       <ContentSection>
         <TimeSection>
-          <div className="icon">{profiles[requestDetail.helperLevel - 1]}</div>
+          <div className="icon">{profiles[requestDetail.helperLevel]}</div>
           <div className="time">
             <span>나무의 시간 : </span>
             {requestDetail.selectedTime}

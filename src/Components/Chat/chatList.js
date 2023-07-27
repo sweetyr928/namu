@@ -3,11 +3,7 @@ import { useQuery } from 'react-query';
 import moment from 'moment';
 import 'moment/locale/ko';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { GiPlantSeed } from 'react-icons/gi';
-import { PiPlantDuotone } from 'react-icons/pi';
-import { BiSolidTree } from 'react-icons/bi';
-import { MdForest } from 'react-icons/md';
-import { useCallback } from 'react';
+import { profiles } from '../../../public/profiles';
 import { userData, roomsData } from '../../Recoil/atoms';
 import { getChatroomById } from '../API/Chat/fetchChat';
 import { SkeletonChatSectionItem } from '../UI/skeletonChatSectionItem';
@@ -58,13 +54,6 @@ const ChatListContainer = styled.section`
     font-size: 13px;
   }
 `;
-
-const profiles = [
-  <GiPlantSeed key={0} size="30" />,
-  <PiPlantDuotone key={1} size="30" />,
-  <BiSolidTree key={2} size="30" />,
-  <MdForest key={3} size="30" />
-];
 
 const ChatList = ({ setIsStarted }) => {
   const setRoom = useSetRecoilState(roomsData);
@@ -118,7 +107,7 @@ const ChatList = ({ setIsStarted }) => {
         chatroomData?.map((data, idx) => (
           <section key={idx} onClick={() => handleClick(idx)}>
             <div className="icon-container">
-              {profiles[data.helperLevel - 1]}
+              {profiles[data.helperLevel]}
             </div>
             <div className="message-container">
               <p className="title">{data.title}</p>

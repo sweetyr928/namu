@@ -1,8 +1,4 @@
 import { useState } from 'react';
-import { GiPlantSeed } from 'react-icons/gi';
-import { PiPlantDuotone } from 'react-icons/pi';
-import { BiSolidTree } from 'react-icons/bi';
-import { MdForest } from 'react-icons/md';
 import { useRecoilValue } from 'recoil';
 import { useQuery } from 'react-query';
 import styled from 'styled-components';
@@ -10,6 +6,7 @@ import RequestListModal from '../UI/requestListModal';
 import { userData } from '../../Recoil/atoms';
 import { getRequestById } from '../API/Request/fetchRequest';
 import { SkeletonMyPageItem } from '../UI/skeletonMyPageItem';
+import { profiles } from '../../../public/profiles';
 
 const ReqListContainer = styled.article`
   display: flex;
@@ -69,13 +66,6 @@ const ModalBackground = styled.div`
   align-items: center;
 `;
 
-const profiles = [
-  <GiPlantSeed key={0} size="30" />,
-  <PiPlantDuotone key={1} size="30" />,
-  <BiSolidTree key={2} size="30" />,
-  <MdForest key={3} size="30" />
-];
-
 const RequestList = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState(0);
@@ -105,7 +95,6 @@ const RequestList = () => {
       {isModalOpen && (
         <>
           <RequestListModal
-            profiles={profiles}
             requestDetail={requestData[selectedId]}
             handlerCloseModal={handlerCloseModal}
           />
@@ -130,7 +119,7 @@ const RequestList = () => {
               }}
             >
               <div className="icon-container">
-                {profiles[data.helperLevel - 1]}
+                {profiles[data.helperLevel]}
               </div>
               <div className="message-container">
                 <p className="title">{data.title}</p>
