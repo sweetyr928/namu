@@ -145,7 +145,7 @@ const ChatRoom = () => {
       return chatList;
     },
     {
-      refetchInterval: 100,
+      refetchInterval: 3000,
       refetchIntervalInBackground: true
     }
   );
@@ -171,6 +171,7 @@ const ChatRoom = () => {
     { name: '채팅', content: <ChatList setIsStarted={setIsStarted} /> },
     { name: '요청', content: <RequestList /> }
   ];
+
   return (
     <>
       {isModalOpen && (
