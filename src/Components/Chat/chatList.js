@@ -20,6 +20,7 @@ const ChatListContainer = styled.section`
   border-radius: 0px 0px 30px 30px;
   background-color: #ffffff;
   padding: 10px 0px;
+  margin: 0 auto;
   section {
     display: flex;
     width: 90%;

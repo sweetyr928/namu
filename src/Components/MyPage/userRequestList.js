@@ -20,6 +20,7 @@ const ReqListContainer = styled.article`
   border-radius: 0px 0px 30px 30px;
   background-color: #c7d36f;
   padding: 10px 0px;
+  margin: 0 auto;
   section {
     display: flex;
     width: 90%;
