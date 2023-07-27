@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { useQuery } from 'react-query';
-import { profiles } from '../../../public/profiles';
+import { profiles } from '../../profiles';
 import RequestListModal from '../UI/requestListModal';
 import { getRequestById } from '../API/Request/fetchRequest';
 import { userData } from '../../Recoil/atoms';
@@ -135,9 +135,7 @@ const RequestList = () => {
                 setModalOpen(true);
               }}
             >
-              <div className="icon-container">
-                {profiles[data.helperLevel]}
-              </div>
+              <div className="icon-container">{profiles[data.helperLevel]}</div>
               <div className="message-container">
                 <p className="title">{data.title}</p>
                 <p>

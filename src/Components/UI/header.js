@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { auth, db } from '../../firebase';
 import { userData, isLoginState, currentBadge } from '../../Recoil/atoms';
 import { addUser, handleGoogleLogin } from '../API/Login/fetchUser';
-import { profiles } from '../../../public/profiles';
+import { profiles } from '../../profiles';
 
 const HeaderContainer = styled.header`
   height: 50px;

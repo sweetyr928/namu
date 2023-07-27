@@ -4,7 +4,7 @@ import Modal from './modal';
 import { WhiteButton } from './button';
 import { isStarted, userData } from '../../Recoil/atoms';
 import { createChatRoom } from '../API/Chat/fetchChat';
-import { profiles } from '../../../public/profiles';
+import { profiles } from '../../profiles';
 
 const ContentSection = styled.section`
   display: flex;

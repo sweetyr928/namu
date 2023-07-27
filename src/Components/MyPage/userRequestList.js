@@ -6,7 +6,7 @@ import RequestListModal from '../UI/requestListModal';
 import { userData } from '../../Recoil/atoms';
 import { getRequestById } from '../API/Request/fetchRequest';
 import { SkeletonMyPageItem } from '../UI/skeletonMyPageItem';
-import { profiles } from '../../../public/profiles';
+import { profiles } from '../../profiles';
 
 const ReqListContainer = styled.article`
   display: flex;
@@ -118,9 +118,7 @@ const RequestList = () => {
                 setModalOpen(true);
               }}
             >
-              <div className="icon-container">
-                {profiles[data.helperLevel]}
-              </div>
+              <div className="icon-container">{profiles[data.helperLevel]}</div>
               <div className="message-container">
                 <p className="title">{data.title}</p>
                 <p>

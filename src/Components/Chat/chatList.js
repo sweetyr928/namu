@@ -3,7 +3,7 @@ import { useQuery } from 'react-query';
 import moment from 'moment';
 import 'moment/locale/ko';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { profiles } from '../../../public/profiles';
+import { profiles } from '../../profiles';
 import { userData, roomsData } from '../../Recoil/atoms';
 import { getChatroomById } from '../API/Chat/fetchChat';
 import { SkeletonChatSectionItem } from '../UI/skeletonChatSectionItem';
@@ -106,9 +106,7 @@ const ChatList = ({ setIsStarted }) => {
       ) : Array.isArray(chatroomData) && chatroomData.length > 0 ? (
         chatroomData?.map((data, idx) => (
           <section key={idx} onClick={() => handleClick(idx)}>
-            <div className="icon-container">
-              {profiles[data.helperLevel]}
-            </div>
+            <div className="icon-container">{profiles[data.helperLevel]}</div>
             <div className="message-container">
               <p className="title">{data.title}</p>
               <p>
