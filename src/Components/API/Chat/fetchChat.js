@@ -63,11 +63,14 @@ export const getChatroomById = async (id) => {
   }
 };
 
-export const givePoint = async (chatId, helperId, point, checked) => {
+export const givePoint = async (chatId, postId, helperId, point, checked) => {
   try {
     if (checked) {
       await updateDoc(doc(db, 'chatrooms', chatId), {
         isChecked: true
+      });
+      await updateDoc(doc(db, 'posts', `${postId}`), {
+        isSolved: true
       });
     }
     await updateDoc(doc(db, 'users', `${helperId}`), {
