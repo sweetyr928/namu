@@ -198,7 +198,7 @@ const UserTitle = () => {
             <div
               key={idx}
               className={
-                userTitleData.userBadges.includes(el.title)
+                userTitleData?.userBadges?.includes(el.title)
                   ? el.title === selectedBadge
                     ? 'currentBadge earnedBadge'
                     : 'earnedBadge'
