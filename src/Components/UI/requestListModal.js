@@ -3,7 +3,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import Modal from './modal';
 import { WhiteButton } from './button';
 import { isStarted, userData } from '../../Recoil/atoms';
-import { createChat } from '../API/Chat/fetchChat';
+import { createChatRoom } from '../API/Chat/fetchChat';
 
 const ContentSection = styled.section`
   display: flex;
@@ -80,7 +80,7 @@ const RequestListModal = ({ requestDetail, profiles, handlerCloseModal }) => {
       <ButtonWrapper>
         <WhiteButton
           onClick={() => {
-            createChat(
+            createChatRoom(
               currentUserData.uuid,
               requestDetail.helperId,
               requestDetail.helperLevel,

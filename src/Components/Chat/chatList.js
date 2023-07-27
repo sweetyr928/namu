@@ -77,7 +77,7 @@ const ChatList = ({ setIsStarted }) => {
     }
   );
   return (
-    <>
+    <ChatListContainer>
       {isLoading ? (
         <GreenLoading />
       ) : (
@@ -95,7 +95,9 @@ const ChatList = ({ setIsStarted }) => {
             <div className="message-container">
               <p className="title">{data.title}</p>
               <p>
-                {data.lastChat.length > 12
+                {data.lastChat === ''
+                  ? '나무를 시작하세요!'
+                  : data.lastChat.length > 12
                   ? `${data.lastChat.slice(0, 12)}…`
                   : data.lastChat}
               </p>
@@ -110,7 +112,7 @@ const ChatList = ({ setIsStarted }) => {
           </section>
         ))
       )}
-    </>
+    </ChatListContainer>
   );
 };
 
