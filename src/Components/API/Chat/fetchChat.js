@@ -9,7 +9,8 @@ import {
   increment,
   collection
 } from 'firebase/firestore';
-import { db } from '../../../firebase';
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
+import { db, storage } from '../../../firebase';
 
 export const createChatRoom = async (
   userId,
@@ -82,18 +83,57 @@ export const givePoint = async (chatId, postId, helperId, point, checked) => {
   }
 };
 
-export const handleSendChat = async (content, user, chatroom) => {
-  if (content.trim() !== '') {
-    const docRef = await addDoc(collection(db, 'chats'), {
-      content,
-      createdAt: serverTimestamp(),
-      user
-    });
-    await updateDoc(doc(db, 'chatrooms', chatroom), {
-      chats: arrayUnion(docRef.id),
-      lastChat: content,
-      lastCreatedAt: serverTimestamp()
-    });
+export const handleSendChat = async (user, chatroom, content, img) => {
+  if (content.trim() === '') {
+    console.log('채팅이 전송되지 않았습니다 :(');
+    return;
+  }
+
+  try {
+    if (img) {
+      const storageRef = ref(storage, `chats/images/${img.name}`);
+      const uploadTask = uploadBytesResumable(storageRef, img);
+
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log(`Upload is${progress}% done`);
+        },
+        (error) => {
+          console.log(error);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+            const docRef = await addDoc(collection(db, 'chats'), {
+              content,
+              createdAt: serverTimestamp(),
+              user,
+              photoURL: downloadURL
+            });
+            await updateDoc(doc(db, 'chatrooms', chatroom), {
+              chats: arrayUnion(docRef.id),
+              lastChat: content,
+              lastCreatedAt: serverTimestamp()
+            });
+          });
+        }
+      );
+    } else {
+      const docRef = await addDoc(collection(db, 'chats'), {
+        content,
+        createdAt: serverTimestamp(),
+        user
+      });
+      await updateDoc(doc(db, 'chatrooms', chatroom), {
+        chats: arrayUnion(docRef.id),
+        lastChat: content,
+        lastCreatedAt: serverTimestamp()
+      });
+    }
+  } catch (error) {
+    console.error(`에러가 발생했습니다! : ${error}`);
   }
 };
 
