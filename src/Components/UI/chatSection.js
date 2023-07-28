@@ -1,9 +1,10 @@
 import styled from 'styled-components';
-import { useSetRecoilState } from 'recoil';
+import { useSetRecoilState, useRecoilValue } from 'recoil';
 import { isStarted } from '../../Recoil/atoms';
 import TabMenu from './TabMenu';
 import ChatList from '../Chat/chatList';
 import RequestList from '../Chat/requestList';
+import ChatRoom from '../Chat/chatRoom';
 
 const ChatContainer = styled.article`
   display: flex;
@@ -37,6 +38,7 @@ const ChatContainer = styled.article`
 
 const ChatSection = ({ isLogin }) => {
   const setIsStarted = useSetRecoilState(isStarted);
+  const chatStarted = useRecoilValue(isStarted);
 
   const tabs = [
     { name: '채팅', content: <ChatList setIsStarted={setIsStarted} /> },
@@ -44,13 +46,19 @@ const ChatSection = ({ isLogin }) => {
   ];
 
   return (
-    <ChatContainer>
-      {isLogin ? (
-        <TabMenu tabs={tabs} />
-      ) : (
-        <h1>나무와 함께 해야 볼 수 있어요!</h1>
-      )}
-    </ChatContainer>
+    <>
+      <ChatContainer>
+        {isLogin ? (
+          chatStarted ? (
+            <ChatRoom />
+          ) : (
+            <TabMenu tabs={tabs} />
+          )
+        ) : (
+          <h1>나무와 함께 해야 볼 수 있어요!</h1>
+        )}
+      </ChatContainer>
+    </>
   );
 };
 

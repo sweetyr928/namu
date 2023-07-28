@@ -8,9 +8,6 @@ import ArticleIcon from '@mui/icons-material/Article';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
-import TabMenu from '../UI/TabMenu';
-import ChatList from './chatList';
-import RequestList from './requestList';
 import { isStarted, roomsData, userData } from '../../Recoil/atoms';
 import PointModal from './pointModal';
 import {
@@ -123,10 +120,10 @@ const ChatRoom = () => {
   const [inputMessage, setInputMessage] = useState('');
   const [inputImg, setInputImg] = useState(null);
 
-  const chatStarted = useRecoilValue(isStarted);
   const currentRoomData = useRecoilValue(roomsData);
   const currentUserData = useRecoilValue(userData);
   const setIsStarted = useSetRecoilState(isStarted);
+  const chatStarted = useRecoilValue(isStarted);
 
   const navigate = useNavigate();
 
@@ -195,11 +192,6 @@ const ChatRoom = () => {
     }
   };
 
-  const tabs = [
-    { name: '채팅', content: <ChatList setIsStarted={setIsStarted} /> },
-    { name: '요청', content: <RequestList /> }
-  ];
-
   return (
     <>
       {isModalOpen && (
@@ -217,107 +209,103 @@ const ChatRoom = () => {
           />
         </>
       )}
-      {chatStarted ? (
-        <ChatRoomContainer>
-          <RoomHeader>
-            <ArrowBackIosIcon
+      <ChatRoomContainer>
+        <RoomHeader>
+          <ArrowBackIosIcon
+            onClick={() => {
+              setIsStarted(false);
+            }}
+          />
+          <p>{currentRoomData.title}</p>
+          <ChatMenu>
+            <ArticleIcon
               onClick={() => {
-                setIsStarted(false);
+                navigate(`/posts/${currentRoomData.postId}`);
               }}
             />
-            <p>{currentRoomData.title}</p>
-            <ChatMenu>
-              <ArticleIcon
+            {currentRoomData.helperId === currentUserData.uuid ? (
+              <></>
+            ) : currentRoomData.isChecked ? (
+              <CheckBoxIcon />
+            ) : (
+              <CheckBoxOutlineBlankIcon
                 onClick={() => {
-                  navigate(`/posts/${currentRoomData.postId}`);
+                  setModalOpen(true);
                 }}
               />
-              {currentRoomData.helperId === currentUserData.uuid ? (
-                <></>
-              ) : currentRoomData.isChecked ? (
-                <CheckBoxIcon />
-              ) : (
-                <CheckBoxOutlineBlankIcon
-                  onClick={() => {
-                    setModalOpen(true);
-                  }}
-                />
-              )}
-            </ChatMenu>
-          </RoomHeader>
-          <Room>
-            {isLoading ? (
-              <GreenLoading />
-            ) : (
-              chatData?.map((data, idx) => (
-                <section
-                  key={idx}
+            )}
+          </ChatMenu>
+        </RoomHeader>
+        <Room>
+          {isLoading ? (
+            <GreenLoading />
+          ) : (
+            chatData?.map((data, idx) => (
+              <section
+                key={idx}
+                className={
+                  currentUserData.uuid === data.user
+                    ? 'my-message'
+                    : 'partner-message'
+                }
+              >
+                <div
                   className={
                     currentUserData.uuid === data.user
-                      ? 'my-message'
-                      : 'partner-message'
+                      ? 'my-chat'
+                      : 'partner-chat'
                   }
                 >
-                  <div
-                    className={
-                      currentUserData.uuid === data.user
-                        ? 'my-chat'
-                        : 'partner-chat'
-                    }
-                  >
-                    {data.photoURL && (
-                      <img
-                        src={getImageFromStorage(data.photoURL)}
-                        alt="Uploaded from Firebase Storage"
-                      />
-                    )}
-                    {data.content}
-                  </div>
-                  <div className="time">
-                    {new Date(data.createdAt.seconds * 1000).toLocaleString(
-                      'ko-KR',
-                      options
-                    )}
-                  </div>
-                </section>
-              ))
-            )}
-          </Room>
-          <ChatInput>
-            <input
-              type="file"
-              style={{ display: 'none' }}
-              id="file"
-              name="file"
-              accept="image/*"
-              onChange={(e) => setInputImg(e.target.files[0])}
-            />
-            <label htmlFor="file">
-              <InsertPhotoIcon />
-            </label>
-            <input
-              type="text"
-              value={inputMessage}
-              onChange={handleInputChange}
-              onKeyUp={(event) => {
-                if (event.key === 'Enter') {
-                  handleSendChat(
-                    currentUserData.uuid,
-                    currentRoomData.chatId,
-                    inputMessage,
-                    inputImg
-                  );
-                  setInputMessage('');
-                  setInputImg(null);
-                }
-              }}
-              placeholder="채팅을 입력해 주세요!"
-            />
-          </ChatInput>
-        </ChatRoomContainer>
-      ) : (
-        <TabMenu tabs={tabs} />
-      )}
+                  {data.photoURL && (
+                    <img
+                      src={getImageFromStorage(data.photoURL)}
+                      alt="Uploaded from Firebase Storage"
+                    />
+                  )}
+                  {data.content}
+                </div>
+                <div className="time">
+                  {new Date(data.createdAt.seconds * 1000).toLocaleString(
+                    'ko-KR',
+                    options
+                  )}
+                </div>
+              </section>
+            ))
+          )}
+        </Room>
+        <ChatInput>
+          <input
+            type="file"
+            style={{ display: 'none' }}
+            id="file"
+            name="file"
+            accept="image/*"
+            onChange={(e) => setInputImg(e.target.files[0])}
+          />
+          <label htmlFor="file">
+            <InsertPhotoIcon />
+          </label>
+          <input
+            type="text"
+            value={inputMessage}
+            onChange={handleInputChange}
+            onKeyUp={(event) => {
+              if (event.key === 'Enter') {
+                handleSendChat(
+                  currentUserData.uuid,
+                  currentRoomData.chatId,
+                  inputMessage,
+                  inputImg
+                );
+                setInputMessage('');
+                setInputImg(null);
+              }
+            }}
+            placeholder="채팅을 입력해 주세요!"
+          />
+        </ChatInput>
+      </ChatRoomContainer>
     </>
   );
 };
