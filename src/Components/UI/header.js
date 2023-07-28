@@ -30,22 +30,12 @@ const ElementWrapper = styled.article`
   div {
     font-weight: 800;
   }
+`;
 
-  .home-link {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-decoration: none;
-    color: #3f3f3f;
-  }
-
-  .mypage-link {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-decoration: none;
-    color: #3f3f3f;
-  }
+const MyPageButton = styled.section`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const IconWrapper = styled.section`
@@ -151,14 +141,16 @@ const Header = () => {
           <LogoDetail>나누고 나눔 받는 무한 지식 품앗이</LogoDetail>
         </ElementWrapper>
         {isLogin ? (
-          <ElementWrapper onClick={navigateToMyPage}>
-            <TwoLineText>
-              <div>
-                {selectedBadge} {currentUserData.name} 님!
-              </div>
-              <div>오늘도 좋은 하루 보내세요!</div>
-            </TwoLineText>
-            <IconWrapper>{profiles[currentUserData.userLevel]}</IconWrapper>
+          <ElementWrapper>
+            <MyPageButton onClick={navigateToMyPage}>
+              <TwoLineText>
+                <div>
+                  {selectedBadge} {currentUserData.name} 님!
+                </div>
+                <div>오늘도 좋은 하루 보내세요!</div>
+              </TwoLineText>
+              <IconWrapper>{profiles[currentUserData.userLevel]}</IconWrapper>
+            </MyPageButton>
             <LogoutRounded sx={{ fontSize: 30 }} onClick={handleGoogleLogout} />
           </ElementWrapper>
         ) : (
