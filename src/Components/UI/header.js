@@ -6,6 +6,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { signOut } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import { auth, db } from '../../firebase';
 import { userData, isLoginState, currentBadge } from '../../Recoil/atoms';
 import { addUser, handleGoogleLogin } from '../API/Login/fetchUser';
@@ -121,18 +122,29 @@ const Header = () => {
     userFunc();
   }, []);
 
-  const handleGoogleLogout = () => {
-    const isLogout = window.confirm('로그아웃 하시겠습니까?');
+  const handleGoogleLogout = async () => {
+    try {
+      const result = await Swal.fire({
+        text: '정말 로그아웃 하시겠습니까?',
+        showCancelButton: true,
+        confirmButtonColor: '#c7d36f',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '예',
+        cancelButtonText: '아니오'
+      });
 
-    if (isLogout) {
-      setIsLoginState(false);
-      signOut(auth)
-        .then(() => {
-          sessionStorage.clear();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      if (result.isConfirmed) {
+        setIsLoginState(false);
+        signOut(auth)
+          .then(() => {
+            sessionStorage.clear();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    } catch (error) {
+      console.error('Error deleting post: ', error);
     }
   };
 
