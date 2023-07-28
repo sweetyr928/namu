@@ -1,7 +1,7 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
-import DOMPurify from 'isomorphic-dompurify';
+import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import DOMPurify from 'isomorphic-dompurify';
 
 const ItemWrapper = styled.article`
   display: flex;

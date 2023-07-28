@@ -1,20 +1,20 @@
 import styled from 'styled-components';
-import { useState, useCallback, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { collection, getDocs } from 'firebase/firestore';
 import Swal from 'sweetalert2';
+import { useState, useCallback, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useQuery, useMutation } from 'react-query';
 import { useRecoilValue } from 'recoil';
-import { getUserTags, updateUserTags } from '../Components/API/Tag/fetchTag';
+import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebase';
+import { GreenButton } from '../Components/UI/button';
+import { GreenLoading } from '../Components/UI/loading';
 import SearchInput from '../Components/UI/searchInput';
+import PostSection from '../Components/UI/postSection';
+import TagInput from '../Components/UI/tagInput';
+import { userData } from '../Recoil/atoms';
 import SearchedTagResult from '../Components/Tag/tagList';
 import TagItem from '../Components/Tag/tagItem';
-import TagInput from '../Components/UI/tagInput';
-import { GreenButton } from '../Components/UI/button';
-import PostSection from '../Components/UI/postSection';
-import { userData } from '../Recoil/atoms';
-import { GreenLoading } from '../Components/UI/loading';
+import { getUserTags, updateUserTags } from '../Components/API/Tag/fetchTag';
 
 const EditTagPageContainer = styled.article`
   width: 100%;

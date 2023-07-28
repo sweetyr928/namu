@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import { useRecoilValue } from 'recoil';
 import { useEffect } from 'react';
-import { userData, currentBadge } from '../../Recoil/atoms';
+import { useRecoilValue } from 'recoil';
 import { profiles } from '../../profiles';
+import { userData, currentBadge } from '../../Recoil/atoms';
 
 const InfoContainer = styled.article`
   display: flex;

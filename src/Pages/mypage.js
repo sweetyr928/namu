@@ -1,14 +1,13 @@
 import styled from 'styled-components';
+import { useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
-import { useEffect, useState } from 'react';
-import UserInfo from '../Components/MyPage/userInfo';
-import UserTitle from '../Components/MyPage/userTitle';
-import UserPostList from '../Components/MyPage/userPostList';
 import TabMenu from '../Components/UI/TabMenu';
-import UserRequestList from '../Components/MyPage/userRequestList';
 import { userData } from '../Recoil/atoms';
+import UserInfo from '../Components/MyPage/userInfo';
+import UserPostList from '../Components/MyPage/userPostList';
+import UserRequestList from '../Components/MyPage/userRequestList';
+import UserTitle from '../Components/MyPage/userTitle';
 import {
-  badges,
   updateUserBadges,
   updateUserLevel
 } from '../Components/API/Login/fetchUser';

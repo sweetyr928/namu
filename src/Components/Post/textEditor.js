@@ -1,6 +1,6 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
-import 'react-quill/dist/quill.snow.css';
+import { useCallback, useMemo, useRef } from 'react';
 import ReactQuill, { Quill } from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import ImageResize from 'quill-image-resize';
 import { uploadBytes, getDownloadURL, ref } from 'firebase/storage';
 import { storage } from '../../firebase';

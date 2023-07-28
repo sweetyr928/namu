@@ -33,4 +33,3 @@ export const updateUserTags = async (uid, updatedTags) => {
     throw e;
   }
 };
-

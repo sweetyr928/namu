@@ -1,13 +1,13 @@
 import styled from 'styled-components';
-import { useQuery } from 'react-query';
 import moment from 'moment';
 import 'moment/locale/ko';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useState } from 'react';
+import { useQuery } from 'react-query';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { profiles } from '../../profiles';
+import { SkeletonChatSectionItem } from '../UI/skeletonChatSectionItem';
 import { userData, roomsData } from '../../Recoil/atoms';
 import { getChatroomById } from '../API/Chat/fetchChat';
-import { SkeletonChatSectionItem } from '../UI/skeletonChatSectionItem';
 import { getUserData } from '../API/Login/fetchUser';
 
 const ChatListContainer = styled.section`

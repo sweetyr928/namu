@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
-import { isStarted } from '../../Recoil/atoms';
 import TabMenu from './TabMenu';
 import ChatList from '../Chat/chatList';
-import RequestList from '../Chat/requestList';
 import ChatRoom from '../Chat/chatRoom';
+import RequestList from '../Chat/requestList';
+import { isStarted } from '../../Recoil/atoms';
 
 const ChatContainer = styled.article`
   display: flex;

@@ -1,16 +1,16 @@
-import { useState, useCallback } from 'react';
-import { serverTimestamp } from 'firebase/firestore';
 import styled from 'styled-components';
+import Swal from 'sweetalert2';
+import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from 'react-query';
-import Swal from 'sweetalert2';
+import { serverTimestamp } from 'firebase/firestore';
 import { useRecoilValue } from 'recoil';
-import { createPost } from '../Components/API/Post/fetchPost';
-import PostSection from '../Components/UI/postSection';
-import TextEditor from '../Components/Post/textEditor';
-import TagInput from '../Components/UI/tagInput';
 import { GreenButton } from '../Components/UI/button';
+import PostSection from '../Components/UI/postSection';
+import TagInput from '../Components/UI/tagInput';
 import { userData } from '../Recoil/atoms';
+import TextEditor from '../Components/Post/textEditor';
+import { createPost } from '../Components/API/Post/fetchPost';
 
 const TitleInput = styled.input`
   border: 2px solid #c7d36f;

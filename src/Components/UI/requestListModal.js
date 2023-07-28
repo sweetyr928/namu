@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import Modal from './modal';
 import { WhiteButton } from './button';
+import Modal from './modal';
+import { profiles } from '../../profiles';
 import { isStarted, userData, roomsData } from '../../Recoil/atoms';
 import { createChatRoom, getChatroomById } from '../API/Chat/fetchChat';
-import { profiles } from '../../profiles';
 
 const ContentSection = styled.section`
   display: flex;

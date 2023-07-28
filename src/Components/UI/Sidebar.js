@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import {
   Home,
   SearchRounded,
   ModeEditOutlineRounded
 } from '@mui/icons-material';
+import { Link } from 'react-router-dom';
 
 const SideBarContainer = styled.nav`
   display: flex;

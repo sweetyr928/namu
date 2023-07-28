@@ -1,15 +1,15 @@
 import { Route, Routes } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { isLoginState } from './Recoil/atoms';
+import ChatSection from './Components/UI/chatSection';
+import CreatePostPage from './Pages/createPostPage';
+import EditTagPage from './Pages/editTagPage';
+import LoginPage from './Pages/loginPage';
 import MainPage from './Pages/mainPage';
 import NotFound from './Pages/notFoundPage';
-import LoginPage from './Pages/loginPage';
-import SearchPage from './Pages/searchPage';
-import CreatePostPage from './Pages/createPostPage';
-import ChatSection from './Components/UI/chatSection';
 import PostDetailPage from './Pages/postDetailPage';
-import EditTagPage from './Pages/editTagPage';
+import SearchPage from './Pages/searchPage';
 import UpdatePostPage from './Pages/updatePostPage';
+import { isLoginState } from './Recoil/atoms';
 
 function MainHome() {
   const isLogin = useRecoilValue(isLoginState);

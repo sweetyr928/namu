@@ -1,21 +1,21 @@
-import { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { useQuery } from 'react-query';
-import { useNavigate } from 'react-router-dom';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArticleIcon from '@mui/icons-material/Article';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
-import { isStarted, roomsData, userData } from '../../Recoil/atoms';
+import { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useQuery } from 'react-query';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import PointModal from './pointModal';
+import { GreenLoading } from '../UI/loading';
+import { isStarted, roomsData, userData } from '../../Recoil/atoms';
 import {
   handleSendChat,
   getChatById,
   getChatroomById
 } from '../API/Chat/fetchChat';
-import { GreenLoading } from '../UI/loading';
 
 const ChatRoomContainer = styled.article`
   display: flex;

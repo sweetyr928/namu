@@ -1,15 +1,14 @@
-import { useRef, useState, useCallback } from 'react';
-import Slider from 'react-slick';
 import styled from 'styled-components';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+import { useRef, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from 'react-query';
-import { Margin } from '@mui/icons-material';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 import CarouselItem from './carouselItem';
 import { GreenButton } from '../UI/button';
-import { getPostsByTags } from '../API/Post/fetchPost';
 import { SkeletonCarousel } from '../UI/skeletonCarousel';
+import { getPostsByTags } from '../API/Post/fetchPost';
 
 const CarouselWrapper = styled.article`
   width: calc(90%);

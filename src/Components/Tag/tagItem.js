@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import Swal from 'sweetalert2';
-import { useCallback } from 'react';
 import { GreenButton } from '../UI/button';
 
 const ResultItem = styled.article`

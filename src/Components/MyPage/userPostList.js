@@ -1,12 +1,12 @@
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
 import { useCallback } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useNavigate } from 'react-router-dom';
 import { useQuery } from 'react-query';
-import { userData } from '../../Recoil/atoms';
-import { getPostById } from '../API/Post/fetchPost';
+import { useRecoilValue } from 'recoil';
 import { SkeletonMyPageItem } from '../UI/skeletonMyPageItem';
+import { userData } from '../../Recoil/atoms';
 import { getUserData } from '../API/Login/fetchUser';
+import { getPostById } from '../API/Post/fetchPost';
 
 const UserPostContainer = styled.section`
   display: flex;

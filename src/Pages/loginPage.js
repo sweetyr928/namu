@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import PostSection from '../Components/UI/postSection';
 import { GreenButton } from '../Components/UI/button';
 import { handleGoogleLogin } from '../Components/API/Login/fetchUser';
 

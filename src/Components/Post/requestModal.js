@@ -1,10 +1,10 @@
-import React, { useState, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
-import { useMutation } from 'react-query';
 import Swal from 'sweetalert2';
+import { useState, useCallback } from 'react';
+import { useMutation } from 'react-query';
 import { serverTimestamp } from 'firebase/firestore';
-import Modal from '../UI/modal';
 import { WhiteButton } from '../UI/button';
+import Modal from '../UI/modal';
 import { createRequest } from '../API/Request/fetchRequest';
 
 const ContentContainer = styled.article`

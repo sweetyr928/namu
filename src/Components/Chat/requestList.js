@@ -1,13 +1,13 @@
-import { useState } from 'react';
 import styled from 'styled-components';
-import { useRecoilValue } from 'recoil';
+import { useState } from 'react';
 import { useQuery } from 'react-query';
+import { useRecoilValue } from 'recoil';
 import { profiles } from '../../profiles';
 import RequestListModal from '../UI/requestListModal';
-import { getRequestById } from '../API/Request/fetchRequest';
+import { SkeletonChatSectionItem } from '../UI/skeletonChatSectionItem';
 import { userData } from '../../Recoil/atoms';
 import { getUserData } from '../API/Login/fetchUser';
-import { SkeletonChatSectionItem } from '../UI/skeletonChatSectionItem';
+import { getRequestById } from '../API/Request/fetchRequest';
 
 const ReqListContainer = styled.article`
   display: flex;

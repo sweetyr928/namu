@@ -1,7 +1,7 @@
-import { useState } from 'react';
 import styled from 'styled-components';
-import { useSetRecoilState } from 'recoil';
 import { FaRegKissWinkHeart, FaRegSmile, FaRegSadTear } from 'react-icons/fa';
+import { useState } from 'react';
+import { useSetRecoilState } from 'recoil';
 import Modal from '../UI/modal';
 import { WhiteButton } from '../UI/button';
 import { isStarted } from '../../Recoil/atoms';

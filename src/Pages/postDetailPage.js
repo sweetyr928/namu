@@ -1,19 +1,19 @@
 import styled, { keyframes } from 'styled-components';
-import { useState, useCallback } from 'react';
-import DOMPurify from 'isomorphic-dompurify';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import Swal from 'sweetalert2';
+import { useState, useCallback } from 'react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useQuery, useMutation } from 'react-query';
+import 'react-quill/dist/quill.core.css';
+import DOMPurify from 'isomorphic-dompurify';
 import { getDoc, doc } from 'firebase/firestore';
 import { useRecoilValue } from 'recoil';
 import { GreenButton } from '../Components/UI/button';
-import RequestModal from '../Components/Post/requestModal';
-import 'react-quill/dist/quill.core.css';
 import PostSection from '../Components/UI/postSection';
-import { getPost, deletePost } from '../Components/API/Post/fetchPost';
+import RequestModal from '../Components/Post/requestModal';
 import { db } from '../firebase';
 import { userData } from '../Recoil/atoms';
+import { getPost, deletePost } from '../Components/API/Post/fetchPost';
 
 const ContentContainer = styled.article`
   display: flex;

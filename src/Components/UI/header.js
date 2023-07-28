@@ -2,15 +2,14 @@ import styled from 'styled-components';
 import GoogleIcon from '@mui/icons-material/Google';
 import { ForestRounded, LogoutRounded } from '@mui/icons-material';
 import { useEffect } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { signOut } from 'firebase/auth';
-import { doc, getDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
-import Swal from 'sweetalert2';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { doc, getDoc } from 'firebase/firestore';
+import { signOut } from 'firebase/auth';
+import { profiles } from '../../profiles';
 import { auth, db } from '../../firebase';
 import { userData, isLoginState, currentBadge } from '../../Recoil/atoms';
 import { addUser, handleGoogleLogin } from '../API/Login/fetchUser';
-import { profiles } from '../../profiles';
 
 const HeaderContainer = styled.header`
   height: 50px;

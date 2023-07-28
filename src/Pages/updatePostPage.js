@@ -1,13 +1,12 @@
-import { useState, useCallback } from 'react';
 import styled from 'styled-components';
-import { useNavigate, useLocation } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { useState, useCallback } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useMutation } from 'react-query';
-import { useRecoilValue } from 'recoil';
-import PostSection from '../Components/UI/postSection';
-import TextEditor from '../Components/Post/textEditor';
-import TagInput from '../Components/UI/tagInput';
 import { GreenButton } from '../Components/UI/button';
+import PostSection from '../Components/UI/postSection';
+import TagInput from '../Components/UI/tagInput';
+import TextEditor from '../Components/Post/textEditor';
 import { updatePost } from '../Components/API/Post/fetchPost';
 
 const TitleInput = styled.input`
