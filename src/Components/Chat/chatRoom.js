@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
@@ -173,6 +173,12 @@ const ChatRoom = () => {
     }
   );
 
+  const scrollRef = useRef();
+
+  useEffect(() => {
+    scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+  }, [chatData?.length, inputMessage]);
+
   useEffect(() => {
     if (chatStarted) {
       refetch();
@@ -230,7 +236,7 @@ const ChatRoom = () => {
             )}
           </ChatMenu>
         </RoomHeader>
-        <Room>
+        <Room ref={scrollRef}>
           {isLoading ? (
             <GreenLoading />
           ) : (
