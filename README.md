@@ -4,7 +4,7 @@
 
 ## 📅 **프로젝트 기간**
 
-- 2023.06.19 ~ 2023.07.31
+- 2023.06.19 ~ 2023.07.28
 
 ## 🙇🏻‍♂️ **팀원소개**
 
@@ -73,7 +73,7 @@
 ### **DevOps**
 
 <div align=left> 
-<img src="https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=Firebase&logoColor=white" height="35"> 
+<img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=Vercel&logoColor=white" height="35"> 
 </div>
 
 ### **Common**
