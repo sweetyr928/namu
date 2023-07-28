@@ -15,7 +15,6 @@ import {
   getChatById,
   getChatroomById
 } from '../API/Chat/fetchChat';
-import { storage } from '../../firebase';
 import { GreenLoading } from '../UI/loading';
 
 const ChatRoomContainer = styled.article`
@@ -73,13 +72,16 @@ const Room = styled.section`
   }
   .my-chat {
     background-color: #c7d36f;
-    padding: 8px 15px;
+    padding: 10px 17px;
     border-radius: 30px;
   }
   .partner-chat {
     background-color: #efefef;
-    padding: 8px 15px;
+    padding: 10px 17px;
     border-radius: 30px;
+  }
+  .photo {
+    margin-bottom: 7px;
   }
 `;
 
@@ -182,16 +184,6 @@ const ChatRoom = () => {
     setInputMessage(event.target.value);
   };
 
-  const getImageFromStorage = async (photo) => {
-    try {
-      const ref = storage.ref(photo);
-      const url = await ref.getDownloadURL();
-      return url;
-    } catch (error) {
-      console.error('Error fetching image from Firebase Storage: ', error);
-    }
-  };
-
   return (
     <>
       {isModalOpen && (
@@ -258,11 +250,13 @@ const ChatRoom = () => {
                 >
                   {data.photoURL && (
                     <img
-                      src={getImageFromStorage(data.photoURL)}
+                      className="photo"
+                      style={{ maxWidth: '300px' }}
+                      src={data.photoURL}
                       alt="Uploaded from Firebase Storage"
                     />
                   )}
-                  {data.content}
+                  <div className="text">{data.content}</div>
                 </div>
                 <div className="time">
                   {new Date(data.createdAt.seconds * 1000).toLocaleString(

@@ -90,7 +90,6 @@ export const givePoint = async (chatId, postId, helperId, point, checked) => {
 
 export const handleSendChat = async (user, chatroom, content, img) => {
   if (content.trim() === '') {
-    console.log('채팅이 전송되지 않았습니다 :(');
     return;
   }
 
