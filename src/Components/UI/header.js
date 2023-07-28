@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Swal from 'sweetalert2';
 import GoogleIcon from '@mui/icons-material/Google';
 import { ForestRounded, LogoutRounded } from '@mui/icons-material';
 import { useEffect } from 'react';
