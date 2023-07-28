@@ -5,6 +5,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from 'react-query';
+import { Margin } from '@mui/icons-material';
 import CarouselItem from './carouselItem';
 import { GreenButton } from '../UI/button';
 import { getPostsByTags } from '../API/Post/fetchPost';
@@ -72,6 +73,12 @@ const GuideWrapper = styled.article`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  p {
+    font-weight: 600;
+    font-size: 25px;
+    margin: 40% auto;
+  }
 
   div {
     font-weight: 800;
@@ -159,6 +166,12 @@ const Carousel = ({ tagList }) => {
                       id={post.id}
                     />
                   ))}
+                {(!carouselData[tagList[tagIdx]] ||
+                  carouselData[tagList[tagIdx]].length === 0) && (
+                  <GuideWrapper>
+                    <p>현재 해당 태그에 게시물이 없습니다.</p>
+                  </GuideWrapper>
+                )}
               </CarouselItemContainer>
             ))}
           </Slider>
