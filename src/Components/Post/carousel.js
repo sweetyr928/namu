@@ -74,9 +74,9 @@ const GuideWrapper = styled.article`
   align-items: center;
 
   p {
-    font-weight: 600;
+    font-weight: 800;
     font-size: 25px;
-    margin: 40% auto;
+    margin: 30% auto;
   }
 
   div {
