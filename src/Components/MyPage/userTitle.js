@@ -25,6 +25,21 @@ const UserTitleContainer = styled.article`
   button {
     margin: 20px 0px 20px 0px;
   }
+
+  p {
+    margin: 20px 0px 20px 0px;
+    color: #ffffff;
+    font-size: 19px;
+    font-weight: 900;
+    font-size: 16px;
+    text-align: center;
+    margin: 20px 0;
+    padding: 10px;
+    background-color: #9eb23b;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: default;
+  }
 `;
 
 const loadingAnimation = keyframes`
@@ -229,7 +244,11 @@ const UserTitle = () => {
         )}
         <Tooltip effect="solid" place="bottom" />
       </UserTitleList>
-      <WhiteButton onClick={handleBadgeChange}>목패 변경</WhiteButton>
+      {userTitleData.userBadges.length > 1 ? (
+        <WhiteButton onClick={handleBadgeChange}>목패 변경</WhiteButton>
+      ) : (
+        <p>게시글 작성과 나무 요청을 통해 나머지 목패를 획득해보세요.</p>
+      )}
     </UserTitleContainer>
   );
 };
