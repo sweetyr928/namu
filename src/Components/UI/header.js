@@ -107,6 +107,7 @@ const Header = () => {
             userPoint: 0
           })
         );
+        setSelectedBadge('나무 심기');
       } else {
         setUserData(docSnap.data());
         setSelectedBadge(docSnap.data().currentBadge);
