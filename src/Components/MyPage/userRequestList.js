@@ -2,11 +2,12 @@ import { useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { useQuery } from 'react-query';
 import styled from 'styled-components';
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import RequestListModal from '../UI/requestListModal';
 import { userData } from '../../Recoil/atoms';
 import { getRequestById } from '../API/Request/fetchRequest';
 import { SkeletonMyPageItem } from '../UI/skeletonMyPageItem';
-import { profiles } from '../../profiles';
 
 const ReqListContainer = styled.article`
   display: flex;
@@ -23,21 +24,19 @@ const ReqListContainer = styled.article`
     width: 90%;
     background-color: #ffffff;
     margin: 6px;
-    padding: 6px;
+    padding: 10px;
     border-bottom: 2px solid #ebebeb;
     justify-content: space-around;
     cursor: pointer;
-  }
-  div {
-    display: flex;
+    border-radius: 30px;
   }
   .icon-container {
-    border: 2px solid #3f3f3f;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    padding: 5px;
-    margin-right: 9px;
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+    svg {
+      font-size: 30px;
+    }
   }
   .message-container {
     flex-direction: column;
@@ -45,7 +44,7 @@ const ReqListContainer = styled.article`
     font-size: 14px;
     .title {
       margin-bottom: 8px;
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 800;
     }
   }
@@ -71,6 +70,14 @@ const RequestList = () => {
   const [selectedId, setSelectedId] = useState(0);
   const currentUserData = useRecoilValue(userData);
   const requests = currentUserData.userRequests;
+
+  const options = {
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true
+  };
 
   const { data: requestData, isLoading } = useQuery(
     'userRequestData',
@@ -118,7 +125,13 @@ const RequestList = () => {
                 setModalOpen(true);
               }}
             >
-              <div className="icon-container">{profiles[data.helperLevel]}</div>
+              <div className="icon-container">
+                {data.isMatched ? (
+                  <CheckBoxIcon />
+                ) : (
+                  <CheckBoxOutlineBlankIcon />
+                )}
+              </div>
               <div className="message-container">
                 <p className="title">{data.title}</p>
                 <p>
@@ -128,11 +141,10 @@ const RequestList = () => {
                 </p>
               </div>
               <div className="time-container">
-                {`${new Date(
-                  data.createdAt.seconds * 1000
-                ).getHours()}:${new Date(
-                  data.createdAt.seconds * 1000
-                ).getMinutes()}`}
+                {new Date(data.createdAt.seconds * 1000).toLocaleString(
+                  'ko-KR',
+                  options
+                )}
               </div>
             </section>
           ))

@@ -21,14 +21,19 @@ const UserPostContainer = styled.section`
     width: 90%;
     background-color: #ffffff;
     margin: 10px;
-    padding: 20px;
+    padding: 16px;
     border-radius: 30px;
     cursor: pointer;
   }
   .title {
     padding-top: 10px;
     padding-bottom: 10px;
-    font-size: 20px;
+    font-size: 18px;
+    font-weight: 800;
+  }
+  .content {
+    font-size: 16px;
+    font-weight: 600;
   }
   .time {
     text-align: right;
@@ -85,7 +90,7 @@ const UserPostList = () => {
               }}
             >
               <div className="title">{data.title}</div>
-              <div>
+              <div className="content">
                 {stripHTMLTags(data.content.replace(/\n/g, '')).length > 30
                   ? `${stripHTMLTags(data.content.replace(/\n/g, '')).slice(
                       0,
