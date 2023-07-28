@@ -417,7 +417,7 @@ const PostDetailPage = () => {
           </ContentDetail>
           <Divider />
           <ContentFooter>
-            {currentUserData.uuid !== postData.author && (
+            {currentUserData.uuid !== postData.author && !state.isSolved && (
               <GreenButton onClick={openModal}>나무 하러 가기</GreenButton>
             )}
             <GreenButton onClick={handleGoBack}>뒤로 가기</GreenButton>

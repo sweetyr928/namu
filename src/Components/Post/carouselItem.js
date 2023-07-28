@@ -87,19 +87,15 @@ const Date = styled.span`
   }
 `;
 
-const CarouselItem = ({ title, content, createdAt, id }) => {
+const CarouselItem = ({ title, content, createdAt, id, isSolved }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   const navigate = useNavigate();
 
   const formattedDate = new window.Date(createdAt.seconds * 1000);
 
-  const handleMouse = useCallback(() => {
-    setIsHovered(!isHovered);
-  }, [isHovered]);
-
   const handleNavigate = useCallback(() => {
-    navigate(`/posts/${id}`);
+    navigate(`/posts/${id}`, { state: { isSolved } });
   }, [id]);
 
   const stripHTMLTags = useCallback((html) => {
@@ -122,25 +118,26 @@ const CarouselItem = ({ title, content, createdAt, id }) => {
 
   return (
     <ItemWrapper
-      onMouseEnter={handleMouse}
-      onMouseLeave={handleMouse}
       style={{
-        backgroundColor: isHovered ? '#f8f8f8' : '#ffffff'
+        backgroundColor: isSolved ? '#f8f8f8' : '#ffffff',
+        boxShadow: isSolved ? 'none' : '0px 0px 10px rgba(0, 0, 0, 0.2)'
       }}
       onClick={handleNavigate}
     >
       <AnimatedCarouselItem>
         <Title
+          className={isSolved ? 'solved' : ''}
           style={{
-            color: isHovered ? '#9eb23b' : '#3f3f3f'
+            color: isSolved ? '#888888' : isHovered ? '#9eb23b' : '#3f3f3f'
           }}
         >
           {title}
         </Title>
         {sanitizedContent && (
           <Content
+            className={isSolved ? 'solved' : ''}
             style={{
-              color: isHovered ? '#555555' : '#3f3f3f'
+              color: isSolved ? '#888888' : isHovered ? '#555555' : '#3f3f3f'
             }}
             dangerouslySetInnerHTML={{
               __html: DOMPurify.sanitize(sanitizedContent)

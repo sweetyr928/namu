@@ -164,6 +164,7 @@ const Carousel = ({ tagList }) => {
                       content={post.content}
                       createdAt={post.createdAt}
                       id={post.id}
+                      isSolved={post.isSolved}
                     />
                   ))}
                 {(!carouselData[tagList[tagIdx]] ||
