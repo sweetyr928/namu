@@ -59,6 +59,10 @@ const ReqListContainer = styled.article`
   .time-container {
     font-size: 13px;
   }
+  .empty-text {
+    margin-top: 20px;
+    font-weight: 800;
+  }
 `;
 
 const ModalBackground = styled.div`
@@ -159,7 +163,7 @@ const RequestList = () => {
             </section>
           ))
         ) : (
-          <p>받은 요청이 없습니다.</p>
+          <div className="empty-text">아직 요청이 오지 않았어요!</div>
         )}
       </ReqListContainer>
     </>

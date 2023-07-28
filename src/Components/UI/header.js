@@ -43,6 +43,15 @@ const IconWrapper = styled.section`
   margin: 0px 10px 0px 0px;
 `;
 
+const UserIconWrapper = styled.section`
+  border: 3px solid #3f3f3f;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  padding: 5px;
+  margin: 0px 10px 0px 0px;
+`;
+
 const LogoDetail = styled.div`
   font-size: 13px;
   margin: 15px 0px 0px 0px;
@@ -153,7 +162,7 @@ const Header = () => {
       <HeaderContainer>
         <ElementWrapper onClick={navigateToHome}>
           <IconWrapper>
-            <ForestRounded sx={{ fontSize: 40 }} />
+            <ForestRounded sx={{ fontSize: 50 }} />
           </IconWrapper>
           <LogoDetail>나누고 나눔 받는 무한 지식 품앗이</LogoDetail>
         </ElementWrapper>
@@ -166,9 +175,11 @@ const Header = () => {
                 </div>
                 <div>오늘도 좋은 하루 보내세요!</div>
               </TwoLineText>
-              <IconWrapper>{profiles[currentUserData.userLevel]}</IconWrapper>
+              <UserIconWrapper>
+                {profiles[currentUserData.userLevel]}
+              </UserIconWrapper>
             </MyPageButton>
-            <LogoutRounded sx={{ fontSize: 30 }} onClick={handleGoogleLogout} />
+            <LogoutRounded sx={{ fontSize: 45 }} onClick={handleGoogleLogout} />
           </ElementWrapper>
         ) : (
           <ElementWrapper>

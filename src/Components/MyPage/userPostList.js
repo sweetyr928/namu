@@ -58,6 +58,10 @@ const UserPostContainer = styled.section`
     text-align: right;
     font-size: 14px;
   }
+  .empty-text {
+    margin-top: 20px;
+    font-weight: 800;
+  }
 `;
 
 const UserPostList = () => {
@@ -100,34 +104,34 @@ const UserPostList = () => {
     <UserPostContainer>
       {isLoading ? (
         <SkeletonMyPageItem />
-      ) : Array.isArray(userPostsData) ? (
-        <>
-          {userPostsData.map((data, idx) => (
-            <section
-              key={idx}
-              onClick={() => {
-                navigate(`/posts/${data.postId}`);
-              }}
-            >
-              <div className="title">{data.title}</div>
-              <div className="content">
-                {stripHTMLTags(data.content.replace(/\n/g, '')).length > 30
-                  ? `${stripHTMLTags(data.content.replace(/\n/g, '')).slice(
-                      0,
-                      30
-                    )}…`
-                  : stripHTMLTags(data.content.replace(/\n/g, ''))}
-              </div>
-              <div className="time">
-                {new Date(data.createdAt.seconds * 1000).toLocaleString(
-                  'ko-KR',
-                  options
-                )}
-              </div>
-            </section>
-          ))}
-        </>
-      ) : null}
+      ) : Array.isArray(userPostsData) && userPostsData.length > 0 ? (
+        userPostsData?.map((data, idx) => (
+          <section
+            key={idx}
+            onClick={() => {
+              navigate(`/posts/${data.postId}`);
+            }}
+          >
+            <div className="title">{data.title}</div>
+            <div className="content">
+              {stripHTMLTags(data.content.replace(/\n/g, '')).length > 30
+                ? `${stripHTMLTags(data.content.replace(/\n/g, '')).slice(
+                    0,
+                    30
+                  )}…`
+                : stripHTMLTags(data.content.replace(/\n/g, ''))}
+            </div>
+            <div className="time">
+              {new Date(data.createdAt.seconds * 1000).toLocaleString(
+                'ko-KR',
+                options
+              )}
+            </div>
+          </section>
+        ))
+      ) : (
+        <div className="empty-text">아직 글을 작성하지 않았어요!</div>
+      )}
     </UserPostContainer>
   );
 };

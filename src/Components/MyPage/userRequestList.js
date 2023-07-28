@@ -69,6 +69,10 @@ const ReqListContainer = styled.article`
   .time-container {
     font-size: 13px;
   }
+  .empty-text {
+    margin-top: 20px;
+    font-weight: 800;
+  }
 `;
 
 const ModalBackground = styled.div`
@@ -135,7 +139,7 @@ const RequestList = () => {
       <ReqListContainer>
         {isLoading ? (
           <SkeletonMyPageItem />
-        ) : (
+        ) : Array.isArray(requestData) && requestData.length > 0 ? (
           requestData?.map((data, idx) => (
             <section
               className="item-container"
@@ -168,6 +172,8 @@ const RequestList = () => {
               </div>
             </section>
           ))
+        ) : (
+          <div className="empty-text">아직 요청을 보내지 않았어요!</div>
         )}
       </ReqListContainer>
     </>

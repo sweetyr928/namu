@@ -17,6 +17,15 @@ const InfoContainer = styled.article`
   margin-bottom: 2vh;
 `;
 
+const UserIconWrapper = styled.section`
+  border: 3px solid #3f3f3f;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  padding: 5px;
+  margin: 0px 10px 0px 0px;
+`;
+
 const TwoLineText = styled.div`
   display: flex;
   flex-direction: column;
@@ -35,7 +44,7 @@ function UserInfo() {
 
   return (
     <InfoContainer>
-      {profiles[currentUserData.userLevel]}
+      <UserIconWrapper>{profiles[currentUserData.userLevel]}</UserIconWrapper>
       <TwoLineText>
         <div>
           안녕하세요, {selectedBadge} {currentUserData.name} 님!

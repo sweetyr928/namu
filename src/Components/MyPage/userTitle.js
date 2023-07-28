@@ -111,7 +111,7 @@ const UserTitleList = styled.section`
       &::after {
         content: attr(data-tip);
         position: absolute;
-        bottom: -40px;
+        bottom: -30px;
         left: 50%;
         transform: translateX(-50%);
         padding: 5px 10px 5px 10px;

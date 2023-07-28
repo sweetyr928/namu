@@ -60,6 +60,10 @@ const ChatListContainer = styled.section`
   .time-container {
     font-size: 13px;
   }
+  .empty-text {
+    margin-top: 20px;
+    font-weight: 800;
+  }
 `;
 
 const ChatList = ({ setIsStarted }) => {
@@ -136,7 +140,7 @@ const ChatList = ({ setIsStarted }) => {
       ) : mustLoad ? (
         <SkeletonChatSectionItem />
       ) : (
-        <p>채팅방이 없습니다.</p>
+        <div className="empty-text">아직 채팅을 시작하지 않았어요!</div>
       )}
     </ChatListContainer>
   );
