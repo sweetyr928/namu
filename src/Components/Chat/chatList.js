@@ -3,6 +3,7 @@ import { useQuery } from 'react-query';
 import moment from 'moment';
 import 'moment/locale/ko';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useState } from 'react';
 import { profiles } from '../../profiles';
 import { userData, roomsData } from '../../Recoil/atoms';
 import { getChatroomById } from '../API/Chat/fetchChat';
@@ -56,6 +57,7 @@ const ChatListContainer = styled.section`
 `;
 
 const ChatList = ({ setIsStarted }) => {
+  const [mustLoad, setMustLoad] = useState(false);
   const setRoom = useSetRecoilState(roomsData);
   const currentUserData = useRecoilValue(userData);
   const chatrooms = currentUserData.userChatrooms;
@@ -71,8 +73,8 @@ const ChatList = ({ setIsStarted }) => {
     'chatroomData',
     async () => {
       try {
-        const { userChatrooms } = await getUserData(userId);
-        if (userChatrooms.length > 0) {
+        if (userId) {
+          const { userChatrooms } = await getUserData(userId);
           const chatroomPromises = userChatrooms.map((id) =>
             getChatroomById(id)
           );
@@ -80,17 +82,20 @@ const ChatList = ({ setIsStarted }) => {
           const sortedChatroomList = chatroomList.sort(
             (a, b) => b.lastCreatedAt.seconds - a.lastCreatedAt.seconds
           );
+          setMustLoad(false);
 
           return sortedChatroomList;
+        } else {
+          setMustLoad(true);
         }
-        return [];
       } catch (error) {
         console.error('Error fetching user data:', error);
         throw new Error('Failed to fetch chatroom data');
       }
     },
     {
-      refetchInterval: false
+      refetchInterval: 500,
+      refetchIntervalInBackground: true
     }
   );
 
@@ -122,6 +127,8 @@ const ChatList = ({ setIsStarted }) => {
             </div>
           </section>
         ))
+      ) : mustLoad ? (
+        <SkeletonChatSectionItem />
       ) : (
         <p>채팅방이 없습니다.</p>
       )}

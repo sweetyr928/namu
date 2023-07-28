@@ -51,7 +51,7 @@ export const createChatRoom = async (
 
 export const getChatroomById = async (id) => {
   if (!id) {
-    return null;
+    return {};
   }
 
   try {
@@ -63,7 +63,7 @@ export const getChatroomById = async (id) => {
       return chatroomData;
     } else {
       console.log('No such document!');
-      return null;
+      return {};
     }
   } catch (e) {
     console.error('Error fetching chatroom data:', e);
