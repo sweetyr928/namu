@@ -126,9 +126,13 @@ const Header = () => {
 
     if (isLogout) {
       setIsLoginState(false);
-      signOut(auth).catch((error) => {
-        console.log(error);
-      });
+      signOut(auth)
+        .then(() => {
+          sessionStorage.clear();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
   };
 
