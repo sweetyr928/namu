@@ -3,9 +3,9 @@ import { useState, useCallback, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { collection, getDocs } from 'firebase/firestore';
 import Swal from 'sweetalert2';
-import { useMutation } from 'react-query';
+import { useQuery, useMutation } from 'react-query';
 import { useRecoilValue } from 'recoil';
-import { updateUserTags } from '../Components/API/Tag/fetchTag';
+import { getUserTags, updateUserTags } from '../Components/API/Tag/fetchTag';
 import { db } from '../firebase';
 import SearchInput from '../Components/UI/searchInput';
 import SearchedTagResult from '../Components/Tag/tagList';
@@ -14,6 +14,7 @@ import TagInput from '../Components/UI/tagInput';
 import { GreenButton } from '../Components/UI/button';
 import PostSection from '../Components/UI/postSection';
 import { userData } from '../Recoil/atoms';
+import { GreenLoading } from '../Components/UI/loading';
 
 const EditTagPageContainer = styled.article`
   width: 100%;
@@ -51,11 +52,18 @@ const GuideWrapper = styled.section`
 
 const EditTagPage = () => {
   const navigate = useNavigate();
-  const { state } = useLocation();
 
   const currentUserData = useRecoilValue(userData);
 
-  const [tagList, setTagList] = useState(state ? state.tagList : []);
+  const { data: userTagList, isLoading } = useQuery(
+    ['userData', currentUserData.uuid],
+    () => getUserTags(currentUserData.uuid),
+    {
+      enabled: !!currentUserData.uuid
+    }
+  );
+
+  const [tagList, setTagList] = useState(userTagList || []);
   const [searchInputText, setSearchInputText] = useState('');
   const [searchedTagList, setSearchedTagList] = useState([]);
 
@@ -160,12 +168,17 @@ const EditTagPage = () => {
             </GuideWrapper>
           )}
         </SearchedTagResult>
-        <TagInput
-          tagList={tagList}
-          setTagList={setTagList}
-          explainText={`나의 태그 목록`}
-          inputWidth={90}
-        />
+        {isLoading ? (
+          <GreenLoading />
+        ) : (
+          <TagInput
+            tagList={tagList}
+            setTagList={setTagList}
+            explainText={`나의 태그 목록`}
+            inputWidth={90}
+          />
+        )}
+
         <ButtonWrapper>
           <GreenButton onClick={handleSave}>저장</GreenButton>
           <GreenButton onClick={handleGoBack}>취소</GreenButton>

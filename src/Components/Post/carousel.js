@@ -100,7 +100,7 @@ const Carousel = ({ tagList }) => {
   );
 
   const handleNavigate = useCallback(() => {
-    navigate('/tag', { state: { tagList } });
+    navigate('/tag');
   }, []);
 
   const settings = {
