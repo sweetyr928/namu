@@ -44,6 +44,8 @@ export const createChatRoom = async (
     await updateDoc(doc(db, 'users', `${helperId}`), {
       userChatrooms: arrayUnion(id)
     });
+
+    return id;
   }
 };
 

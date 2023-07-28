@@ -150,13 +150,15 @@ const ChatRoom = () => {
     `chatData-${currentRoomData.chatId}`,
     async () => {
       try {
-        const { chats } = await getChatroomById(currentRoomData.chatId);
-        if (chats.length > 0) {
-          const chatPromises = chats.map((id) => getChatById(id));
-          const chatList = await Promise.all(chatPromises);
-          return chatList;
-        } else {
-          return [];
+        if (currentRoomData.chatId) {
+          const { chats } = await getChatroomById(currentRoomData.chatId);
+          if (chats.length > 0) {
+            const chatPromises = chats.map((id) => getChatById(id));
+            const chatList = await Promise.all(chatPromises);
+            return chatList;
+          } else {
+            return [];
+          }
         }
       } catch (error) {
         console.error('Error fetching chat data:', error);

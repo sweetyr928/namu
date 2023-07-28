@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import Modal from './modal';
 import { WhiteButton } from './button';
-import { isStarted, userData } from '../../Recoil/atoms';
-import { createChatRoom } from '../API/Chat/fetchChat';
+import { isStarted, userData, roomsData } from '../../Recoil/atoms';
+import { createChatRoom, getChatroomById } from '../API/Chat/fetchChat';
 import { profiles } from '../../profiles';
 
 const ContentSection = styled.section`
@@ -31,7 +31,7 @@ const TimeSection = styled.section`
     border: 2px solid #3f3f3f;
     border-radius: 50%;
     width: 35px;
-    heigth: 35px;
+    height: 35px;
     padding: 5px;
     text-align: center;
   }
@@ -61,7 +61,16 @@ const ButtonWrapper = styled.section`
 
 const RequestListModal = ({ requestDetail, handlerCloseModal }) => {
   const setIsStarted = useSetRecoilState(isStarted);
+  const setRoom = useSetRecoilState(roomsData);
   const currentUserData = useRecoilValue(userData);
+
+  const handleClick = async (chatRoomId) => {
+    if (chatRoomId) {
+      const newChatRoomData = await getChatroomById(chatRoomId);
+      setRoom(newChatRoomData);
+      setIsStarted(true);
+    }
+  };
 
   return (
     <Modal>
@@ -81,15 +90,22 @@ const RequestListModal = ({ requestDetail, handlerCloseModal }) => {
       {requestDetail.helperId !== currentUserData.uuid ? (
         <ButtonWrapper>
           <WhiteButton
-            onClick={() => {
-              createChatRoom(
+            onClick={async () => {
+              const newChatRoomId = await createChatRoom(
                 currentUserData.uuid,
                 requestDetail.helperId,
                 requestDetail.helperLevel,
                 requestDetail.postId,
                 requestDetail.title
               );
-              setIsStarted(true);
+
+              if (newChatRoomId) {
+                handleClick(newChatRoomId);
+              } else {
+                handleClick(
+                  `${currentUserData.uuid}${requestDetail.helperId}${requestDetail.postId}`
+                );
+              }
             }}
           >
             나무 하러 가요!
