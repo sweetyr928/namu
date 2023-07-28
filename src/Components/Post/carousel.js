@@ -13,7 +13,7 @@ import { SkeletonCarousel } from '../UI/skeletonCarousel';
 
 const CarouselWrapper = styled.article`
   width: calc(90%);
-  height: 100%;
+  height: 80vh;
 
   .slick-prev::before,
   .slick-next::before {
@@ -33,11 +33,11 @@ const TagWrapper = styled.section`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  margin: 30px 0px 20px 0px;
+  margin: 3vh 0vh 2vh 0vh;
 
   p {
     margin: 0px 0px 0px 10px;
-    font-size: x-large;
+    font-size: 20px;
     font-weight: 700;
   }
 
@@ -45,7 +45,7 @@ const TagWrapper = styled.section`
     background-color: transparent;
     border: none;
     margin: 0px 1px 0px 0px;
-    font-size: medium;
+    font-size: 17px;
     font-weight: 600;
     cursor: pointer;
 

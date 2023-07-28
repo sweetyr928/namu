@@ -8,12 +8,13 @@ const InfoContainer = styled.article`
   display: flex;
   flex-direction: column;
   width: 100%;
+  height: 20vh;
   justify-content: center;
   align-items: center;
   border-radius: 30px;
   background-color: #c7d36f;
-  padding: 30px 0px;
-  margin-bottom: 20px;
+  padding: 3vh 0px;
+  margin-bottom: 2vh;
 `;
 
 const TwoLineText = styled.div`

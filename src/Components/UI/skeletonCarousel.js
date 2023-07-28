@@ -86,8 +86,6 @@ export const SkeletonCarousel = () => (
       <SkeletonSliderItem />
       <SkeletonSliderItem />
       <SkeletonSliderItem />
-      <SkeletonSliderItem />
-      <SkeletonSliderItem />
     </>
   </SkeletonCarouselWrapper>
 );

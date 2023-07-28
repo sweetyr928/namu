@@ -96,7 +96,7 @@ const UserTitleList = styled.section`
     align-items: center;
     position: relative;
     height: 40px;
-    font-size: 19px;
+    font-size: 15px;
     font-weight: 700;
     color: lightgray;
     background-color: #ffffff;
@@ -123,6 +123,14 @@ const UserTitleList = styled.section`
         text-overflow: ellipsis;
         white-space: nowrap;
       }
+    }
+
+    @media (min-width: 1024px) {
+      font-size: 17px;
+    }
+
+    @media (min-width: 1440px) {
+      font-size: 19px;
     }
   }
 `;

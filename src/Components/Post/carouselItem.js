@@ -8,12 +8,12 @@ const ItemWrapper = styled.article`
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
-  margin: 10px auto 0px auto;
-  padding: 20px 20px 10px 20px;
+  margin: 1vh auto 1vh auto;
+  padding: 2vh 2vh 1vh 2vh;
   border-radius: 20px;
   background-color: #ffffff;
   width: 92%;
-  height: calc(10%);
+  height: 8vh;
   cursor: pointer;
   transition: all 0.3s ease;
 
@@ -58,7 +58,6 @@ const Content = styled.div`
   font-size: 12px;
   font-weight: 600;
   transition: color 0.3s ease;
-  margin: 5px 0px 0px 0px;
   width: calc(95%);
   overflow: hidden;
   white-space: nowrap;
@@ -66,10 +65,12 @@ const Content = styled.div`
 
   @media (min-width: 1024px) {
     font-size: 14px;
+    margin: 1vh 0vh 0vh 0vh;
   }
 
   @media (min-width: 1440px) {
     font-size: 16px;
+    margin: 1vh 0vh 0vh 0vh;
   }
 `;
 
@@ -77,6 +78,7 @@ const Date = styled.span`
   font-size: 10px;
   font-weight: 300;
   align-self: flex-end;
+  margin: 0vh 0vh 0.3vh 0vh;
 
   @media (min-width: 1024px) {
     font-size: 12px;

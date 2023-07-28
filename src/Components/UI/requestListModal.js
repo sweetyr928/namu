@@ -51,9 +51,7 @@ const MessageSection = styled.section`
 const ButtonWrapper = styled.section`
   display: flex;
   justify-content: flex-end;
-  button {
-    font-size: 17px;
-  }
+
   button:first-child {
     margin: 0px 20px 0px 0px;
   }

@@ -20,6 +20,12 @@ const ChatListContainer = styled.section`
   background-color: #ffffff;
   padding: 10px 0px;
   margin: 0 auto;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
   section {
     display: flex;
     width: 90%;
@@ -27,7 +33,7 @@ const ChatListContainer = styled.section`
     margin: 6px;
     padding: 6px;
     border-bottom: 2px solid #ebebeb;
-    justify-content: space-around;
+    justify-content: space-between;
     cursor: pointer;
   }
   div {
@@ -43,7 +49,7 @@ const ChatListContainer = styled.section`
   }
   .message-container {
     flex-direction: column;
-    width: 300px;
+    width: 65%;
     font-size: 14px;
     .title {
       margin-bottom: 8px;

@@ -18,27 +18,45 @@ const UserPostContainer = styled.section`
   background-color: #c7d36f;
   padding: 10px;
   margin: 0 auto;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
   section {
     width: 90%;
+    height: 8vh;
     background-color: #ffffff;
-    margin: 10px;
-    padding: 16px;
+    margin: 1vh;
+    padding: 1.6vh;
     border-radius: 30px;
     cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+      transform: scale(1.01);
+      background-color: #f8f8f8;
+
+      div {
+        color: #9eb23b;
+      }
+    }
   }
   .title {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    font-size: 18px;
+    padding-top: 0.5vh;
+    padding-bottom: 1vh;
+    font-size: 16px;
     font-weight: 800;
   }
   .content {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
   }
   .time {
     text-align: right;
-    font-size: 15px;
+    font-size: 14px;
   }
 `;
 

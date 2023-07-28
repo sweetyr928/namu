@@ -20,6 +20,12 @@ const ReqListContainer = styled.article`
   background-color: #c7d36f;
   padding: 10px 0px;
   margin: 0 auto;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
   section {
     display: flex;
     width: 90%;
@@ -30,6 +36,17 @@ const ReqListContainer = styled.article`
     justify-content: space-around;
     cursor: pointer;
     border-radius: 30px;
+    transition: all 0.3s ease;
+
+    &:hover {
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+      transform: scale(1.01);
+      background-color: #f8f8f8;
+
+      div {
+        color: #9eb23b;
+      }
+    }
   }
   .icon-container {
     display: flex;

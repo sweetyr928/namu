@@ -53,8 +53,13 @@ const Room = styled.section`
   border-top: 1.5px solid #c7d36f;
   border-bottom: 1.5px solid #c7d36f;
   overflow-y: scroll;
+
   &::-webkit-scrollbar {
     display: none;
+  }
+
+  .loading {
+    margin: 45% 40%;
   }
   .my-message {
     display: flex;
@@ -79,6 +84,9 @@ const Room = styled.section`
     background-color: #efefef;
     padding: 10px 17px;
     border-radius: 30px;
+  }
+  .time {
+    margin: 0px 20px 0px 0px;
   }
   .photo {
     margin-bottom: 7px;
@@ -238,7 +246,9 @@ const ChatRoom = () => {
         </RoomHeader>
         <Room ref={scrollRef}>
           {isLoading ? (
-            <GreenLoading />
+            <div className="loading">
+              <GreenLoading />
+            </div>
           ) : (
             chatData?.map((data, idx) => (
               <section
