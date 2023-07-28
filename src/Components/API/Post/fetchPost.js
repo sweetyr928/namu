@@ -130,9 +130,11 @@ export const getPostsByTags = async (selectedTagIdx, carouselData, tagList) => {
   }
 };
 
-export const updatePost = async (postData) => {
+export const updatePost = async (oldTags, postData) => {
   try {
     const postRef = doc(db, 'posts', postData.id);
+    const tagsRef = collection(db, 'tags');
+    const batch = writeBatch(db);
 
     const updatedData = {
       title: postData.title,
@@ -140,7 +142,46 @@ export const updatePost = async (postData) => {
       tags: postData.tagList
     };
 
-    await updateDoc(postRef, updatedData);
+    const mustAddTags = postData.tagList.filter((el) => !oldTags.includes(el));
+
+    const mustDeletesTags = oldTags.filter(
+      (el) => !postData.tagList.includes(el)
+    );
+
+    batch.update(postRef, updatedData);
+
+    for (const tag of mustAddTags) {
+      const tagDocRef = doc(tagsRef, tag);
+      const tagDoc = await getDoc(tagDocRef);
+
+      if (tagDoc.exists()) {
+        const tagData = tagDoc.data();
+        batch.update(tagDocRef, { [postData.id]: true });
+      } else {
+        const initialTagData = {
+          [postData.id]: true
+        };
+        batch.set(tagDocRef, initialTagData);
+      }
+    }
+
+    for (const tag of mustDeletesTags) {
+      const tagRef = doc(tagsRef, tag);
+      const tagDoc = await getDoc(tagRef);
+
+      if (tagDoc.exists()) {
+        const tagData = tagDoc.data();
+        delete tagData[postData.id];
+
+        if (Object.keys(tagData).length === 0) {
+          batch.delete(tagRef);
+        } else {
+          batch.update(tagRef, tagData);
+        }
+      }
+    }
+
+    await batch.commit();
 
     return true;
   } catch (e) {

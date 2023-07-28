@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { useMutation } from 'react-query';
+import { useRecoilValue } from 'recoil';
 import PostSection from '../Components/UI/postSection';
 import TextEditor from '../Components/Post/textEditor';
 import TagInput from '../Components/UI/tagInput';
@@ -54,7 +55,9 @@ const UpdatePostPage = () => {
   const [content, setContent] = useState(state.postData.content);
   const [tagList, setTagList] = useState(state.postData.tags);
 
-  const updatePostMutation = useMutation((postData) => updatePost(postData));
+  const updatePostMutation = useMutation((postData) =>
+    updatePost(state.postData.tags, postData)
+  );
 
   const handleChange = (e) => {
     setTitle(e.target.value);
