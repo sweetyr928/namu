@@ -8,6 +8,7 @@ import RequestListModal from '../UI/requestListModal';
 import { userData } from '../../Recoil/atoms';
 import { getRequestById } from '../API/Request/fetchRequest';
 import { SkeletonMyPageItem } from '../UI/skeletonMyPageItem';
+import { getUserData } from '../API/Login/fetchUser';
 
 const ReqListContainer = styled.article`
   display: flex;
@@ -68,21 +69,15 @@ const ModalBackground = styled.div`
 const RequestList = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState(0);
-  const currentUserData = useRecoilValue(userData);
-  const requests = currentUserData.userRequests;
 
-  const options = {
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: true
-  };
+  const currentUserData = useRecoilValue(userData);
+  const userId = currentUserData.uuid;
 
   const { data: requestData, isLoading } = useQuery(
     'userRequestData',
     async () => {
-      const requestPromises = requests.map((id) => getRequestById(id));
+      const { userRequests } = await getUserData(userId);
+      const requestPromises = userRequests.map((id) => getRequestById(id));
       const requestList = await Promise.all(requestPromises);
 
       const sortedRequestList = requestList.sort(
@@ -92,6 +87,14 @@ const RequestList = () => {
       return sortedRequestList;
     }
   );
+
+  const options = {
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true
+  };
 
   const handlerCloseModal = () => {
     setModalOpen(false);

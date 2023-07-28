@@ -6,6 +6,7 @@ import { useQuery } from 'react-query';
 import { userData } from '../../Recoil/atoms';
 import { getPostById } from '../API/Post/fetchPost';
 import { SkeletonMyPageItem } from '../UI/skeletonMyPageItem';
+import { getUserData } from '../API/Login/fetchUser';
 
 const UserPostContainer = styled.section`
   display: flex;
@@ -43,9 +44,24 @@ const UserPostContainer = styled.section`
 
 const UserPostList = () => {
   const currentUserData = useRecoilValue(userData);
-  const posts = currentUserData.userPosts;
+  const userId = currentUserData.uuid;
 
   const navigate = useNavigate();
+
+  const { data: userPostsData, isLoading } = useQuery(
+    'userPostsData',
+    async () => {
+      const { userPosts } = await getUserData(userId);
+      const postPromises = userPosts.map((id) => getPostById(id));
+      const postList = await Promise.all(postPromises);
+
+      const sortedPostList = postList.sort(
+        (a, b) => b.createdAt.seconds - a.createdAt.seconds
+      );
+
+      return sortedPostList;
+    }
+  );
 
   const options = {
     month: '2-digit',
@@ -61,20 +77,6 @@ const UserPostList = () => {
 
     return tmp.textContent || tmp.innerText || '';
   }, []);
-
-  const { data: userPostsData, isLoading } = useQuery(
-    'userPostsData',
-    async () => {
-      const postPromises = posts.map((id) => getPostById(id));
-      const postList = await Promise.all(postPromises);
-
-      const sortedPostList = postList.sort(
-        (a, b) => b.createdAt.seconds - a.createdAt.seconds
-      );
-
-      return sortedPostList;
-    }
-  );
 
   return (
     <UserPostContainer>
