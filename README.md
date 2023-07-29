@@ -8,10 +8,16 @@
 
 ## 🙇🏻‍♂️ **팀원소개**
 
-|                     [이희진](https://github.com/9lumint)                     |                   [전예린](https://github.com/sweetyr928)                    |
-| :--------------------------------------------------------------------------: | :--------------------------------------------------------------------------: |
-| <img src="https://avatars.githubusercontent.com/u/111138420?v=4" width="80"> | <img src="https://avatars.githubusercontent.com/u/111138420?v=4" width="80"> |
-|                                      FE                                      |                                      FE                                      |
+|                                       [이희진](https://github.com/9lumint)                                        |                   [전예린](https://github.com/sweetyr928)                    |
+| :---------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------: |
+| <img src="https://github.com/Project-Namu/namu/assets/131740436/c70960ba-d8c1-44f0-9e19-64d49bcc5b3b" width="80"> | <img src="https://avatars.githubusercontent.com/u/111138420?v=4" width="80"> |
+|                                                        FE                                                         |                                      FE                                      |
+
+## 📜 **관련 문서 링크**
+
+👉 [화면 정의서](https://www.figma.com/file/GsYNnCvNtXQaoWdy5LgEyB/%EB%82%98%EB%AC%B4?type=design&node-id=0-1&mode=design&t=GW2baxPnG6sHNJnm-0)<br/>
+<br/>
+👉 [요구사항 정의서](https://docs.google.com/spreadsheets/d/106qPPfNfvlYh-XcL4ZThDmyfOOcLYfndg9o99N0MTM8/edit#gid=0)<br/>
 
 ## ⚒️ **기능 시연**
 
@@ -19,12 +25,16 @@
 <summary>메인 페이지</summary><br/>
 👉 선택한 태그의 게시글 리스트 조회 및 상세 내용 조회<br/>
 <img width=550 src="https://github.com/Project-Namu/namu/assets/131740436/57e06a83-5ce1-4aaa-aa72-00cdb4837ea4"><br/>
+<br/>
 👉 게시글 작성자에게 나무 요청 전송<br/>
 <img width=550 src="https://github.com/Project-Namu/namu/assets/131740436/82739c33-9f74-4cdd-b7c2-ea4c12603de9"><br/>
+<br/>
 👉 채팅 및 요청 리스트 조회<br/>
 <img width=550 src="https://github.com/Project-Namu/namu/assets/131740436/9ae61023-8a85-4e15-aea9-4ea3897c2b45"><br/>
+<br/>
 👉 1:1 실시간 채팅<br/>
 <img width=550 src="https://github.com/Project-Namu/namu/assets/131740436/452be111-ea2b-43c3-ae94-f864f71f101c"><br/>
+<br/>
 👉 받은 나무 요청 목록 조회 요청 수락/거절<br/>
 <img width=550 src="https://github.com/Project-Namu/namu/assets/131740436/ca13a692-2e25-404d-988b-7b68b0b10141"><br/>
 </details>
