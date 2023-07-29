@@ -15,9 +15,8 @@
 
 ## 📜 **관련 문서 링크**
 
-👉 [화면 정의서](https://www.figma.com/file/GsYNnCvNtXQaoWdy5LgEyB/%EB%82%98%EB%AC%B4?type=design&node-id=0-1&mode=design&t=GW2baxPnG6sHNJnm-0)<br/>
-<br/>
-👉 [요구사항 정의서](https://docs.google.com/spreadsheets/d/106qPPfNfvlYh-XcL4ZThDmyfOOcLYfndg9o99N0MTM8/edit#gid=0)<br/>
+* [화면 정의서](https://www.figma.com/file/GsYNnCvNtXQaoWdy5LgEyB/%EB%82%98%EB%AC%B4?type=design&node-id=0-1&mode=design&t=GW2baxPnG6sHNJnm-0)<br/>
+* [요구사항 정의서](https://docs.google.com/spreadsheets/d/106qPPfNfvlYh-XcL4ZThDmyfOOcLYfndg9o99N0MTM8/edit#gid=0)<br/>
 
 ## ⚒️ **기능 시연**
 
