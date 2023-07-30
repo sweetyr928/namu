@@ -71,6 +71,8 @@
 <img src="https://img.shields.io/badge/Styled Components-DB7093?style=for-the-badge&amp;logo=styled-components&amp;logoColor=white" height="35"> 
 <img src="https://img.shields.io/badge/Recoil-3578EC?style=for-the-badge&amp;logo=recoil&amp;logoColor=white" height="35">
 <img src="https://img.shields.io/badge/MUI-007FFF?style=for-the-badge&amp;logo=mui&amp;logoColor=white" height="35">
+<img src="https://img.shields.io/badge/EsLint-4B32C3?style=for-the-badge&amp;logo=EsLint&amp;logoColor=white" height="35">
+<img src="https://img.shields.io/badge/Prettier-F7B93E?style=for-the-badge&amp;logo=Prettier&amp;logoColor=white" height="35">
 </div>
 
 ### **Back-end**
