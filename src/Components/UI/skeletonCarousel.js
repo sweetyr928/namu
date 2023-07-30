@@ -10,7 +10,7 @@ const loadingAnimation = keyframes`
 `;
 
 const SkeletonCarouselWrapper = styled.article`
-  width: calc(90%);
+  width: 90%;
   height: 100%;
 `;
 
@@ -60,9 +60,15 @@ const SkeletonItem = styled.div`
   align-items: center;
 `;
 
+const SkeletonSliderItemContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 20px 10px 20px 10px;
+`;
+
 const SkeletonSliderItem = styled.div`
   width: 100%;
-  max-width: 800px;
   height: 110px;
   background: linear-gradient(
     90deg,
@@ -73,7 +79,7 @@ const SkeletonSliderItem = styled.div`
   background-size: 200px;
   animation: ${loadingAnimation} 1.8s infinite;
   border-radius: 20px;
-  margin: 20px 0px 20px 0px;
+  margin: 10px 0px 0px 0px;
 `;
 
 export const SkeletonCarousel = () => (
@@ -82,10 +88,10 @@ export const SkeletonCarousel = () => (
       <SkeletonItem style={{ width: '50%', height: '30px' }} />
       <SkeletonItem style={{ width: '10%', height: '25px' }} />
     </SkeletonTagWrapper>
-    <>
+    <SkeletonSliderItemContainer>
       <SkeletonSliderItem />
       <SkeletonSliderItem />
       <SkeletonSliderItem />
-    </>
+    </SkeletonSliderItemContainer>
   </SkeletonCarouselWrapper>
 );
