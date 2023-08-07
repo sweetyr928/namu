@@ -27,11 +27,12 @@ const TabButtonContainer = styled.div`
   }
 `;
 
-const TabCotentContainer = styled.div`
+const TabContentContainer = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  height: 100%;
+  height: 85%;
+  margin: 0px 0px 15px 0px;
 `;
 
 const TabMenu = ({ tabs }) => {
@@ -54,7 +55,7 @@ const TabMenu = ({ tabs }) => {
           </button>
         ))}
       </TabButtonContainer>
-      <TabCotentContainer>{tabs[activeTab].content}</TabCotentContainer>
+      <TabContentContainer>{tabs[activeTab].content}</TabContentContainer>
     </TabSection>
   );
 };
