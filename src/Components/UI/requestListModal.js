@@ -19,9 +19,9 @@ const ContentSection = styled.section`
 
 const TimeSection = styled.section`
   display: flex;
-  height: 50px;
+  height: 5vh;
   border-bottom: 2px solid #c7d36f;
-  padding: 10px;
+  padding: 1vh 1vh 1vh 1vh;
   justify-content: start;
   align-items: center;
   span {
@@ -41,19 +41,26 @@ const TimeSection = styled.section`
 `;
 
 const MessageSection = styled.section`
-  padding: 20px;
+  padding: 2vh 2vh 2vh 2vh;
   .item {
     font-weight: 800;
     font-size: 17px;
     margin-bottom: 10px;
   }
 `;
-const ButtonWrapper = styled.section`
+
+const ButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
+  height: 10%;
+
+  button {
+    border-bottom: none;
+    font-size: 15px;
+  }
 
   button:first-child {
-    margin: 0px 20px 0px 0px;
+    margin: 0 2vh 0 0;
   }
 `;
 

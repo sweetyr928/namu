@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Swal from 'sweetalert2';
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 import { useMutation } from 'react-query';
 import { serverTimestamp } from 'firebase/firestore';
 import { WhiteButton } from '../UI/button';
@@ -11,23 +11,31 @@ const ContentContainer = styled.article`
   display: flex;
   flex-direction: column;
   background-color: #ffffff;
-  margin: 0px 0px 15px 0px;
-  padding: 5px 10px 5px 10px;
+  margin: 0 0 1.5vh 0;
+  padding: 0.5vh 1vh 0.5vh 1vh;
   width: 37vw;
   height: 90%;
   border-radius: 20px;
 `;
 
 const DetailWrapper = styled.section`
-  font-size: 20px;
+  font-size: 26px;
   font-weight: 800;
-  margin: 15px 0px 15px 25px;
+  margin: 1.5vh 0 1.5vh 2.5vh;
+
+  @media (min-width: 1024px) {
+    font-size: 18px;
+  }
+
+  @media (min-width: 1440px) {
+    font-size: 20px;
+  }
 `;
 
 const Divider = styled.hr`
   border: none;
   border-top: 2px solid #c7d36f;
-  margin: 0px 0px 30px 0px;
+  margin: 0 0 3vh 0;
 `;
 
 const TimeSelectWrapper = styled.section`
@@ -35,10 +43,10 @@ const TimeSelectWrapper = styled.section`
   justify-items: center;
   align-items: center;
   width: 95%;
-  margin: 0px auto 20px auto;
+  margin: 0 auto 2vh auto;
 
   span {
-    margin: 0px 0px 0px 10px;
+    margin: 0 0 0 1vh;
     font-size: 16px;
     font-weight: 700;
   }
@@ -46,7 +54,7 @@ const TimeSelectWrapper = styled.section`
 
 const DropdownWrapper = styled.div`
   position: relative;
-  margin: 0px 0px 0px 10px;
+  margin: 0 0 0 1vh;
 `;
 
 const DropdownMenu = styled.ul`
@@ -68,14 +76,14 @@ const DropdownButton = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 5px 10px 5px 10px;
+  padding: 0.5vh 1vh 0.5vh 1vh;
   border-radius: 4px;
   border: 1px solid #c7d36f;
   cursor: pointer;
 `;
 
 const DropdownMenuItem = styled.li`
-  padding: 5px 10px 5px 10px;
+  padding: 0.5vh 1vh 0.5vh 1vh;
   cursor: pointer;
 
   &:hover {
@@ -89,11 +97,11 @@ const TextWrapper = styled.section`
   justify-content: space-around;
   align-items: stretch;
   width: 95%;
-  margin: 0px auto 5px auto;
-  height: 60%;
+  margin: 0 auto 0.5vh auto;
+  height: 22vh;
 
   div {
-    margin: 0px 0px 0px 10px;
+    margin: 0 0 0 1vh;
     font-size: 16px;
     font-weight: 700;
   }
@@ -101,10 +109,10 @@ const TextWrapper = styled.section`
 
 const ModalTextArea = styled.textarea`
   width: 93%;
-  height: 130px;
+  height: 100%;
   resize: none;
-  margin: 10px auto;
-  padding: 10px 10px 10px 10px;
+  margin: 1vh auto;
+  padding: 1vh 1vh 1vh 1vh;
   border-radius: 10px;
   border: 2px solid #c7d36f;
   font-size: 15px;
@@ -114,9 +122,10 @@ const ModalTextArea = styled.textarea`
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
+  height: 10%;
 
   button:first-child {
-    margin: 0px 20px 0px 0px;
+    margin: 0 2vh 0 0;
   }
 `;
 
