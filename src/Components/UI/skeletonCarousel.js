@@ -19,76 +19,57 @@ const SkeletonTagWrapper = styled.section`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  margin: 30px 0px 20px 0px;
-
-  p {
-    margin: 0px 0px 0px 10px;
-    font-size: x-large;
-    font-weight: 700;
-  }
-
-  button {
-    background-color: transparent;
-    border: none;
-    margin: 0px 1px 0px 0px;
-    font-size: medium;
-    font-weight: 600;
-    cursor: pointer;
-
-    &:hover {
-      color: #c7d36f;
-    }
-  }
+  margin: 30px 0px 15px 0px;
 `;
 
 const SkeletonItem = styled.div`
-  width: 70%;
-  height: 40px;
   background: linear-gradient(
     90deg,
-    rgba(200, 200, 200, 0.4) 25%,
-    rgba(220, 220, 220, 0.5) 37%,
-    rgba(200, 200, 200, 0.4) 63%
+    rgba(240, 240, 240, 0.8) 25%,
+    rgba(240, 240, 240, 0.9) 37%,
+    rgba(240, 240, 240, 0.8) 63%
   );
   background-size: 200px;
   animation: ${loadingAnimation} 1.8s infinite;
-  margin: 6px;
-  padding: 6px;
-  border-radius: 20px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
+  margin: 6px 0px 6px 0px;
+  padding: 6px 6px 6px 6px;
+  border-radius: 15px;
 `;
 
 const SkeletonSliderItemContainer = styled.div`
   width: 100%;
+  height: 80%;
   display: flex;
   flex-direction: column;
-  margin: 20px 10px 20px 10px;
+  margin: 2vh auto 2vh auto;
+  border-radius: 10px;
+  background-color: #c7d36f;
 `;
 
 const SkeletonSliderItem = styled.div`
-  width: 100%;
-  height: 110px;
+  width: 97%;
+  height: 10vh;
   background: linear-gradient(
     90deg,
-    rgba(200, 200, 200, 0.4) 25%,
-    rgba(220, 220, 220, 0.5) 37%,
-    rgba(200, 200, 200, 0.4) 63%
+    rgba(240, 240, 240, 0.8) 25%,
+    rgba(240, 240, 240, 0.9) 37%,
+    rgba(240, 240, 240, 0.8) 63%
   );
   background-size: 200px;
   animation: ${loadingAnimation} 1.8s infinite;
   border-radius: 20px;
-  margin: 10px 0px 0px 0px;
+  margin: 1vh auto 0 auto;
 `;
 
 export const SkeletonCarousel = () => (
   <SkeletonCarouselWrapper>
     <SkeletonTagWrapper>
       <SkeletonItem style={{ width: '50%', height: '30px' }} />
-      <SkeletonItem style={{ width: '10%', height: '25px' }} />
+      <SkeletonItem style={{ width: '15%', height: '25px' }} />
     </SkeletonTagWrapper>
     <SkeletonSliderItemContainer>
+      <SkeletonSliderItem />
+      <SkeletonSliderItem />
       <SkeletonSliderItem />
       <SkeletonSliderItem />
       <SkeletonSliderItem />
