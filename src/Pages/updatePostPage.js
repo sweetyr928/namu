@@ -58,9 +58,9 @@ const UpdatePostPage = () => {
     updatePost(state.postData.tags, postData)
   );
 
-  const handleChange = (e) => {
+  const handleChange = useCallback((e) => {
     setTitle(e.target.value);
-  };
+  }, []);
 
   const Toast = Swal.mixin({
     toast: true,

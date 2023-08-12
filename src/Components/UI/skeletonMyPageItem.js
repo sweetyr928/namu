@@ -11,21 +11,18 @@ const loadingAnimation = keyframes`
 
 const SkeletonItem = styled.div`
   width: 90%;
-  height: 70px;
+  height: 8vh;
   background: linear-gradient(
     90deg,
-    rgba(207, 213, 175, 0.9) 25%,
-    rgba(207, 213, 175, 1) 37%,
-    rgba(207, 213, 175, 0.9) 63%
+    rgba(240, 240, 240, 0.8) 25%,
+    rgba(240, 240, 240, 0.9) 37%,
+    rgba(240, 240, 240, 0.8) 63%
   );
   background-size: 200px;
   animation: ${loadingAnimation} 1.8s infinite;
   margin: 0px 0px 10px 0px;
-  padding: 6px;
+  padding: 6px 6px 6px 6px;
   border-radius: 20px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
 `;
 
 export const SkeletonMyPageItem = () => (

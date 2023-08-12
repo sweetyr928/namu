@@ -4,8 +4,6 @@ import { useState, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery, useMutation } from 'react-query';
 import { useRecoilValue } from 'recoil';
-import { collection, getDocs } from 'firebase/firestore';
-import { db } from '../firebase';
 import { GreenButton } from '../Components/UI/button';
 import { GreenLoading } from '../Components/UI/loading';
 import SearchInput from '../Components/UI/searchInput';
@@ -14,7 +12,11 @@ import TagInput from '../Components/UI/tagInput';
 import { userData } from '../Recoil/atoms';
 import SearchedTagResult from '../Components/Tag/tagList';
 import TagItem from '../Components/Tag/tagItem';
-import { getUserTags, updateUserTags } from '../Components/API/Tag/fetchTag';
+import {
+  getSearchedTags,
+  getUserTags,
+  updateUserTags
+} from '../Components/API/Tag/fetchTag';
 
 const EditTagPageContainer = styled.article`
   width: 100%;
@@ -114,22 +116,8 @@ const EditTagPage = () => {
   }, []);
 
   const searchTags = useCallback(async (text) => {
-    const tagsRef = collection(db, 'tags');
-
     try {
-      const querySnapshot = await getDocs(tagsRef);
-
-      const results = querySnapshot.docs
-        .filter((doc) => doc.id.includes(text))
-        .map((doc) => {
-          const tagData = doc.data();
-          const postCount = Object.keys(tagData).length || 0;
-          return {
-            id: doc.id,
-            postCount
-          };
-        });
-
+      const results = await getSearchedTags(text);
       setSearchedTagList(results);
     } catch (error) {
       console.error('Error searching tags: ', error);
@@ -152,7 +140,7 @@ const EditTagPage = () => {
           setSearchInputText={setSearchInputText}
         />
         <SearchedTagResult>
-          {searchedTagList.length ? (
+          {searchedTagList?.length ? (
             searchedTagList.map((el, idx) => (
               <TagItem
                 key={idx}

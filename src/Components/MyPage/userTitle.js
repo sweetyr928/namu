@@ -159,15 +159,15 @@ const UserTitle = () => {
 
   useEffect(() => {}, [selectedBadge]);
 
-  const {
-    data: userTitleData,
-    isLoading,
-    refetch
-  } = useQuery('requestData', async () => {
-    const { userBadges, currentBadge } = await getUserData(userId);
-    setSelectedBadge(currentBadge);
-    return { userBadges, currentBadge };
-  });
+  const { data: userTitleData, isLoading } = useQuery(
+    'requestData',
+    async () => {
+      const { userBadges, currentBadge } = await getUserData(userId);
+      setSelectedBadge(currentBadge);
+
+      return { userBadges, currentBadge };
+    }
+  );
 
   const updateBadgeMutation = useMutation((updatedBadge) =>
     updateUserCurrentBadge(userId, updatedBadge)
@@ -244,7 +244,7 @@ const UserTitle = () => {
         )}
         <Tooltip effect="solid" place="bottom" />
       </UserTitleList>
-      {userTitleData?.userBadges.length > 1 ? (
+      {userTitleData?.userBadges && userTitleData?.userBadges?.length > 1 ? (
         <WhiteButton onClick={handleBadgeChange}>목패 변경</WhiteButton>
       ) : (
         <p>게시글 작성과 나무 요청을 통해 나머지 목패를 획득해보세요.</p>

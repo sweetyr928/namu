@@ -90,8 +90,6 @@ const Date = styled.span`
 `;
 
 const CarouselItem = ({ title, content, createdAt, id, isSolved }) => {
-  const [isHovered, setIsHovered] = useState(false);
-
   const navigate = useNavigate();
 
   const formattedDate = new window.Date(createdAt.seconds * 1000);
@@ -130,7 +128,7 @@ const CarouselItem = ({ title, content, createdAt, id, isSolved }) => {
         <Title
           className={isSolved ? 'solved' : ''}
           style={{
-            color: isSolved ? '#888888' : isHovered ? '#9eb23b' : '#3f3f3f'
+            color: isSolved ? '#888888' : '#3f3f3f'
           }}
         >
           {title}
@@ -139,7 +137,7 @@ const CarouselItem = ({ title, content, createdAt, id, isSolved }) => {
           <Content
             className={isSolved ? 'solved' : ''}
             style={{
-              color: isSolved ? '#888888' : isHovered ? '#555555' : '#3f3f3f'
+              color: isSolved ? '#888888' : '#3f3f3f'
             }}
             dangerouslySetInnerHTML={{
               __html: DOMPurify.sanitize(sanitizedContent)

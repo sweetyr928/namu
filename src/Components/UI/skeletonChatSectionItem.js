@@ -11,7 +11,7 @@ const loadingAnimation = keyframes`
 
 const SkeletonItem = styled.div`
   width: 90%;
-  height: 50px;
+  height: 5vh;
   background: linear-gradient(
     90deg,
     rgba(240, 240, 240, 0.8) 25%,
@@ -20,12 +20,9 @@ const SkeletonItem = styled.div`
   );
   background-size: 200px;
   animation: ${loadingAnimation} 1.8s infinite;
-  margin: 6px;
-  padding: 6px;
+  margin: 6px 6px 6px 6px;
+  padding: 6px 6px 6px 6px;
   border-radius: 15px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
 `;
 
 export const SkeletonChatSectionItem = () => (
