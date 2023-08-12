@@ -39,6 +39,12 @@
 </details>
 
 <details>
+<summary>태그 수정 페이지</summary><br/>
+👉 태그 검색 및 태그 추가/삭제<br/>
+<img width=550 src="https://github.com/Project-Namu/namu/assets/39157466/abd8a24c-11bf-4672-a799-19bebcd88278"><br/>
+</details>
+
+<details>
 <summary>검색 페이지</summary><br/>
 👉 게시글 제목 또는 내용 검색<br/>
 <img width=550 src="https://github.com/Project-Namu/namu/assets/131740436/952c9d78-0523-4831-a63d-127653aa276b"><br/>
