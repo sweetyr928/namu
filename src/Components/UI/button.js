@@ -7,7 +7,7 @@ export const GreenButton = styled.button`
   font-weight: 800;
   border-radius: 20px;
   font-size: 15px;
-  padding: 10px 10px 10px 10px;
+  padding: 1vh 1vh 1vh 1vh;
 
   &:hover {
     background-color: #9eb23b;
@@ -21,7 +21,7 @@ export const WhiteButton = styled.button`
   font-weight: 800;
   border-radius: 20px;
   font-size: 15px;
-  padding: 10px 10px 10px 10px;
+  padding: 1vh 1vh 1vh 1vh;
 
   &:hover {
     color: #9eb23b;
