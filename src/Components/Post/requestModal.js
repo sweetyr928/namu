@@ -199,9 +199,9 @@ const RequestModal = ({
     setMessage(e.target.value);
   };
 
-  const handleCancel = useCallback(() => {
+  const handleCancel = () => {
     closeModal();
-  }, []);
+  };
 
   return (
     <Modal>
