@@ -141,9 +141,9 @@ const EditTagPage = () => {
         />
         <SearchedTagResult>
           {searchedTagList?.length ? (
-            searchedTagList.map((el, idx) => (
+            searchedTagList.map((el) => (
               <TagItem
-                key={idx}
+                key={el.id}
                 category={el.id}
                 postCount={el.postCount}
                 tagList={tagList}
