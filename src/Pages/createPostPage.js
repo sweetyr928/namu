@@ -62,9 +62,9 @@ const CreatePostPage = () => {
 
   const navigate = useNavigate();
 
-  const handleChange = useCallback((e) => {
+  const handleChange = (e) => {
     setTitle(e.target.value);
-  }, []);
+  };
 
   const Toast = Swal.mixin({
     toast: true,

@@ -200,13 +200,13 @@ const PostDetailPage = () => {
     ? new window.Date(postData.createdAt.seconds * 1000)
     : null;
 
-  const handleHamburgerClick = useCallback(() => {
+  const handleHamburgerClick = () => {
     setIsMenuOpen(!isMenuOpen);
-  }, []);
+  };
 
-  const handleEdit = useCallback(() => {
+  const handleEdit = () => {
     navigate(`/posts/${id}/edit`, { state: { id, postData } });
-  }, [id, postData]);
+  };
 
   const Toast = Swal.mixin({
     toast: true,
@@ -220,7 +220,7 @@ const PostDetailPage = () => {
     }
   });
 
-  const handleDelete = useCallback(async () => {
+  const handleDelete = async () => {
     try {
       const result = await Swal.fire({
         text: '정말로 이 게시글을 삭제하시겠습니까?',
@@ -252,17 +252,17 @@ const PostDetailPage = () => {
     } catch (error) {
       console.error('Error deleting post: ', error);
     }
-  }, []);
+  };
 
-  const handleGoBack = useCallback(() => {
+  const handleGoBack = () => {
     if (state && state.searchResult) {
       navigate('/search', { state: { searchResult: state.searchResult } });
     } else {
       navigate(-1);
     }
-  }, [state, navigate]);
+  };
 
-  const openModal = useCallback(async () => {
+  const openModal = async () => {
     const requestId = `${id}-${currentUserData.uuid}`;
     const docRef = doc(db, 'requests', requestId);
 
@@ -275,11 +275,11 @@ const PostDetailPage = () => {
     } else {
       setIsModalOpen(!isModalOpen);
     }
-  }, [isModalOpen]);
+  };
 
-  const closeModal = useCallback(async () => {
+  const closeModal = async () => {
     setIsModalOpen(!isModalOpen);
-  }, [isModalOpen]);
+  };
 
   const options = {
     month: '2-digit',

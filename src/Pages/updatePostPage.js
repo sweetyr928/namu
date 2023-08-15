@@ -58,9 +58,9 @@ const UpdatePostPage = () => {
     updatePost(state.postData.tags, postData)
   );
 
-  const handleChange = useCallback((e) => {
+  const handleChange = (e) => {
     setTitle(e.target.value);
-  }, []);
+  };
 
   const Toast = Swal.mixin({
     toast: true,
@@ -107,9 +107,9 @@ const UpdatePostPage = () => {
     }
   };
 
-  const handleGoBack = useCallback(() => {
+  const handleGoBack = () => {
     navigate(-1);
-  }, []);
+  };
 
   return (
     <PostSection>
