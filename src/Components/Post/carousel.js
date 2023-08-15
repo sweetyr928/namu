@@ -158,7 +158,7 @@ const Carousel = ({ tagList }) => {
                   carouselData[tagList[tagIdx]] &&
                   carouselData[tagList[tagIdx]].map((post, i) => (
                     <CarouselItem
-                      key={i}
+                      key={post.id}
                       title={post.title}
                       content={post.content}
                       createdAt={post.createdAt}
