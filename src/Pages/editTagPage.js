@@ -85,7 +85,7 @@ const EditTagPage = () => {
     }
   });
 
-  const handleSave = () => {
+  const handleSave = useCallback(() => {
     if (tagList.length < 2 || !tagList.length) {
       Toast.fire({
         icon: 'error',
@@ -109,7 +109,7 @@ const EditTagPage = () => {
         }
       });
     }
-  };
+  }, [tagList]);
 
   const handleGoBack = useCallback(() => {
     navigate('/');
@@ -141,9 +141,9 @@ const EditTagPage = () => {
         />
         <SearchedTagResult>
           {searchedTagList?.length ? (
-            searchedTagList.map((el, idx) => (
+            searchedTagList.map((el) => (
               <TagItem
-                key={idx}
+                key={el.id}
                 category={el.id}
                 postCount={el.postCount}
                 tagList={tagList}

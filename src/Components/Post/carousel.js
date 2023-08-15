@@ -104,7 +104,7 @@ const Carousel = ({ tagList }) => {
       }
     },
     {
-      refetchInterval: 3000,
+      refetchInterval: 30000,
       refetchIntervalInBackground: true
     }
   );
@@ -131,13 +131,7 @@ const Carousel = ({ tagList }) => {
         });
       }
 
-      if (next > current) {
-        if (tagIdx < tagList.length - 1) setTagIdx((prevIdx) => prevIdx + 1);
-        else setTagIdx(0);
-      } else if (next < current) {
-        if (tagIdx > 0) setTagIdx((prevIdx) => prevIdx - 1);
-        else setTagIdx(tagList.length - 1);
-      }
+      setTagIdx(next);
     }
   };
 
@@ -152,13 +146,13 @@ const Carousel = ({ tagList }) => {
             <button onClick={handleNavigate}>태그 추가</button>
           </TagWrapper>
           <Slider ref={carouselRef} {...settings}>
-            {tagList.map((_, idx) => (
-              <CarouselItemContainer key={idx}>
+            {tagList.map((_) => (
+              <CarouselItemContainer key={tagList[tagIdx]}>
                 {carouselData &&
                   carouselData[tagList[tagIdx]] &&
                   carouselData[tagList[tagIdx]].map((post, i) => (
                     <CarouselItem
-                      key={i}
+                      key={post.id}
                       title={post.title}
                       content={post.content}
                       createdAt={post.createdAt}

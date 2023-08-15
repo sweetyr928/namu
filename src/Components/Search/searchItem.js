@@ -85,28 +85,28 @@ const SearchItem = ({ title, content, createdAt, id, searchResult }) => {
 
   const formattedDate = new window.Date(createdAt.seconds * 1000);
 
-  const handleNavigate = useCallback(() => {
+  const handleNavigate = () => {
     navigate(`/posts/${id}`, { state: { searchResult } });
-  }, [id]);
+  };
 
-  const handleMouse = useCallback(() => {
+  const handleMouse = () => {
     setIsHovered(!isHovered);
-  }, [isHovered]);
+  };
 
-  const truncateContent = useCallback((text, maxLength) => {
+  const truncateContent = (text, maxLength) => {
     if (text.length > maxLength) {
       return `${text.slice(0, maxLength)}...`;
     }
 
     return text;
-  }, []);
+  };
 
-  const stripHTMLTags = useCallback((html) => {
+  const stripHTMLTags = (html) => {
     const tmp = document.createElement('div');
     tmp.innerHTML = html;
 
     return tmp.textContent || tmp.innerText || '';
-  }, []);
+  };
 
   const mergedContent = content.replace(/\n/g, '');
   const sanitizedContent = stripHTMLTags(mergedContent);
