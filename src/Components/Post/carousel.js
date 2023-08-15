@@ -104,7 +104,7 @@ const Carousel = ({ tagList }) => {
       }
     },
     {
-      refetchInterval: 3000,
+      refetchInterval: 30000,
       refetchIntervalInBackground: true
     }
   );
