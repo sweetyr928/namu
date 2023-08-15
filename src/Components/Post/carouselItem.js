@@ -1,5 +1,5 @@
 import styled, { keyframes } from 'styled-components';
-import { useState, useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DOMPurify from 'isomorphic-dompurify';
 
@@ -92,11 +92,14 @@ const Date = styled.span`
 const CarouselItem = ({ title, content, createdAt, id, isSolved }) => {
   const navigate = useNavigate();
 
-  const formattedDate = new window.Date(createdAt.seconds * 1000);
+  const formattedDate = useMemo(
+    () => new window.Date(createdAt.seconds * 1000),
+    [createdAt]
+  );
 
   const handleNavigate = useCallback(() => {
     navigate(`/posts/${id}`, { state: { isSolved } });
-  }, [id]);
+  }, [id, isSolved]);
 
   const stripHTMLTags = useCallback((html) => {
     const tmp = document.createElement('div');
@@ -105,16 +108,23 @@ const CarouselItem = ({ title, content, createdAt, id, isSolved }) => {
     return tmp.textContent || tmp.innerText || '';
   }, []);
 
-  const mergedContent = content.replace(/\n/g, '');
-  const sanitizedContent = stripHTMLTags(mergedContent);
+  const mergedContent = useMemo(() => content.replace(/\n/g, ''), [content]);
 
-  const options = {
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: true
-  };
+  const sanitizedContent = useMemo(
+    () => stripHTMLTags(mergedContent),
+    [mergedContent]
+  );
+
+  const options = useMemo(
+    () => ({
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true
+    }),
+    []
+  );
 
   return (
     <ItemWrapper
@@ -149,5 +159,7 @@ const CarouselItem = ({ title, content, createdAt, id, isSolved }) => {
     </ItemWrapper>
   );
 };
+
+CarouselItem.displayName = 'CarouselItem';
 
 export default CarouselItem;
