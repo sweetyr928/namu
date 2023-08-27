@@ -25,8 +25,8 @@ const ChatContainer = styled.article`
 
   button {
     border-bottom: 2px solid #ebebeb;
-    font-size: 20px;
   }
+
   .active {
     background-color: #c7d36f;
     color: #ffffff;

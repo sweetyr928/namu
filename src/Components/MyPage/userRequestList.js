@@ -29,11 +29,13 @@ const ReqListContainer = styled.article`
   section {
     display: flex;
     width: 90%;
+    height: 3.5rem;
     background-color: #ffffff;
-    margin: 6px;
+    margin: 10px;
     padding: 10px;
     border-bottom: 2px solid #ebebeb;
     justify-content: space-around;
+    align-items: center;
     cursor: pointer;
     border-radius: 30px;
     transition: all 0.3s ease;
@@ -51,14 +53,13 @@ const ReqListContainer = styled.article`
   .icon-container {
     display: flex;
     justify-content: center;
-    margin-top: 5px;
     svg {
       font-size: 30px;
     }
   }
   .message-container {
     flex-direction: column;
-    width: 300px;
+    width: 350px;
     font-size: 14px;
     .title {
       margin-bottom: 8px;
@@ -68,9 +69,10 @@ const ReqListContainer = styled.article`
   }
   .time-container {
     font-size: 13px;
+    margin-top: 2.1875rem;
   }
   .empty-text {
-    margin-top: 20px;
+    margin-top: 1.5625rem;
     font-weight: 800;
   }
 `;
@@ -157,10 +159,14 @@ const RequestList = () => {
                 )}
               </div>
               <div className="message-container">
-                <p className="title">{data.title}</p>
+                <p className="title">
+                  {data.title.length > 28
+                    ? `${data.title.slice(0, 28)}…`
+                    : data.title}
+                </p>
                 <p>
-                  {data.message.length > 12
-                    ? `${data.message.slice(0, 12)}…`
+                  {data.message.length > 35
+                    ? `${data.message.slice(0, 35)}…`
                     : data.message}
                 </p>
               </div>

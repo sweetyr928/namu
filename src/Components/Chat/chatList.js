@@ -29,6 +29,7 @@ const ChatListContainer = styled.section`
   section {
     display: flex;
     width: 90%;
+    height: 3.5rem;
     background-color: #ffffff;
     margin: 6px;
     padding: 6px;
@@ -70,16 +71,11 @@ const ChatList = ({ setIsStarted }) => {
   const [mustLoad, setMustLoad] = useState(false);
   const setRoom = useSetRecoilState(roomsData);
   const currentUserData = useRecoilValue(userData);
-  const chatrooms = currentUserData.userChatrooms;
   const userId = currentUserData.uuid;
 
   const timeFromNow = (timestamp) => moment(timestamp).fromNow();
 
-  const {
-    data: chatroomData,
-    isLoading,
-    isError
-  } = useQuery(
+  const { data: chatroomData, isLoading } = useQuery(
     'chatroomData',
     async () => {
       try {
@@ -123,12 +119,16 @@ const ChatList = ({ setIsStarted }) => {
           <section key={idx} onClick={() => handleClick(idx)}>
             <div className="icon-container">{profiles[data.helperLevel]}</div>
             <div className="message-container">
-              <p className="title">{data.title}</p>
+              <p className="title">
+                {data.title.length > 22
+                  ? `${data.title.slice(0, 22)}…`
+                  : data.title}
+              </p>
               <p>
                 {data.lastChat === ''
                   ? '나무를 시작하세요!'
-                  : data.lastChat.length > 12
-                  ? `${data.lastChat.slice(0, 12)}…`
+                  : data.lastChat.length > 22
+                  ? `${data.lastChat.slice(0, 22)}…`
                   : data.lastChat}
               </p>
             </div>

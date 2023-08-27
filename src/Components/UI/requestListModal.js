@@ -56,7 +56,6 @@ const ButtonWrapper = styled.div`
 
   button {
     border-bottom: none;
-    font-size: 15px;
   }
 
   button:first-child {
