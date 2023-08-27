@@ -26,7 +26,7 @@ const UserPostContainer = styled.section`
 
   section {
     width: 90%;
-    height: 8vh;
+    height: 3.5rem;
     background-color: #ffffff;
     margin: 1vh;
     padding: 1.6vh;
@@ -46,7 +46,7 @@ const UserPostContainer = styled.section`
   }
   .title {
     padding-top: 0.5vh;
-    padding-bottom: 1vh;
+    padding-bottom: 0.3vh;
     font-size: 16px;
     font-weight: 800;
   }
@@ -57,6 +57,7 @@ const UserPostContainer = styled.section`
   .time {
     text-align: right;
     font-size: 14px;
+    margin-right: 0.625rem;
   }
   .empty-text {
     margin-top: 20px;
@@ -112,12 +113,16 @@ const UserPostList = () => {
               navigate(`/posts/${data.postId}`);
             }}
           >
-            <div className="title">{data.title}</div>
+            <div className="title">
+              {data.title.length > 35
+                ? `${data.title.slice(0, 35)}…`
+                : data.title}
+            </div>
             <div className="content">
-              {stripHTMLTags(data.content.replace(/\n/g, '')).length > 30
+              {stripHTMLTags(data.content.replace(/\n/g, '')).length > 40
                 ? `${stripHTMLTags(data.content.replace(/\n/g, '')).slice(
                     0,
-                    30
+                    40
                   )}…`
                 : stripHTMLTags(data.content.replace(/\n/g, ''))}
             </div>

@@ -28,6 +28,7 @@ const ReqListContainer = styled.article`
   section {
     display: flex;
     width: 90%;
+    height: 3.5rem;
     background-color: #ffffff;
     margin: 6px;
     padding: 6px;
@@ -147,10 +148,14 @@ const RequestList = () => {
             >
               <div className="icon-container">{profiles[data.helperLevel]}</div>
               <div className="message-container">
-                <p className="title">{data.title}</p>
+                <p className="title">
+                  {data.title.length > 22
+                    ? `${data.title.slice(0, 22)}…`
+                    : data.title}
+                </p>
                 <p>
-                  {data.message.length > 12
-                    ? `${data.message.slice(0, 12)}…`
+                  {data.message.length > 22
+                    ? `${data.message.slice(0, 22)}…`
                     : data.message}
                 </p>
               </div>
