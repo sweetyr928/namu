@@ -3,11 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.11.16",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
     "firebase": "^10.0.0",
     "firebase-tools": "^12.4.2",
     "isomorphic-dompurify": "^1.7.0",
@@ -26,7 +22,9 @@
     "recoil": "^0.7.7",
     "recoil-persist": "^5.1.0",
     "styled-components": "^6.0.1",
-    "sweetalert2": "^11.7.16"
+    "sweetalert2": "^11.7.16",
+    "react-slick": "^0.29.0",
+    "slick-carousel": "^1.8.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -55,7 +53,6 @@
   },
   "devDependencies": {
     "@babel/preset-react": "^7.22.5",
-    "@emotion/react": "^11.11.1",
     "babel-eslint": "^10.1.0",
     "eslint": "^8.43.0",
     "eslint-config-airbnb": "^19.0.4",
@@ -64,8 +61,6 @@
     "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "prettier": "^2.8.8",
-    "react-slick": "^0.29.0",
-    "slick-carousel": "^1.8.1"
+    "prettier": "^2.8.8"
   }
 }
