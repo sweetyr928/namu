@@ -102,10 +102,6 @@ const Carousel = ({ tagList }) => {
       onSuccess: () => {
         setSavedCarouselData(carouselData);
       }
-    },
-    {
-      refetchInterval: 30000,
-      refetchIntervalInBackground: true
     }
   );
 
