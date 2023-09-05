@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useRef, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -85,9 +85,9 @@ const GuideWrapper = styled.article`
     margin: 0px 0px 30px 0px;
   }
 `;
-
 const Carousel = ({ tagList }) => {
   const carouselRef = useRef(null);
+  const queryClient = useQueryClient();
 
   const [tagIdx, setTagIdx] = useState(0);
   const [savedCarouselData, setSavedCarouselData] = useState({});
@@ -101,11 +101,8 @@ const Carousel = ({ tagList }) => {
       enabled: tagList.length > 0,
       onSuccess: () => {
         setSavedCarouselData(carouselData);
-      }
-    },
-    {
-      refetchInterval: 30000,
-      refetchIntervalInBackground: true
+      },
+      initialData: queryClient.getQueryData(['carouselData', tagList[tagIdx]])
     }
   );
 
@@ -119,7 +116,7 @@ const Carousel = ({ tagList }) => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    initialSlide: 2,
+    initialSlide: tagIdx,
     arrows: true,
     beforeChange: (current, next) => {
       const carouselElement = carouselRef.current;
@@ -137,7 +134,7 @@ const Carousel = ({ tagList }) => {
 
   return (
     <>
-      {isLoading ? (
+      {isLoading || !carouselData ? (
         <SkeletonCarousel />
       ) : tagList.length > 0 ? (
         <CarouselWrapper>
@@ -160,7 +157,7 @@ const Carousel = ({ tagList }) => {
                       isSolved={post.isSolved}
                     />
                   ))}
-                {(!carouselData[tagList[tagIdx]] ||
+                {((!isLoading && !carouselData[tagList[tagIdx]]) ||
                   carouselData[tagList[tagIdx]].length === 0) && (
                   <GuideWrapper>
                     <p>현재 해당 태그에 게시물이 없습니다.</p>

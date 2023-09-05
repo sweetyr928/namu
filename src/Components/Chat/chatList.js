@@ -98,10 +98,6 @@ const ChatList = ({ setIsStarted }) => {
         console.error('Error fetching user data:', error);
         throw new Error('Failed to fetch chatroom data');
       }
-    },
-    {
-      refetchInterval: 500,
-      refetchIntervalInBackground: true
     }
   );
 

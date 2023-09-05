@@ -91,28 +91,19 @@ const RequestList = () => {
     hour12: true
   };
 
-  const { data: requestData, isLoading } = useQuery(
-    'requestData',
-    async () => {
-      const { receivedRequests } = await getUserData(userId);
-      if (receivedRequests.length > 0) {
-        const requestPromises = receivedRequests.map((id) =>
-          getRequestById(id)
-        );
-        const requestList = await Promise.all(requestPromises);
+  const { data: requestData, isLoading } = useQuery('requestData', async () => {
+    const { receivedRequests } = await getUserData(userId);
+    if (receivedRequests.length > 0) {
+      const requestPromises = receivedRequests.map((id) => getRequestById(id));
+      const requestList = await Promise.all(requestPromises);
 
-        const sortedRequestList = requestList.sort(
-          (a, b) => b.createdAt.seconds - a.createdAt.seconds
-        );
+      const sortedRequestList = requestList.sort(
+        (a, b) => b.createdAt.seconds - a.createdAt.seconds
+      );
 
-        return sortedRequestList;
-      }
-    },
-    {
-      refetchInterval: 2000,
-      refetchIntervalInBackground: true
+      return sortedRequestList;
     }
-  );
+  });
 
   const handlerCloseModal = () => {
     setModalOpen(false);
